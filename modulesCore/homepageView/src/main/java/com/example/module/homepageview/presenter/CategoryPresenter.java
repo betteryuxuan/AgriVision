@@ -22,6 +22,10 @@ public class CategoryPresenter implements ICategoryContract.ICategoryPresenter {
         mCategoryModel.loadCategoryDatas(new ICategoryContract.ICategoryModel.CropsCallback() {
             @Override
             public void onCropsLoaded(Crop data) {
+
+                if (data == null || data.getData() == null) {
+                    return;
+                }
                 List<Crop.CropDetail> foodCategoryData = new ArrayList<>();
                 List<Crop.CropDetail> oilCategoryData = new ArrayList<>();
                 List<Crop.CropDetail> vegetableCategoryData = new ArrayList<>();

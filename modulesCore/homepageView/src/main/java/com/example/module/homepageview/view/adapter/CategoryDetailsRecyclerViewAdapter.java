@@ -49,7 +49,7 @@ public class CategoryDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Cat
         Crop.CropDetail crop = list.get(position);
         holder.name.setText(crop.getName());
         Glide.with(context)
-                .load(crop.getIcon())  // news.getImage() 返回的是图片的 URL 或文件路径
+                .load(crop.getIcon())
                 .into(holder.image); // 将图片加载到 ImageView
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

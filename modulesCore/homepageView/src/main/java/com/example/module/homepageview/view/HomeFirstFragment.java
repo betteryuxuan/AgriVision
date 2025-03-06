@@ -16,7 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.homepageview.R;
 import com.example.module.homepageview.contract.IHomeFirstContract;
-import com.example.module.libBase.bean.Crop;
+import com.example.module.homepageview.custom.BookPageTransformer;
 import com.example.module.homepageview.model.HomeFirstModel;
 import com.example.module.homepageview.model.classes.News;
 import com.example.module.homepageview.model.classes.Proverb;
@@ -24,6 +24,9 @@ import com.example.module.homepageview.presenter.HomeFirstPresenter;
 import com.example.module.homepageview.view.adapter.CropRecyclerViewAdapter;
 import com.example.module.homepageview.view.adapter.NewsRecyclerViewAdapter;
 import com.example.module.homepageview.view.adapter.ProverbViewPagerAdapter;
+import com.example.module.libBase.bean.Crop;
+import com.fangxu.library.DragContainer;
+import com.fangxu.library.DragListener;
 import com.youth.banner.Banner;
 import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.config.IndicatorConfig;
@@ -40,6 +43,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     private IHomeFirstContract.IHomeFirstPresenter mPresenter;
     private RecyclerView cropRecyclerView, newsRecyclerView;
     private ViewPager2 viewPager2;
+    private DragContainer dragContainer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         cropRecyclerView = view.findViewById(R.id.rv_homepage_crop);
         newsRecyclerView = view.findViewById(R.id.rv_homepage_news);
         viewPager2 = view.findViewById(R.id.vp_homepage_recommend);
+        dragContainer = (DragContainer) view.findViewById(R.id.dc_home_drag);
         initView();
         initListener();
     }
@@ -81,6 +86,13 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     @Override
     public void initListener() {
 
+        dragContainer.setDragListener(new DragListener() {
+            @Override
+            public void onDragEvent() {
+                ViewPager2 viewPager2 = getActivity().findViewById(R.id.vp_homepage_main);
+                viewPager2.setCurrentItem(1, true);
+            }
+        });
     }
 
     @Override
@@ -142,6 +154,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     public void setupProverbViewPager(List<Proverb.ProverbData> list) {
         ProverbViewPagerAdapter adapter = new ProverbViewPagerAdapter(getActivity(), list);
         viewPager2.setAdapter(adapter);
+        viewPager2.setPageTransformer(new BookPageTransformer());
     }
 
     @Override

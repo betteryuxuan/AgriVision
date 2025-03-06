@@ -61,7 +61,7 @@ public class CropRecyclerViewAdapter extends RecyclerView.Adapter<CropRecyclerVi
         Crop.DataItem crop = cropList.get(position);
         holder.textView.setText(crop.getCropDetail().get(0).getName());
         Glide.with(mContext)
-                .load(crop.getCropDetail().get(0).getIcon())  // news.getImage() 返回的是图片的 URL 或文件路径
+                .load(crop.getCropDetail().get(0).getIcon())
                 .into(holder.imageView); // 将图片加载到 ImageView
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

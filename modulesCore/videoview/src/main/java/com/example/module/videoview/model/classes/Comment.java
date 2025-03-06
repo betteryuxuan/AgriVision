@@ -2,21 +2,21 @@ package com.example.module.videoview.model.classes;
 
 public class Comment {
 
-    private int image;
+    private String image;
     private String name;
     private String comment;
 
-    public Comment(int image, String name, String comment) {
+    public Comment(String image, String name, String comment) {
         this.image = image;
         this.name = name;
         this.comment = comment;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

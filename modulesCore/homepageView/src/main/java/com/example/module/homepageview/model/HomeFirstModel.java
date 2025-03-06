@@ -149,11 +149,11 @@ public class HomeFirstModel implements IHomeFirstContract.IHomeFirstModel<HomePa
                 }
 
                 String responseBody = body.string();
-//                Log.d(TAG, "解析前的数据：" + responseBody);
+                Log.d(TAG, "解析前的数据：" + responseBody);
 
                 Gson gson = new Gson();
                 News news = gson.fromJson(responseBody, News.class);
-//                Log.d(TAG, "解析后的数据：" + news);
+                Log.d(TAG, "解析后的数据：" + news);
 
                 // 确保回调在主线程中执行
                 if (callback != null) {

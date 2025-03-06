@@ -52,7 +52,7 @@ public class CropCategoryRecyclerViewAdapter extends RecyclerView.Adapter<CropCa
         Crop.CropDetail crop = list.get(position);
         holder.textView.setText(crop.getName());
         Glide.with(context)
-                .load(crop.getIcon())  // news.getImage() 返回的是图片的 URL 或文件路径
+                .load(crop.getIcon())
                 .into(holder.imageView); // 将图片加载到 ImageView
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

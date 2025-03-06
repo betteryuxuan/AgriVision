@@ -15,26 +15,28 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_video_bottom_commit"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_margin="10dp"
             android:background="@drawable/comment_corner"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_video_send"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/et_video_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
-                android:background="@android:color/transparent"
+                android:background="@null"
                 android:hint="留下您宝贵的见解吧~"
                 android:textColor="#767077"
                 android:textSize="16sp"
+                android:layout_marginLeft="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,19 +44,18 @@
 
         <TextView
             android:id="@+id/tv_video_send"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/send_corner_uninput"
             android:gravity="center"
             android:text="发送"
-            android:textStyle="bold"
             android:textColor="@color/gray"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_video_bottom_commit" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

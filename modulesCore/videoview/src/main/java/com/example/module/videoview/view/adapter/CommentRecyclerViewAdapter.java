@@ -1,5 +1,6 @@
 package com.example.module.videoview.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.module.videoview.R;
 import com.example.module.videoview.model.classes.Comment;
 
@@ -17,9 +19,11 @@ import java.util.List;
 public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.CommentViewHolder> {
 
     private List<Comment> comments;
+    private Context context;
 
-    public CommentRecyclerViewAdapter(List<Comment> comments) {
+    public CommentRecyclerViewAdapter(List<Comment> comments, Context context) {
         this.comments = comments;
+        this.context = context;
     }
 
     @NonNull
@@ -32,7 +36,9 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     @Override
     public void onBindViewHolder(@NonNull CommentRecyclerViewAdapter.CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
-        holder.image.setImageResource(comment.getImage());
+        Glide.with(context)
+                .load(comment.getImage())
+                .into(holder.image);
         holder.name.setText(comment.getName());
         holder.comment.setText(comment.getComment());
         holder.like.setOnClickListener(new View.OnClickListener() {

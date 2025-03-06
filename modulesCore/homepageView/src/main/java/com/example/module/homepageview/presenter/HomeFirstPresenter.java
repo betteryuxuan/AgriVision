@@ -33,7 +33,9 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
         homeFirstModel.getCropRecyclerViewDatas(new IHomeFirstContract.IHomeFirstModel.CropsCallback() {
             @Override
             public void onCropsLoaded(List<Crop.DataItem> data) {
-                homeFirstView.setupCropRecyclerView(data);
+                if (homeFirstView != null && data != null) {
+                    homeFirstView.setupCropRecyclerView(data);
+                }
             }
 
             @Override
@@ -48,7 +50,7 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
         homeFirstModel.getNewsRecyclerViewDatas(new IHomeFirstContract.IHomeFirstModel.NewsCallback() {
             @Override
             public void onNewsLoaded(List<News.Item> data) {
-                if (homeFirstView != null) {
+                if (homeFirstView != null && data != null) {
                     homeFirstView.setupNewsRecyclerView(data);
                 }
             }
@@ -64,7 +66,7 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
         homeFirstModel.getProverbViewPagerDatas(new IHomeFirstContract.IHomeFirstModel.ProverbCallback() {
             @Override
             public void onProverbsLoaded(List<Proverb.ProverbData> data) {
-                if (homeFirstView != null) {
+                if (homeFirstView != null && data != null) {
                     homeFirstView.setupProverbViewPager(data);
                 }
             }

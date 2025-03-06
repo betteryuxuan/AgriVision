@@ -8,7 +8,8 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/pv_video_show"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:resize_mode="fill"
         app:controller_layout_id="@layout/custom_player_control_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,27 +141,88 @@
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintLeft_toRightOf="@+id/cardview" />
 
-    <!-- 评论区内容 -->
-    <LinearLayout
-        android:id="@+id/comment_section"
+    <com.example.module.videoview.custom.MyView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pv_video_show"
-        android:visibility="gone">
-
-        <!-- 可以放置评论内容，像RecyclerView或者其他布局 -->
-        <TextView
-            android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_video_comment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="评论内容"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:padding="16dp"/>
-    </LinearLayout>
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="3条评论"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_video_comment_close"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_videoshow_comment"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#10000000"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_videoshow_comment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_video_bottom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/comment_corner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_videoshow_comment">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="留下您宝贵的见解吧~"
+                    android:textColor="#767077"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.example.module.videoview.custom.MyView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
