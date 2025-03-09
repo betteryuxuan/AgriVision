@@ -1,6 +1,7 @@
 package com.example.module.homepageview.contract;
 
 import com.example.module.homepageview.base.BaseView;
+import com.example.module.homepageview.model.classes.Recommend;
 import com.example.module.libBase.bean.Crop;
 import com.example.module.homepageview.model.classes.News;
 import com.example.module.homepageview.model.classes.Proverb;
@@ -20,6 +21,8 @@ public interface IHomeFirstContract {
 
         void setupBanner(List<Integer> list);
 
+        void setupRecommendRecyclerView(List<Recommend> list);
+
         void setupCropRecyclerView(List<Crop.DataItem> list);
 
         void setupNewsRecyclerView(List<News.Item> list);
@@ -31,6 +34,8 @@ public interface IHomeFirstContract {
 
         void loadBannerDatas();
 
+        void loadRecommendRecyclerViewDatas();
+
         void loadCropRecyclerViewDatas();
 
         void loadNewsRecyclerViewDatas();
@@ -41,6 +46,8 @@ public interface IHomeFirstContract {
     interface IHomeFirstModel<T> {
 
         List<Integer> getBannerDatas();
+
+        List<Recommend> getRecommendRecyclerViewDatas();
 
         void getCropRecyclerViewDatas(CropsCallback callback);
 

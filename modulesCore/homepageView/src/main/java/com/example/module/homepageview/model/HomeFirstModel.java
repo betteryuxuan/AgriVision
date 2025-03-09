@@ -9,11 +9,12 @@ import androidx.annotation.NonNull;
 
 import com.example.module.homepageview.R;
 import com.example.module.homepageview.contract.IHomeFirstContract;
-import com.example.module.libBase.bean.Crop;
 import com.example.module.homepageview.model.classes.News;
 import com.example.module.homepageview.model.classes.Proverb;
+import com.example.module.homepageview.model.classes.Recommend;
 import com.example.module.homepageview.presenter.HomePagePresenter;
 import com.example.module.libBase.TokenManager;
+import com.example.module.libBase.bean.Crop;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -44,12 +45,22 @@ public class HomeFirstModel implements IHomeFirstContract.IHomeFirstModel<HomePa
     public List<Integer> getBannerDatas() {
 
         List<Integer> list = new ArrayList<>();
-        list.add(R.drawable.example_pic1);
-        list.add(R.drawable.example_pic2);
-        list.add(R.drawable.example_pic3);
+        list.add(R.drawable.xiaomai_img);
+        list.add(R.drawable.shuidao_img);
+        list.add(R.drawable.huasheng_img);
 
         return list;
     }
+
+    @Override
+    public List<Recommend> getRecommendRecyclerViewDatas() {
+        List<Recommend> list = new ArrayList<>();
+        list.add(new Recommend(R.drawable.xiaomai_img, "作物分类", ""));
+        list.add(new Recommend(R.drawable.shuidao_img, "谚语学习", ""));
+        list.add(new Recommend(R.drawable.huasheng_img, "知识储备", ""));
+        return list;
+    }
+
     @Override
     public void getCropRecyclerViewDatas(CropsCallback callback) {
         OkHttpClient okHttpClient = new OkHttpClient();

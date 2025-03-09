@@ -36,7 +36,9 @@ import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.ui.PlayerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class VideoShowFragment extends Fragment {
@@ -212,7 +214,9 @@ public class VideoShowFragment extends Fragment {
                     public void onCommentDataReturned(String s) {
                         String name = SPUtils.getString(getContext(), SPUtils.USERNAME_KEY);
                         String avatar = SPUtils.getString(getContext(), SPUtils.AVATAR_KEY);
-                        comments.add(new Comment(avatar, name, s));
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+                        String formattedDate = sdf.format(new Date());
+                        comments.add(new Comment(avatar, name, s, formattedDate));
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();
                         }
@@ -330,8 +334,10 @@ public class VideoShowFragment extends Fragment {
             // 记录初始Y位置，方便回到全屏
             originalVideoY = playerView.getY();
 
-            // 评论区从底部弹出
+            // 评论区从底部弹出，确保初始位置在屏幕外
+            commentLayout.setTranslationY(commentLayout.getHeight());
             commentLayout.setVisibility(View.VISIBLE);
+
             ObjectAnimator translationUp = ObjectAnimator.ofFloat(commentLayout, "translationY", commentLayout.getHeight(), 0);
 
             ViewPager2 vp = getActivity().findViewById(R.id.vp_video_show);
@@ -363,7 +369,6 @@ public class VideoShowFragment extends Fragment {
 
         isCommentOpen = !isCommentOpen;
     }
-
 
 
     private void showHeartAnimation(View likeButton, int drawableResId) {

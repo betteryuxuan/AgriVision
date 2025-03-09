@@ -2,9 +2,14 @@ package com.example.module.homepageview.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.homepageview.R;
 import com.example.module.homepageview.contract.IHomeFirstContract;
@@ -20,11 +26,16 @@ import com.example.module.homepageview.custom.BookPageTransformer;
 import com.example.module.homepageview.model.HomeFirstModel;
 import com.example.module.homepageview.model.classes.News;
 import com.example.module.homepageview.model.classes.Proverb;
+import com.example.module.homepageview.model.classes.Recommend;
 import com.example.module.homepageview.presenter.HomeFirstPresenter;
 import com.example.module.homepageview.view.adapter.CropRecyclerViewAdapter;
 import com.example.module.homepageview.view.adapter.NewsRecyclerViewAdapter;
 import com.example.module.homepageview.view.adapter.ProverbViewPagerAdapter;
+import com.example.module.homepageview.view.adapter.RecommendRecyclerViewAdapter;
+import com.example.module.libBase.SPUtils;
+import com.example.module.libBase.TimeUtils;
 import com.example.module.libBase.bean.Crop;
+import com.example.module.libBase.bean.SwitchPageEvent;
 import com.fangxu.library.DragContainer;
 import com.fangxu.library.DragListener;
 import com.youth.banner.Banner;
@@ -33,17 +44,21 @@ import com.youth.banner.config.IndicatorConfig;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
+@Route(path = "/HomePageView/HomeFirstFragment")
 public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IHomeFirstView {
 
     private final String TAG = "HomeFirstFragment";
 
     private Banner banner;
     private IHomeFirstContract.IHomeFirstPresenter mPresenter;
-    private RecyclerView cropRecyclerView, newsRecyclerView;
+    private RecyclerView recommendRecyclerView, cropRecyclerView, newsRecyclerView;
     private ViewPager2 viewPager2;
     private DragContainer dragContainer;
+    private TextView nameTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +81,9 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             mPresenter = new HomeFirstPresenter(this, new HomeFirstModel(getContext()), getContext());
         }
 
+        nameTextView = view.findViewById(R.id.tv_homefirst_name_text);
         banner = view.findViewById(R.id.banner_homepage_top);
+        recommendRecyclerView = view.findViewById(R.id.rv_homefirst_recommend);
         cropRecyclerView = view.findViewById(R.id.rv_homepage_crop);
         newsRecyclerView = view.findViewById(R.id.rv_homepage_news);
         viewPager2 = view.findViewById(R.id.vp_homepage_recommend);
@@ -77,7 +94,17 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
 
     @Override
     public void initView() {
+
+        String username = SPUtils.getString(getContext(), "username");
+        String time = TimeUtils.getTimeNormal();
+        if (username != null) {
+            nameTextView.setText(username + "，" + time + "好");
+        } else {
+            nameTextView.setText(time + "好");
+        }
+
         mPresenter.loadBannerDatas();
+        mPresenter.loadRecommendRecyclerViewDatas();
         mPresenter.loadCropRecyclerViewDatas();
         mPresenter.loadNewsRecyclerViewDatas();
         mPresenter.loadProverbViewPagerDatas();
@@ -89,19 +116,19 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         dragContainer.setDragListener(new DragListener() {
             @Override
             public void onDragEvent() {
-                ViewPager2 viewPager2 = getActivity().findViewById(R.id.vp_homepage_main);
-                viewPager2.setCurrentItem(1, true);
+                EventBus.getDefault().post(new SwitchPageEvent(1));
+                Log.d(TAG, "onDragEvent: ");
             }
         });
     }
 
     @Override
     public void initAinm() {
-//        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.my_anim);
-//        LayoutAnimationController layoutAnimationController = new LayoutAnimationController(animation);
-//        layoutAnimationController.setOrder(LayoutAnimationController.ORDER_NORMAL);
-//        layoutAnimationController.setDelay(0.2f);
-//        newsRecyclerView.setLayoutAnimation(layoutAnimationController);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.my_anim);
+        LayoutAnimationController layoutAnimationController = new LayoutAnimationController(animation);
+        layoutAnimationController.setOrder(LayoutAnimationController.ORDER_NORMAL);
+        layoutAnimationController.setDelay(0.2f);
+        newsRecyclerView.setLayoutAnimation(layoutAnimationController);
     }
 
     @Override
@@ -117,6 +144,13 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
                 .setIndicatorNormalColor(getResources().getColor(R.color.white_shallow))
                 .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
                 .setLoopTime(3000);
+    }
+
+    @Override
+    public void setupRecommendRecyclerView(List<Recommend> list) {
+        recommendRecyclerView.setAdapter(new RecommendRecyclerViewAdapter(list, getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recommendRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
     @Override

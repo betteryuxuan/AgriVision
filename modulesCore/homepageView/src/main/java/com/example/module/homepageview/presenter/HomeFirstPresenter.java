@@ -3,6 +3,7 @@ package com.example.module.homepageview.presenter;
 import android.content.Context;
 
 import com.example.module.homepageview.contract.IHomeFirstContract;
+import com.example.module.homepageview.model.classes.Recommend;
 import com.example.module.libBase.bean.Crop;
 import com.example.module.homepageview.model.classes.News;
 import com.example.module.homepageview.model.classes.Proverb;
@@ -26,6 +27,12 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
     public void loadBannerDatas() {
         List<Integer> bannerDatas = homeFirstModel.getBannerDatas();
         homeFirstView.setupBanner(bannerDatas);
+    }
+
+    @Override
+    public void loadRecommendRecyclerViewDatas() {
+        List<Recommend> recommendDatas = homeFirstModel.getRecommendRecyclerViewDatas();
+        homeFirstView.setupRecommendRecyclerView(recommendDatas);
     }
 
     @Override

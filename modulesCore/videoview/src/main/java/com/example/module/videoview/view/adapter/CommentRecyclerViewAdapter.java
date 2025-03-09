@@ -55,6 +55,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
                 }
             }
         });
+        holder.time.setText(comment.getTime());
     }
 
     @Override
@@ -66,7 +67,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
 
         private ImageView image;
         private ImageView like;
-        private TextView name, comment, likeCount;
+        private TextView name, comment, likeCount, time;
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +76,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
             name = itemView.findViewById(R.id.tv_video_username);
             comment = itemView.findViewById(R.id.tv_video_user_text);
             likeCount = itemView.findViewById(R.id.tv_video_user_like_count);
+            time = itemView.findViewById(R.id.tv_video_send_time);
         }
     }
 }

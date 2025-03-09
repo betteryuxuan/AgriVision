@@ -45,6 +45,7 @@ dependencies {
         implementation project(":modulesCore:personalinfoview")
         implementation project(":modulesCore:shoppingview")
         implementation project(":modulesCore:videoview")
+        implementation project(":modulesCore:classificationview")
     }
 
     implementation "com.alibaba:arouter-api:1.5.2"
