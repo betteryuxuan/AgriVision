@@ -1,6 +1,24 @@
 R_DEF: Internal format may change without notice
 local
+color background
 color black
+color black2
+color black_blue
+color chat_bg
+color gray_1
+color gray_2
+color gray_transparent
+color green_1
+color green_2
+color green_3
+color green_4
+color green_5
+color grenn_gray
+color hint_gray
+color light_grenn
+color red
+color red_error
+color trans_white
 color white
 drawable classification_top_color_selector
 drawable ic_category_back
@@ -8,11 +26,14 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_more
 drawable ima_bac
+drawable xiaomai_img
+id appbar
 id cardView2
-id category_main
 id cl_category_cropcard
 id cl_category_layout
 id cl_homepage_cropcard
+id classification_main
+id ctl_detail
 id cv_homepage_cropcard
 id iv_category_back
 id iv_category_food
@@ -26,12 +47,6 @@ id iv_category_wild_fruit
 id iv_classification_top
 id iv_homepage_cropimage
 id main
-id myView2
-id myView3
-id myView4
-id myView5
-id myView6
-id myView7
 id nestedScrollView
 id rv_category_details
 id rv_category_food
@@ -61,4 +76,6 @@ mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
 style Base.Theme.AgriVison
+style TextAppearance.CollapsingToolbar.Collapsed
+style TextAppearance.CollapsingToolbar.Expanded
 style Theme.AgriVison

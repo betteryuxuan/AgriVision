@@ -58,6 +58,7 @@ public class HomeFirstModel implements IHomeFirstContract.IHomeFirstModel<HomePa
         list.add(new Recommend(R.drawable.xiaomai_img, "作物分类", ""));
         list.add(new Recommend(R.drawable.shuidao_img, "谚语学习", ""));
         list.add(new Recommend(R.drawable.huasheng_img, "知识储备", ""));
+        list.add(new Recommend(R.drawable.xiaomai_img2, "视频经验", ""));
         return list;
     }
 

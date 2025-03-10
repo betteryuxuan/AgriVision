@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-38:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-39:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\18135c0e1ce84d4638a7d777786b5b11\\transformed\\jetified-exoplayer-core-2.18.1\\res\\values-zh-rTW\\values-zh-rTW.xml",
@@ -18,6 +18,23 @@
                         "startOffsets": "6483,6539,6595,6652,6705,6775,6829,6905,6983",
                         "endColumns": "55,55,56,52,69,53,75,77,58",
                         "endOffsets": "6534,6590,6647,6700,6770,6824,6900,6978,7037"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\a0a6b715a16d1bd546d06c2a845f4335\\transformed\\jetified-ucrop-2.2.9-native\\res\\values-zh-rTW\\values-zh-rTW.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,97,174,228,282,329,446,490",
+                        "endColumns": "41,76,53,53,46,116,43,42",
+                        "endOffsets": "92,169,223,277,324,441,485,528"
+                    },
+                    "to": {
+                        "startLines": "185,186,187,188,189,190,191,192",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "12783,12825,12902,12956,13010,13057,13174,13218",
+                        "endColumns": "41,76,53,53,46,116,43,42",
+                        "endOffsets": "12820,12897,12951,13005,13052,13169,13213,13256"
                     }
                 },
                 {

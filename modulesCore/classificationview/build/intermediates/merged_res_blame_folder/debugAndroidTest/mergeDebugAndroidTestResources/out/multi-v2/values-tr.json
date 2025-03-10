@@ -1,8 +1,25 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-38:/values-tr/values-tr.xml",
+            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-39:/values-tr/values-tr.xml",
             "map": [
+                {
+                    "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\a0a6b715a16d1bd546d06c2a845f4335\\transformed\\jetified-ucrop-2.2.9-native\\res\\values-tr\\values-tr.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,99,168,226,275,325",
+                        "endColumns": "43,68,57,48,49,46",
+                        "endOffsets": "94,163,221,270,320,367"
+                    },
+                    "to": {
+                        "startLines": "185,186,187,188,189,190",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "14193,14237,14306,14364,14413,14463",
+                        "endColumns": "43,68,57,48,49,46",
+                        "endOffsets": "14232,14301,14359,14408,14458,14505"
+                    }
+                },
                 {
                     "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\a75a88d57b5b90a2ff0a3ad7e1c61f7f\\transformed\\material-1.12.0\\res\\values-tr\\values-tr.xml",
                     "from": {

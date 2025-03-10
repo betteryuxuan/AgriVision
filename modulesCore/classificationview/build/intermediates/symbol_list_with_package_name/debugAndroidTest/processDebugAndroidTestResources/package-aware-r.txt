@@ -43,6 +43,8 @@ anim m3_side_sheet_exit_to_right
 anim mtrl_bottom_sheet_slide_in
 anim mtrl_bottom_sheet_slide_out
 anim mtrl_card_lowers_interpolator
+anim ucrop_loader_circle_path
+anim ucrop_loader_circle_scale
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec
@@ -1370,6 +1372,22 @@ attr triggerId
 attr triggerReceiver
 attr triggerSlack
 attr ttcIndex
+attr ucrop_artv_ratio_title
+attr ucrop_artv_ratio_x
+attr ucrop_artv_ratio_y
+attr ucrop_aspect_ratio_x
+attr ucrop_aspect_ratio_y
+attr ucrop_circle_dimmed_layer
+attr ucrop_dimmed_color
+attr ucrop_frame_color
+attr ucrop_frame_stroke_size
+attr ucrop_grid_color
+attr ucrop_grid_column_count
+attr ucrop_grid_row_count
+attr ucrop_grid_stroke_size
+attr ucrop_show_frame
+attr ucrop_show_grid
+attr ucrop_show_oval_crop_frame
 attr unplayed_color
 attr upDuration
 attr useCompatPadding
@@ -1439,11 +1457,14 @@ color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color background
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
 color background_material_light
 color black
+color black2
+color black_blue
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
 color bright_foreground_inverse_material_dark
@@ -1458,6 +1479,7 @@ color cardview_dark_background
 color cardview_light_background
 color cardview_shadow_end_color
 color cardview_shadow_start_color
+color chat_bg
 color design_bottom_navigation_shadow_color
 color design_box_stroke_color
 color design_dark_default_color_background
@@ -1512,8 +1534,19 @@ color exo_white
 color exo_white_opacity_70
 color foreground_material_dark
 color foreground_material_light
+color gray_1
+color gray_2
+color gray_transparent
+color green_1
+color green_2
+color green_3
+color green_4
+color green_5
+color grenn_gray
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color hint_gray
+color light_grenn
 color m3_appbar_overlay_color
 color m3_assist_chip_icon_tint_color
 color m3_assist_chip_stroke_color
@@ -2179,6 +2212,8 @@ color primary_text_default_material_dark
 color primary_text_default_material_light
 color primary_text_disabled_material_dark
 color primary_text_disabled_material_light
+color red
+color red_error
 color ripple_material_dark
 color ripple_material_light
 color secondary_text_default_material_dark
@@ -2193,6 +2228,32 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
+color trans_white
+color ucrop_color_active_aspect_ratio
+color ucrop_color_active_controls_color
+color ucrop_color_black
+color ucrop_color_blaze_orange
+color ucrop_color_crop_background
+color ucrop_color_default_crop_frame
+color ucrop_color_default_crop_grid
+color ucrop_color_default_dimmed
+color ucrop_color_default_logo
+color ucrop_color_ebony_clay
+color ucrop_color_heather
+color ucrop_color_inactive_aspect_ratio
+color ucrop_color_inactive_controls_color
+color ucrop_color_progress_wheel_line
+color ucrop_color_statusbar
+color ucrop_color_toolbar
+color ucrop_color_toolbar_widget
+color ucrop_color_white
+color ucrop_color_widget
+color ucrop_color_widget_active
+color ucrop_color_widget_background
+color ucrop_color_widget_rotate_angle
+color ucrop_color_widget_rotate_mid_line
+color ucrop_color_widget_text
+color ucrop_scale_text_view_selector
 color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
@@ -3032,6 +3093,28 @@ dimen tooltip_precise_anchor_threshold
 dimen tooltip_vertical_padding
 dimen tooltip_y_offset_non_touch
 dimen tooltip_y_offset_touch
+dimen ucrop_default_crop_frame_stoke_width
+dimen ucrop_default_crop_grid_stoke_width
+dimen ucrop_default_crop_logo_size
+dimen ucrop_default_crop_rect_corner_touch_area_line_length
+dimen ucrop_default_crop_rect_corner_touch_threshold
+dimen ucrop_default_crop_rect_min_size
+dimen ucrop_height_crop_aspect_ratio_text
+dimen ucrop_height_divider_shadow
+dimen ucrop_height_horizontal_wheel_progress_line
+dimen ucrop_height_wrapper_controls
+dimen ucrop_height_wrapper_states
+dimen ucrop_margin_horizontal_wheel_progress_line
+dimen ucrop_margin_top_controls_text
+dimen ucrop_margin_top_widget_text
+dimen ucrop_padding_crop_frame
+dimen ucrop_progress_size
+dimen ucrop_size_dot_scale_text_view
+dimen ucrop_size_wrapper_rotate_button
+dimen ucrop_text_size_controls_text
+dimen ucrop_text_size_widget_text
+dimen ucrop_width_horizontal_wheel_progress_line
+dimen ucrop_width_middle_wheel_progress_line
 drawable abc_ab_share_pack_mtrl_alpha
 drawable abc_action_bar_item_background_material
 drawable abc_btn_borderless_material
@@ -3228,6 +3311,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_search_black_24
+drawable ima_bac
 drawable indeterminate_static
 drawable left
 drawable m3_avd_hide_password
@@ -3305,6 +3389,26 @@ drawable notify_panel_notification_icon_bg
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable ucrop_crop
+drawable ucrop_ic_angle
+drawable ucrop_ic_crop
+drawable ucrop_ic_crop_unselected
+drawable ucrop_ic_cross
+drawable ucrop_ic_done
+drawable ucrop_ic_next
+drawable ucrop_ic_reset
+drawable ucrop_ic_rotate
+drawable ucrop_ic_rotate_unselected
+drawable ucrop_ic_scale
+drawable ucrop_ic_scale_unselected
+drawable ucrop_rotate
+drawable ucrop_scale
+drawable ucrop_shadow_upside
+drawable ucrop_vector_ic_crop
+drawable ucrop_vector_loader
+drawable ucrop_vector_loader_animated
+drawable ucrop_wrapper_controls_shape
+drawable xiaomai_img
 font roboto_medium_numbers
 id ALT
 id BOTTOM_END
@@ -3388,6 +3492,7 @@ id animateToEnd
 id animateToStart
 id antiClockwise
 id anticipate
+id appbar
 id arc
 id asConfigured
 id async
@@ -3417,7 +3522,6 @@ id cancel_action
 id cancel_button
 id cardView2
 id carryVelocity
-id category_main
 id center
 id centerCrop
 id centerInside
@@ -3433,6 +3537,7 @@ id circle_center
 id cl_category_cropcard
 id cl_category_layout
 id cl_homepage_cropcard
+id classification_main
 id clear_text
 id clip_horizontal
 id clip_vertical
@@ -3447,10 +3552,13 @@ id content
 id contentPanel
 id contiguous
 id continuousVelocity
+id controls_shadow
+id controls_wrapper
 id coordinator
 id cos
 id counterclockwise
 id cradle
+id ctl_detail
 id currentState
 id custom
 id customPanel
@@ -3595,6 +3703,11 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id image_view_crop
+id image_view_logo
+id image_view_state_aspect_ratio
+id image_view_state_rotate
+id image_view_state_scale
 id immediateStop
 id included
 id indeterminate
@@ -3612,11 +3725,15 @@ id iv_category_oil
 id iv_category_seed
 id iv_category_vegetable
 id iv_category_wild_fruit
+id iv_classification_top
 id iv_homepage_cropimage
 id jumpToEnd
 id jumpToStart
 id labeled
 id layout
+id layout_aspect_ratio
+id layout_rotate_wheel
+id layout_scale_wheel
 id left
 id leftToRight
 id legacy
@@ -3654,6 +3771,8 @@ id material_value_index
 id matrix
 id media_actions
 id media_controller_compat_view_tag
+id menu_crop
+id menu_loader
 id message
 id middle
 id mini
@@ -3701,6 +3820,7 @@ id navigation_bar_item_labels_group
 id navigation_bar_item_large_label_view
 id navigation_bar_item_small_label_view
 id navigation_header_container
+id nestedScrollView
 id never
 id neverCompleteToEnd
 id neverCompleteToStart
@@ -3759,6 +3879,7 @@ id right
 id rightToLeft
 id right_icon
 id right_side
+id rotate_scroll_wheel
 id rounded
 id row_index_key
 id rv_category_details
@@ -3773,6 +3894,7 @@ id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
 id scale
+id scale_scroll_wheel
 id screen
 id scroll
 id scrollIndicatorDown
@@ -3824,6 +3946,9 @@ id start
 id startHorizontal
 id startToEnd
 id startVertical
+id state_aspect_ratio
+id state_rotate
+id state_scale
 id staticLayout
 id staticPostLayout
 id status_bar_latest_event_content
@@ -3857,6 +3982,9 @@ id textTop
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
+id text_view_crop
+id text_view_rotate
+id text_view_scale
 id textinput_counter
 id textinput_error
 id textinput_helper_text
@@ -3870,6 +3998,7 @@ id titleDividerNoCustom
 id title_template
 id toggle
 id toolbar
+id toolbar_title
 id top
 id topPanel
 id touch_outside
@@ -3894,6 +4023,9 @@ id tv_category_title
 id tv_category_vegetable
 id tv_category_wild_fruit
 id tv_homepage_cropname
+id ucrop
+id ucrop_frame
+id ucrop_photobox
 id unchecked
 id uniform
 id unlabeled
@@ -3903,6 +4035,7 @@ id vertical
 id vertical_only
 id video_decoder_gl_surface_view
 id view_offset_helper
+id view_overlay
 id view_transition
 id view_tree_lifecycle_owner
 id view_tree_on_back_pressed_dispatcher_owner
@@ -3918,6 +4051,10 @@ id withinBounds
 id wrap
 id wrap_content
 id wrap_content_constrained
+id wrapper_controls
+id wrapper_reset_rotate
+id wrapper_rotate_by_angle
+id wrapper_states
 id x_left
 id x_right
 id zoom
@@ -3991,6 +4128,7 @@ integer mtrl_view_invisible
 integer mtrl_view_visible
 integer show_password_duration
 integer status_bar_notification_info_maxnum
+integer ucrop_progress_loading_anim_time
 interpolator btn_checkbox_checked_mtrl_animation_interpolator_0
 interpolator btn_checkbox_checked_mtrl_animation_interpolator_1
 interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_0
@@ -4141,6 +4279,14 @@ layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
+layout ucrop_activity_photobox
+layout ucrop_aspect_ratio
+layout ucrop_controls
+layout ucrop_fragment_photobox
+layout ucrop_layout_rotate_wheel
+layout ucrop_layout_scale_wheel
+layout ucrop_view
+menu ucrop_menu_activity
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals exo_controls_fastforward_by_amount_description
@@ -4368,6 +4514,14 @@ string searchview_navigation_content_description
 string side_sheet_accessibility_pane_title
 string side_sheet_behavior
 string status_bar_notification_info_overflow
+string ucrop_crop
+string ucrop_error_input_data_is_absent
+string ucrop_label_edit_photo
+string ucrop_label_original
+string ucrop_menu_crop
+string ucrop_mutate_exception_hint
+string ucrop_rotate
+string ucrop_scale
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog
@@ -4852,6 +5006,8 @@ style TextAppearance_AppCompat_Widget_PopupMenu_Large
 style TextAppearance_AppCompat_Widget_PopupMenu_Small
 style TextAppearance_AppCompat_Widget_Switch
 style TextAppearance_AppCompat_Widget_TextView_SpinnerItem
+style TextAppearance_CollapsingToolbar_Collapsed
+style TextAppearance_CollapsingToolbar_Expanded
 style TextAppearance_Compat_Notification
 style TextAppearance_Compat_Notification_Info
 style TextAppearance_Compat_Notification_Info_Media
@@ -5535,6 +5691,12 @@ style Widget_MaterialComponents_Toolbar_PrimarySurface
 style Widget_MaterialComponents_Toolbar_Surface
 style Widget_MaterialComponents_Tooltip
 style Widget_Support_CoordinatorLayout
+style ucrop_ImageViewWidgetIcon
+style ucrop_TextViewCropAspectRatio
+style ucrop_TextViewWidget
+style ucrop_TextViewWidgetText
+style ucrop_WrapperIconState
+style ucrop_WrapperRotateButton
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -5699,3 +5861,5 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
+styleable ucrop_AspectRatioTextView ucrop_artv_ratio_title ucrop_artv_ratio_x ucrop_artv_ratio_y
+styleable ucrop_UCropView ucrop_aspect_ratio_x ucrop_aspect_ratio_y ucrop_circle_dimmed_layer ucrop_dimmed_color ucrop_frame_color ucrop_frame_stroke_size ucrop_grid_color ucrop_grid_column_count ucrop_grid_row_count ucrop_grid_stroke_size ucrop_show_frame ucrop_show_grid ucrop_show_oval_crop_frame

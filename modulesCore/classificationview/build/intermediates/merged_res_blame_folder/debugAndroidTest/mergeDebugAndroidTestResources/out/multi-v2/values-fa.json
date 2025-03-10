@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-38:/values-fa/values-fa.xml",
+            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-39:/values-fa/values-fa.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\c62aad7d7eb243486b073810116eebfa\\transformed\\core-1.13.0\\res\\values-fa\\values-fa.xml",
@@ -71,6 +71,23 @@
                         "startOffsets": "950,1060,1161,1272,1356,1457,1572,1652,1729,1822,1917,2009,2103,2205,2300,2397,2491,2584,2674,2756,2864,2968,3066,3172,3277,3382,3539,13758",
                         "endColumns": "109,100,110,83,100,114,79,76,92,94,91,93,101,94,96,93,92,89,81,107,103,97,105,104,104,156,100,81",
                         "endOffsets": "1055,1156,1267,1351,1452,1567,1647,1724,1817,1912,2004,2098,2200,2295,2392,2486,2579,2669,2751,2859,2963,3061,3167,3272,3377,3534,3635,13835"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\a0a6b715a16d1bd546d06c2a845f4335\\transformed\\jetified-ucrop-2.2.9-native\\res\\values-fa\\values-fa.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,98,160,214,262,308",
+                        "endColumns": "42,61,53,47,45,46",
+                        "endOffsets": "93,155,209,257,303,350"
+                    },
+                    "to": {
+                        "startLines": "185,186,187,188,189,190",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "14178,14221,14283,14337,14385,14431",
+                        "endColumns": "42,61,53,47,45,46",
+                        "endOffsets": "14216,14278,14332,14380,14426,14473"
                     }
                 },
                 {

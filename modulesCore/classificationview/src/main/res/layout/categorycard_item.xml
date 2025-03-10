@@ -16,13 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardCornerRadius="20dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#00000000">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_category_layout"
             android:layout_width="150dp"
             android:layout_height="130dp"
-            android:background="#EAF7ED"
+            android:background="#A3D9B1"
             android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

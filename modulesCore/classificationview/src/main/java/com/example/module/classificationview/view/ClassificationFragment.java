@@ -22,6 +22,7 @@ import com.example.module.classificationview.model.ClassificationModel;
 import com.example.module.classificationview.presenter.ClassificationPresenter;
 import com.example.module.classificationview.view.adapter.CropCategoryRecyclerViewAdapter;
 import com.example.module.libBase.bean.Crop;
+import com.example.module.libBase.bean.SpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
         medicinalButton = view.findViewById(R.id.iv_category_medicinal);
         initView();
         initListener();
+
     }
 
     @Override
@@ -90,6 +92,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                         .navigation();
             }
         }, getContext()));
+        foodRecyclerView.setNestedScrollingEnabled(false);
 
         foodButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +103,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+        int space = 25;
+        foodRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
@@ -115,6 +120,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                         .navigation();
             }
         }, getContext()));
+        oilRecyclerView.setNestedScrollingEnabled(false);
 
         oilButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +131,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+        int space = 25;
+        oilRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
@@ -140,6 +148,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                         .navigation();
             }
         }, getContext()));
+        vegetableRecyclerView.setNestedScrollingEnabled(false);
 
         vegetableButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +159,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+        int space = 25;
+        vegetableRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
@@ -165,6 +176,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                         .navigation();
             }
         }, getContext()));
+        fruitRecyclerView.setNestedScrollingEnabled(false);
 
         fruitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +187,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+        int space = 25;
+        fruitRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
@@ -190,6 +204,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                         .navigation();
             }
         }, getContext()));
+        wildFruitRecyclerView.setNestedScrollingEnabled(false);
 
         wildFruitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,6 +215,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+        int space = 25;
+        wildFruitRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
@@ -215,6 +232,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                         .navigation();
             }
         }, getContext()));
+        seedRecyclerView.setNestedScrollingEnabled(false);
 
         seedButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,6 +243,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+        int space = 25;
+        seedRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
@@ -240,6 +260,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                         .navigation();
             }
         }, getContext()));
+        medicinalRecyclerView.setNestedScrollingEnabled(false);
 
         medicinalButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,6 +271,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+        int space = 25;
+        medicinalRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override

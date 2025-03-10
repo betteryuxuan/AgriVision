@@ -41,6 +41,10 @@
             android:exported="true" >
         </activity>
         <activity
+            android:name="com.example.module.classificationview.view.CategoryDetailsActivity"
+            android:exported="true" >
+        </activity>
+        <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:exported="true"
             android:theme="@style/WhiteBackgroundTheme" >

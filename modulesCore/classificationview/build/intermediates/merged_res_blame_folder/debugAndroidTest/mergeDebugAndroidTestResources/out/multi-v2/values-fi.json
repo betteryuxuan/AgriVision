@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-38:/values-fi/values-fi.xml",
+            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-39:/values-fi/values-fi.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\ac2072a6565ffcbda827ae2d4bd49b92\\transformed\\jetified-exoplayer-ui-2.18.1\\res\\values-fi\\values-fi.xml",
@@ -90,6 +90,23 @@
                         "startOffsets": "4029,4125,4227,4325,4430,4535,4647,14112",
                         "endColumns": "95,101,97,104,104,111,115,100",
                         "endOffsets": "4120,4222,4320,4425,4530,4642,4758,14208"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\a0a6b715a16d1bd546d06c2a845f4335\\transformed\\jetified-ucrop-2.2.9-native\\res\\values-fi\\values-fi.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,178,243,293",
+                        "endColumns": "122,64,49,48",
+                        "endOffsets": "173,238,288,337"
+                    },
+                    "to": {
+                        "startLines": "185,186,187,188",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "14213,14336,14401,14451",
+                        "endColumns": "122,64,49,48",
+                        "endOffsets": "14331,14396,14446,14495"
                     }
                 }
             ]

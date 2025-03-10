@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="18dp"
+    android:padding="10dp"
     android:paddingTop="10dp">
     <androidx.cardview.widget.CardView
         android:id="@+id/card_humidity"

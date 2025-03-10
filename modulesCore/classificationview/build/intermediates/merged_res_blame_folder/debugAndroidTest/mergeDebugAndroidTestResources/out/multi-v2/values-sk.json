@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-38:/values-sk/values-sk.xml",
+            "outputFile": "com.example.module.classificationview.test.classificationview-mergeDebugAndroidTestResources-39:/values-sk/values-sk.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\c62aad7d7eb243486b073810116eebfa\\transformed\\core-1.13.0\\res\\values-sk\\values-sk.xml",
@@ -35,6 +35,23 @@
                         "startOffsets": "7644,7721,7783,7847,7918,7995,8069,8153,8235",
                         "endColumns": "76,61,63,70,76,73,83,81,79",
                         "endOffsets": "7716,7778,7842,7913,7990,8064,8148,8230,8310"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Lenovo\\.gradle\\caches\\8.9\\transforms\\a0a6b715a16d1bd546d06c2a845f4335\\transformed\\jetified-ucrop-2.2.9-native\\res\\values-sk\\values-sk.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,125,182",
+                        "endColumns": "69,56,50",
+                        "endOffsets": "120,177,228"
+                    },
+                    "to": {
+                        "startLines": "191,192,193",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "14812,14882,14939",
+                        "endColumns": "69,56,50",
+                        "endOffsets": "14877,14934,14985"
                     }
                 },
                 {

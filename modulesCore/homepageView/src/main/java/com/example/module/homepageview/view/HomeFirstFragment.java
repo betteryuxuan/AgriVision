@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.homepageview.R;
 import com.example.module.homepageview.contract.IHomeFirstContract;
 import com.example.module.homepageview.custom.BookPageTransformer;
+import com.example.module.libBase.bean.SpaceItemDecoration;
 import com.example.module.homepageview.model.HomeFirstModel;
 import com.example.module.homepageview.model.classes.News;
 import com.example.module.homepageview.model.classes.Proverb;
@@ -53,12 +55,13 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
 
     private final String TAG = "HomeFirstFragment";
 
+    private NestedScrollView scrollView;
     private Banner banner;
     private IHomeFirstContract.IHomeFirstPresenter mPresenter;
     private RecyclerView recommendRecyclerView, cropRecyclerView, newsRecyclerView;
     private ViewPager2 viewPager2;
     private DragContainer dragContainer;
-    private TextView nameTextView;
+    private TextView nameTextView, text3;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,7 +83,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             // 如果 mPresenter 为 null，初始化它
             mPresenter = new HomeFirstPresenter(this, new HomeFirstModel(getContext()), getContext());
         }
-
+        scrollView = view.findViewById(R.id.ncv_homefirst_layout);
         nameTextView = view.findViewById(R.id.tv_homefirst_name_text);
         banner = view.findViewById(R.id.banner_homepage_top);
         recommendRecyclerView = view.findViewById(R.id.rv_homefirst_recommend);
@@ -88,6 +91,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         newsRecyclerView = view.findViewById(R.id.rv_homepage_news);
         viewPager2 = view.findViewById(R.id.vp_homepage_recommend);
         dragContainer = (DragContainer) view.findViewById(R.id.dc_home_drag);
+        text3 = view.findViewById(R.id.homepage_text3);
         initView();
         initListener();
     }
@@ -148,9 +152,30 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
 
     @Override
     public void setupRecommendRecyclerView(List<Recommend> list) {
-        recommendRecyclerView.setAdapter(new RecommendRecyclerViewAdapter(list, getContext()));
+        recommendRecyclerView.setAdapter(new RecommendRecyclerViewAdapter(list, getContext(), new RecommendRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                switch (position) {
+                    case 0:
+                        EventBus.getDefault().post(new SwitchPageEvent(1));
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        scrollView.smoothScrollTo(0, text3.getTop());
+                        break;
+                    case 3:
+                        EventBus.getDefault().post(new SwitchPageEvent(2));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recommendRecyclerView.setLayoutManager(linearLayoutManager);
+        int space = 20;
+        recommendRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
@@ -166,6 +191,8 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             }
         }, getContext()));
         cropRecyclerView.setLayoutManager(linearLayoutManager);
+        int space = 35;
+        cropRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
 
     @Override
