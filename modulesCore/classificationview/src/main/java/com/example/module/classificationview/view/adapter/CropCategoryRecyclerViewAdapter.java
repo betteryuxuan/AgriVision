@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -54,7 +54,7 @@ public class CropCategoryRecyclerViewAdapter extends RecyclerView.Adapter<CropCa
         Glide.with(context)
                 .load(crop.getIcon())
                 .into(holder.imageView); // 将图片加载到 ImageView
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickListener.onItemClick(crop);
@@ -70,13 +70,13 @@ public class CropCategoryRecyclerViewAdapter extends RecyclerView.Adapter<CropCa
     public class CropFoodViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textView;
-        private CardView cardView;
+        private ConstraintLayout layout;
         private ImageView imageView;
         public CropFoodViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.tv_homepage_cropname);
-            imageView = itemView.findViewById(R.id.iv_homepage_cropimage);
-            cardView = itemView.findViewById(R.id.cv_homepage_cropcard);
+            textView = itemView.findViewById(R.id.tv_classification_cropname);
+            imageView = itemView.findViewById(R.id.iv_classification_cropimage);
+            layout = itemView.findViewById(R.id.cl_classification_cropcard);
         }
     }
 }

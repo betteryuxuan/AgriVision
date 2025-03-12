@@ -1,5 +1,7 @@
 package com.example.module.classificationview.presenter;
 
+import android.util.Log;
+
 import com.example.module.classificationview.contract.IClassificationContract;
 import com.example.module.libBase.bean.Crop;
 
@@ -9,12 +11,21 @@ import java.util.List;
 
 public class ClassificationPresenter implements IClassificationContract.IClassificationPresenter {
 
+    private static final String TAG = "ClassificationPresenter";
+
     private IClassificationContract.IClassificationView mView;
     private IClassificationContract.IClassificationModel mModel;
 
     public ClassificationPresenter(IClassificationContract.IClassificationView mView, IClassificationContract.IClassificationModel mModel) {
         this.mView = mView;
         this.mModel = mModel;
+    }
+
+    @Override
+    public void loadBannerDatas() {
+        if (mView != null) {
+            mView.setupBanner(mModel.getBannerDatas());
+        }
     }
 
     @Override

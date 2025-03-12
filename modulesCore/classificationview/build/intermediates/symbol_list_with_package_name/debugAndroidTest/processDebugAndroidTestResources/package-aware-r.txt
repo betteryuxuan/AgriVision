@@ -3204,6 +3204,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable card_bac_paper
 drawable classification_top_color_selector
 drawable design_fab_background
 drawable design_ic_visibility
@@ -3386,6 +3387,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable ripple_cropcard
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -3410,6 +3412,7 @@ drawable ucrop_vector_loader_animated
 drawable ucrop_wrapper_controls_shape
 drawable xiaomai_img
 font roboto_medium_numbers
+font ziti3
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -3536,7 +3539,7 @@ id chronometer
 id circle_center
 id cl_category_cropcard
 id cl_category_layout
-id cl_homepage_cropcard
+id cl_classification_cropcard
 id classification_main
 id clear_text
 id clip_horizontal
@@ -3563,7 +3566,6 @@ id currentState
 id custom
 id customPanel
 id cut
-id cv_homepage_cropcard
 id date_picker_actions
 id decelerate
 id decelerateAndComplete
@@ -3725,8 +3727,8 @@ id iv_category_oil
 id iv_category_seed
 id iv_category_vegetable
 id iv_category_wild_fruit
+id iv_classification_cropimage
 id iv_classification_top
-id iv_homepage_cropimage
 id jumpToEnd
 id jumpToStart
 id labeled
@@ -3807,12 +3809,6 @@ id mtrl_picker_text_input_range_start
 id mtrl_picker_title_text
 id mtrl_view_tag_bottom_padding
 id multiply
-id myView2
-id myView3
-id myView4
-id myView5
-id myView6
-id myView7
 id navigation_bar_item_active_indicator_view
 id navigation_bar_item_icon_container
 id navigation_bar_item_icon_view
@@ -4022,7 +4018,7 @@ id tv_category_seed
 id tv_category_title
 id tv_category_vegetable
 id tv_category_wild_fruit
-id tv_homepage_cropname
+id tv_classification_cropname
 id ucrop
 id ucrop_frame
 id ucrop_photobox

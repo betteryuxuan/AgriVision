@@ -23,6 +23,9 @@ import com.example.module.classificationview.presenter.ClassificationPresenter;
 import com.example.module.classificationview.view.adapter.CropCategoryRecyclerViewAdapter;
 import com.example.module.libBase.bean.Crop;
 import com.example.module.libBase.bean.SpaceItemDecoration;
+import com.youth.banner.Banner;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.holder.BannerImageHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
     private IClassificationContract.IClassificationPresenter presenter;
     private RecyclerView foodRecyclerView, oilRecyclerView, vegetableRecyclerView, fruitRecyclerView, wildFruitRecyclerView, seedRecyclerView, medicinalRecyclerView;
     private ImageView foodButton, oilButton, vegetableButton, fruitButton, wildFruitButton, seedButton, medicinalButton;
+    private Banner banner;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class ClassificationFragment extends Fragment implements IClassificationC
         if (presenter == null) {
             presenter = new ClassificationPresenter(this, new ClassificationModel(getContext()));
         }
+
+        banner = view.findViewById(R.id.banner_classification_top);
 
         foodRecyclerView = view.findViewById(R.id.rv_category_food);
         oilRecyclerView = view.findViewById(R.id.rv_category_oil);
@@ -71,12 +77,24 @@ public class ClassificationFragment extends Fragment implements IClassificationC
     public void initView() {
 
         presenter.loadCategoryDatas();
+        presenter.loadBannerDatas();
 
     }
 
     @Override
     public void initListener() {
 
+    }
+
+    @Override
+    public void setupBanner(List<Integer> list) {
+        banner.setAdapter(new BannerImageAdapter<Integer>(list) {
+                    @Override
+                    public void onBindView(BannerImageHolder holder, Integer data, int position, int size) {
+                        holder.imageView.setImageResource(data);
+                    }
+                }).addBannerLifecycleObserver(this)
+                .setLoopTime(3000);
     }
 
     @Override

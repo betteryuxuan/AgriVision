@@ -24,19 +24,21 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.homepageview.R;
 import com.example.module.homepageview.contract.IHomeFirstContract;
 import com.example.module.homepageview.custom.BookPageTransformer;
-import com.example.module.libBase.bean.SpaceItemDecoration;
 import com.example.module.homepageview.model.HomeFirstModel;
 import com.example.module.homepageview.model.classes.News;
+import com.example.module.homepageview.model.classes.Poetry;
 import com.example.module.homepageview.model.classes.Proverb;
 import com.example.module.homepageview.model.classes.Recommend;
 import com.example.module.homepageview.presenter.HomeFirstPresenter;
 import com.example.module.homepageview.view.adapter.CropRecyclerViewAdapter;
 import com.example.module.homepageview.view.adapter.NewsRecyclerViewAdapter;
+import com.example.module.homepageview.view.adapter.PoetryRecyclerViewAdapter;
 import com.example.module.homepageview.view.adapter.ProverbViewPagerAdapter;
 import com.example.module.homepageview.view.adapter.RecommendRecyclerViewAdapter;
 import com.example.module.libBase.SPUtils;
 import com.example.module.libBase.TimeUtils;
 import com.example.module.libBase.bean.Crop;
+import com.example.module.libBase.bean.SpaceItemDecoration;
 import com.example.module.libBase.bean.SwitchPageEvent;
 import com.fangxu.library.DragContainer;
 import com.fangxu.library.DragListener;
@@ -58,10 +60,10 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     private NestedScrollView scrollView;
     private Banner banner;
     private IHomeFirstContract.IHomeFirstPresenter mPresenter;
-    private RecyclerView recommendRecyclerView, cropRecyclerView, newsRecyclerView;
+    private RecyclerView recommendRecyclerView, cropRecyclerView, newsRecyclerView, poetryRecyclerView;
     private ViewPager2 viewPager2;
     private DragContainer dragContainer;
-    private TextView nameTextView, text3;
+    private TextView nameTextView, text3, poetryMore;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,9 +91,12 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         recommendRecyclerView = view.findViewById(R.id.rv_homefirst_recommend);
         cropRecyclerView = view.findViewById(R.id.rv_homepage_crop);
         newsRecyclerView = view.findViewById(R.id.rv_homepage_news);
+        poetryRecyclerView = view.findViewById(R.id.rv_homefirst_poetry);
         viewPager2 = view.findViewById(R.id.vp_homepage_recommend);
         dragContainer = (DragContainer) view.findViewById(R.id.dc_home_drag);
         text3 = view.findViewById(R.id.homepage_text3);
+        poetryMore = view.findViewById(R.id.tv_homefirst_poetry_more);
+
         initView();
         initListener();
     }
@@ -112,6 +117,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         mPresenter.loadCropRecyclerViewDatas();
         mPresenter.loadNewsRecyclerViewDatas();
         mPresenter.loadProverbViewPagerDatas();
+        mPresenter.loadPoetryRecyclerViewDatas();
     }
 
     @Override
@@ -122,6 +128,13 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             public void onDragEvent() {
                 EventBus.getDefault().post(new SwitchPageEvent(1));
                 Log.d(TAG, "onDragEvent: ");
+            }
+        });
+
+        poetryMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/HomePageView/PoetryActivity").navigation(getContext());
             }
         });
     }
@@ -216,6 +229,17 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         ProverbViewPagerAdapter adapter = new ProverbViewPagerAdapter(getActivity(), list);
         viewPager2.setAdapter(adapter);
         viewPager2.setPageTransformer(new BookPageTransformer());
+    }
+
+    @Override
+    public void setupPoetryRecyclerView(List<Poetry.Item> list) {
+        poetryRecyclerView.setAdapter(new PoetryRecyclerViewAdapter(list, new PoetryRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Poetry poetry) {
+
+            }
+        }, getContext()));
+        poetryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override

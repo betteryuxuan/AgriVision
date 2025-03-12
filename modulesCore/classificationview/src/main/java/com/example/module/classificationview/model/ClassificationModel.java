@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.module.classificationview.R;
 import com.example.module.classificationview.contract.IClassificationContract;
 import com.example.module.libBase.TokenManager;
 import com.example.module.libBase.bean.Crop;
@@ -40,6 +41,15 @@ public class ClassificationModel implements IClassificationContract.IClassificat
     private List<Crop.DataItem> wildFruitCrops = new ArrayList<>();
     private List<Crop.DataItem> seedCrops = new ArrayList<>();
     private List<Crop.DataItem> medicinalCrops = new ArrayList<>();
+
+    @Override
+    public List<Integer> getBannerDatas() {
+        List<Integer> list = new ArrayList<>();
+        list.add(R.drawable.xiaomai_img);
+        list.add(R.drawable.shuidao_img);
+        return list;
+    }
+
     @Override
     public void loadCategoryDatas(CropsCallback callback) {
         OkHttpClient okHttpClient = new OkHttpClient();

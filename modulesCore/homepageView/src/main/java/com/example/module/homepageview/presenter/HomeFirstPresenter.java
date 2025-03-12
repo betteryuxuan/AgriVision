@@ -3,10 +3,11 @@ package com.example.module.homepageview.presenter;
 import android.content.Context;
 
 import com.example.module.homepageview.contract.IHomeFirstContract;
+import com.example.module.homepageview.model.classes.News;
+import com.example.module.homepageview.model.classes.Poetry;
+import com.example.module.homepageview.model.classes.Proverb;
 import com.example.module.homepageview.model.classes.Recommend;
 import com.example.module.libBase.bean.Crop;
-import com.example.module.homepageview.model.classes.News;
-import com.example.module.homepageview.model.classes.Proverb;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,13 +27,17 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
     @Override
     public void loadBannerDatas() {
         List<Integer> bannerDatas = homeFirstModel.getBannerDatas();
-        homeFirstView.setupBanner(bannerDatas);
+        if (homeFirstView != null && bannerDatas != null) {
+            homeFirstView.setupBanner(bannerDatas);
+        }
     }
 
     @Override
     public void loadRecommendRecyclerViewDatas() {
         List<Recommend> recommendDatas = homeFirstModel.getRecommendRecyclerViewDatas();
-        homeFirstView.setupRecommendRecyclerView(recommendDatas);
+        if (homeFirstView != null && recommendDatas != null) {
+            homeFirstView.setupRecommendRecyclerView(recommendDatas);
+        }
     }
 
     @Override
@@ -83,6 +88,14 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
 
             }
         });
+    }
+
+    @Override
+    public void loadPoetryRecyclerViewDatas() {
+        List<Poetry.Item> poetryDatas = homeFirstModel.getPoetryRecyclerViewDatas();
+        if (homeFirstView != null && poetryDatas != null) {
+            homeFirstView.setupPoetryRecyclerView(poetryDatas);
+        }
     }
 }
 

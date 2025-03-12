@@ -4,7 +4,7 @@
     android:id="@+id/cl_homepage_newsList"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:background="@color/white"
+    android:background="@drawable/card_bac_paper"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -18,8 +18,8 @@
         android:maxLines="2"
         android:text="标题"
         android:textColor="#333333"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
+        android:fontFamily="@font/ziti1"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -13,6 +13,8 @@ public class IClassificationContract {
         void initView();
         void initListener();
 
+        void setupBanner(List<Integer> list);
+
         void setupFoodCatergoryRecyclerView(List<Crop.CropDetail> list);
 
         void setupOilCatergoryRecyclerView(List<Crop.CropDetail> list);
@@ -30,12 +32,14 @@ public class IClassificationContract {
 
     public interface IClassificationPresenter{
 
+        void loadBannerDatas();
         void loadCategoryDatas();
 
     }
 
     public interface IClassificationModel {
 
+        List<Integer> getBannerDatas();
         void loadCategoryDatas(CropsCallback callback);
 
 
