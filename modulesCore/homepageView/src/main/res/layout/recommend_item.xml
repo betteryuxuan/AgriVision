@@ -13,6 +13,7 @@
         android:layout_marginBottom="2dp"
         android:background="@drawable/ripple_cropcard"
         app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
         app:cardBackgroundColor="#00000000">
         <ImageView
             android:id="@+id/iv_recommend_image"

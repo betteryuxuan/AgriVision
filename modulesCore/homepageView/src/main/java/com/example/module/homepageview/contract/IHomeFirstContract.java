@@ -20,7 +20,6 @@ public interface IHomeFirstContract {
 
         void initAinm();
 
-        void setupBanner(List<Integer> list);
 
         void setupRecommendRecyclerView(List<Recommend> list);
 
@@ -35,7 +34,6 @@ public interface IHomeFirstContract {
 
     interface IHomeFirstPresenter {
 
-        void loadBannerDatas();
 
         void loadRecommendRecyclerViewDatas();
 
@@ -49,8 +47,6 @@ public interface IHomeFirstContract {
     }
 
     interface IHomeFirstModel<T> {
-
-        List<Integer> getBannerDatas();
 
         List<Recommend> getRecommendRecyclerViewDatas();
 

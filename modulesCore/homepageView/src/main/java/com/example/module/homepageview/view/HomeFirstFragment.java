@@ -42,11 +42,6 @@ import com.example.module.libBase.bean.SpaceItemDecoration;
 import com.example.module.libBase.bean.SwitchPageEvent;
 import com.fangxu.library.DragContainer;
 import com.fangxu.library.DragListener;
-import com.youth.banner.Banner;
-import com.youth.banner.adapter.BannerImageAdapter;
-import com.youth.banner.config.IndicatorConfig;
-import com.youth.banner.holder.BannerImageHolder;
-import com.youth.banner.indicator.CircleIndicator;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -58,12 +53,11 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     private final String TAG = "HomeFirstFragment";
 
     private NestedScrollView scrollView;
-    private Banner banner;
     private IHomeFirstContract.IHomeFirstPresenter mPresenter;
     private RecyclerView recommendRecyclerView, cropRecyclerView, newsRecyclerView, poetryRecyclerView;
     private ViewPager2 viewPager2;
     private DragContainer dragContainer;
-    private TextView nameTextView, text3, poetryMore;
+    private TextView nameTextView, text3, poetryMore, cropMore;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +81,6 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         }
         scrollView = view.findViewById(R.id.ncv_homefirst_layout);
         nameTextView = view.findViewById(R.id.tv_homefirst_name_text);
-        banner = view.findViewById(R.id.banner_homepage_top);
         recommendRecyclerView = view.findViewById(R.id.rv_homefirst_recommend);
         cropRecyclerView = view.findViewById(R.id.rv_homepage_crop);
         newsRecyclerView = view.findViewById(R.id.rv_homepage_news);
@@ -96,6 +89,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         dragContainer = (DragContainer) view.findViewById(R.id.dc_home_drag);
         text3 = view.findViewById(R.id.homepage_text3);
         poetryMore = view.findViewById(R.id.tv_homefirst_poetry_more);
+        cropMore = view.findViewById(R.id.tv_homefirst_crop_more);
 
         initView();
         initListener();
@@ -112,7 +106,6 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             nameTextView.setText(time + "好");
         }
 
-        mPresenter.loadBannerDatas();
         mPresenter.loadRecommendRecyclerViewDatas();
         mPresenter.loadCropRecyclerViewDatas();
         mPresenter.loadNewsRecyclerViewDatas();
@@ -149,21 +142,6 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     }
 
     @Override
-    public void setupBanner(List<Integer> list) {
-        banner.setAdapter(new BannerImageAdapter<Integer>(list) {
-            @Override
-            public void onBindView(BannerImageHolder holder, Integer data, int position, int size) {
-                holder.imageView.setImageResource(data);
-            }
-        }).setIndicator(new CircleIndicator(getContext()))
-                .addBannerLifecycleObserver(this)
-                .setIndicatorSelectedColor(getResources().getColor(R.color.white))
-                .setIndicatorNormalColor(getResources().getColor(R.color.white_shallow))
-                .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
-                .setLoopTime(3000);
-    }
-
-    @Override
     public void setupRecommendRecyclerView(List<Recommend> list) {
         recommendRecyclerView.setAdapter(new RecommendRecyclerViewAdapter(list, getContext(), new RecommendRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -173,6 +151,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
                         EventBus.getDefault().post(new SwitchPageEvent(1));
                         break;
                     case 1:
+                        ARouter.getInstance().build("/HomePageView/PoetryActivity").navigation(getContext());
                         break;
                     case 2:
                         scrollView.smoothScrollTo(0, text3.getTop());
@@ -206,6 +185,27 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         cropRecyclerView.setLayoutManager(linearLayoutManager);
         int space = 35;
         cropRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
+        cropRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                // 获取布局管理器
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                // 获取最后一个可见项的位置
+                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+
+                // 获取总数据的数量
+                int totalItemCount = layoutManager.getItemCount();
+
+                // 判断是否滚动到了最后一个位置
+                if (lastVisibleItemPosition == totalItemCount - 1) {
+                    cropMore.setVisibility(View.VISIBLE);
+                } else {
+                    cropMore.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -235,8 +235,10 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     public void setupPoetryRecyclerView(List<Poetry.Item> list) {
         poetryRecyclerView.setAdapter(new PoetryRecyclerViewAdapter(list, new PoetryRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Poetry poetry) {
-
+            public void onItemClick(Poetry.Item poetry) {
+                ARouter.getInstance().build("/HomePageView/PoetryDetailsActivity")
+                        .withParcelable("item", poetry)
+                        .navigation(getContext());
             }
         }, getContext()));
         poetryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

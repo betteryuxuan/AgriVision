@@ -38,8 +38,7 @@
             android:id="@+id/iv_homepage_newsimage"
             android:layout_width="140dp"
             android:layout_height="90dp"
-            android:scaleType="center"
-            android:src="@drawable/news1_pic" />
+            android:scaleType="center" />
     </androidx.cardview.widget.CardView>
 
 

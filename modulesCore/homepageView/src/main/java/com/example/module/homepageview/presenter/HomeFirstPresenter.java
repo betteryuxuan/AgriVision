@@ -25,14 +25,6 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
     }
 
     @Override
-    public void loadBannerDatas() {
-        List<Integer> bannerDatas = homeFirstModel.getBannerDatas();
-        if (homeFirstView != null && bannerDatas != null) {
-            homeFirstView.setupBanner(bannerDatas);
-        }
-    }
-
-    @Override
     public void loadRecommendRecyclerViewDatas() {
         List<Recommend> recommendDatas = homeFirstModel.getRecommendRecyclerViewDatas();
         if (homeFirstView != null && recommendDatas != null) {

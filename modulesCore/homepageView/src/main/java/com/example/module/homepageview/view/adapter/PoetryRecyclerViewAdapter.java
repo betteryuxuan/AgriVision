@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,10 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
     private List<Poetry.Item> poetryList;
     private OnItemClickListener clickListener;
     private Context mContext;
+    private LinearLayout layout;
 
     public interface OnItemClickListener {
-        void onItemClick(Poetry poetry);
+        void onItemClick(Poetry.Item poetry);
     }
 
     public PoetryRecyclerViewAdapter(List<Poetry.Item> poetryList, OnItemClickListener clickListener, Context mContext) {
@@ -43,6 +45,14 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
         Poetry.Item poetry = poetryList.get(position);
         holder.title.setText(poetry.getTitle());
         holder.content.setText(poetry.getText());
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null) {
+                    clickListener.onItemClick(poetry);
+                }
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -59,6 +69,7 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
 
             content = itemView.findViewById(R.id.tv_poetry_content);
             title = itemView.findViewById(R.id.tv_poetry_title);
+            layout = itemView.findViewById(R.id.ll_poetry_layout);
         }
     }
 }
