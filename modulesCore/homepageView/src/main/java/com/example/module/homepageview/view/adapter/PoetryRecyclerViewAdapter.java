@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.module.homepageview.R;
 import com.example.module.homepageview.model.classes.Poetry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecyclerViewAdapter.PoetryViewHolder> {
@@ -20,7 +21,7 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
     private List<Poetry.Item> poetryList;
     private OnItemClickListener clickListener;
     private Context mContext;
-    private LinearLayout layout;
+    private List<Integer> drawableList = new ArrayList<>();
 
     public interface OnItemClickListener {
         void onItemClick(Poetry.Item poetry);
@@ -30,6 +31,9 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
         this.poetryList = poetryList;
         this.clickListener = clickListener;
         this.mContext = mContext;
+        drawableList.add(R.drawable.card_bac3);
+        drawableList.add(R.drawable.card_bac1);
+        drawableList.add(R.drawable.card_bac4);
     }
 
     @NonNull
@@ -45,7 +49,7 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
         Poetry.Item poetry = poetryList.get(position);
         holder.title.setText(poetry.getTitle());
         holder.content.setText(poetry.getText());
-        layout.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (clickListener != null) {
@@ -53,6 +57,8 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
                 }
             }
         });
+        holder.layout.setBackgroundResource(drawableList.get(position % drawableList.size()));
+
     }
     @Override
     public int getItemCount() {
@@ -63,6 +69,7 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
 
         private TextView title;
         private TextView content;
+        private LinearLayout layout;
 
         public PoetryViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,6 +60,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     private ViewPager2 viewPager2;
     private DragContainer dragContainer;
     private TextView nameTextView, text3, poetryMore, cropMore;
+    private LinearLayout layout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         text3 = view.findViewById(R.id.homepage_text3);
         poetryMore = view.findViewById(R.id.tv_homefirst_poetry_more);
         cropMore = view.findViewById(R.id.tv_homefirst_crop_more);
+        layout = view.findViewById(R.id.ll_homepage_search);
 
         initView();
         initListener();
@@ -128,6 +132,13 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             @Override
             public void onClick(View v) {
                 ARouter.getInstance().build("/HomePageView/PoetryActivity").navigation(getContext());
+            }
+        });
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/HomePageView/SearchActivity").navigation(getContext());
             }
         });
     }
@@ -237,6 +248,9 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             @Override
             public void onItemClick(Poetry.Item poetry) {
                 ARouter.getInstance().build("/HomePageView/PoetryDetailsActivity")
+                        .withOptionsCompat(ActivityOptionsCompat.makeScaleUpAnimation(
+                                poetryRecyclerView, poetryRecyclerView.getWidth() / 2, poetryRecyclerView.getHeight() / 2, 0, 0
+                        ))
                         .withParcelable("item", poetry)
                         .navigation(getContext());
             }

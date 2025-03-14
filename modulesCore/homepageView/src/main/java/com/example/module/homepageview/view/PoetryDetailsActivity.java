@@ -3,13 +3,16 @@ package com.example.module.homepageview.view;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,8 +26,11 @@ import com.example.module.homepageview.model.classes.Poetry;
 @Route(path = "/HomePageView/PoetryDetailsActivity")
 public class PoetryDetailsActivity extends AppCompatActivity {
 
+    private static final String TAG = "PoetryDetailsActivity";
+
     private TextView cropIntroduction, cropTranslation, expandText1, expandText2;
-    private ImageView expandImage1, expandImage2, back;
+    private ImageView expandImage1, expandImage2;
+    private ImageButton back;
     private LinearLayout expandButton1, expandButton2;
     private TextView title, author, content, translation, introduce, appreciation, crop;
 
@@ -68,6 +74,7 @@ public class PoetryDetailsActivity extends AppCompatActivity {
 
         setGradientEffect(cropIntroduction, true);
         setGradientEffect(cropTranslation, false);
+
         initView();
         initListener();
     }
@@ -88,7 +95,16 @@ public class PoetryDetailsActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        back.setOnClickListener(v -> finish());
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(
+                        back, back.getWidth() / 2, back.getHeight() / 2, 0, 0
+                );
+                finish();
+                overridePendingTransition(0, android.R.anim.fade_out);
+            }
+        });
     }
 
     private void toggleText(TextView textView, TextView expandText, ImageView expandImage, boolean isExpanded, boolean isFirstText) {
@@ -120,5 +136,30 @@ public class PoetryDetailsActivity extends AppCompatActivity {
     private void removeGradientEffect(TextView textView) {
         // 移除渐变效果
         textView.getPaint().setShader(null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(
+                back, back.getWidth() / 2, back.getHeight() / 2, 0, 0
+        );
+        finish();
+        overridePendingTransition(0, android.R.anim.fade_out);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // 使用 makeScaleDownAnimation 创建收回动画
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(
+                back, back.getWidth() / 2, back.getHeight() / 2, 0, 0
+        );
+
+        // 调用 finish() 结束当前活动
+        finish();
+
+        // 设置退出时的动画效果，这里可以使用 fade_out 或自定义动画
+        overridePendingTransition(0, android.R.anim.fade_out);
     }
 }

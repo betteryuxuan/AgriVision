@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_gravity="center"
-        android:background="@drawable/card_bac1"
-        android:padding="25dp"
+        android:background="@drawable/ripple_cropcard"
+        android:padding="24dp"
         android:orientation="vertical">
 
         <TextView
