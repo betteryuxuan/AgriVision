@@ -3,24 +3,24 @@
 3    package="com.example.module.classificationview.test" >
 4
 5    <uses-sdk
-5-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:5:5-74
+5-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:5:5-74
 6        android:minSdkVersion="28"
-6-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:5:15-41
+6-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:5:15-41
 7        android:targetSdkVersion="34" />
-7-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:5:42-71
+7-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:5:42-71
 8
 9    <instrumentation
-9-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:11:5-15:92
+9-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:11:5-15:92
 10        android:name="androidx.test.runner.AndroidJUnitRunner"
-10-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:11:22-76
+10-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:11:22-76
 11        android:functionalTest="false"
-11-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:14:22-52
+11-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:14:22-52
 12        android:handleProfiling="false"
-12-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:13:22-53
+12-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:13:22-53
 13        android:label="Tests for com.example.module.classificationview.test"
-13-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:15:22-90
+13-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:15:22-90
 14        android:targetPackage="com.example.module.classificationview.test" />
-14-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:12:22-88
+14-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:12:22-88
 15
 16    <queries>
 16-->[androidx.test:runner:1.6.1] C:\Users\Lenovo\.gradle\caches\8.9\transforms\b12d14e2325611b4e9e992a4330d880a\transformed\runner-1.6.1\AndroidManifest.xml:24:5-28:15
@@ -54,7 +54,7 @@
 29-->[androidx.core:core:1.13.0] C:\Users\Lenovo\.gradle\caches\8.9\transforms\c62aad7d7eb243486b073810116eebfa\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
 30
 31    <application
-31-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:7:5-9:19
+31-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:7:5-9:19
 32        android:allowBackup="true"
 32-->[com.github.uin3566:DragFooterView:v1.0.2] C:\Users\Lenovo\.gradle\caches\8.9\transforms\4bfdf83674a42660f0fa559187b305fe\transformed\jetified-DragFooterView-v1.0.2\AndroidManifest.xml:12:9-35
 33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -64,8 +64,8 @@
 36        android:label="@string/app_name" >
 36-->[com.github.uin3566:DragFooterView:v1.0.2] C:\Users\Lenovo\.gradle\caches\8.9\transforms\4bfdf83674a42660f0fa559187b305fe\transformed\jetified-DragFooterView-v1.0.2\AndroidManifest.xml:13:9-41
 37        <uses-library android:name="android.test.runner" />
-37-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:8:9-60
-37-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest15493009046764749516.xml:8:23-57
+37-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:8:9-60
+37-->F:\AgriVison\modulesCore\classificationview\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1724435687590896141.xml:8:23-57
 38
 39        <activity
 39-->[:modulesCore:classificationview] F:\AgriVison\modulesCore\classificationview\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-11:20

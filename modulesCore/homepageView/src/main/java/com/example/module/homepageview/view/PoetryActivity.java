@@ -1,6 +1,7 @@
 package com.example.module.homepageview.view;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class PoetryActivity extends AppCompatActivity implements IPoetryContract
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         if (mPresenter == null) {
             mPresenter = new PoetryPresenter(this, new PoetryModel(this));

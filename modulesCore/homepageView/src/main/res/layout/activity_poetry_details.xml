@@ -4,7 +4,8 @@
     android:id="@+id/poetry_details_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow">
+    android:background="@color/yellow"
+    android:fitsSystemWindows="true">
 
 
 
@@ -27,6 +28,7 @@
                 android:fontFamily="@font/ziti6"
                 android:text="种豆南山下"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +42,7 @@
                 android:fontFamily="@font/ziti6"
                 android:text="陶渊明（东晋）"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,12 +56,13 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="15dp"
                 android:fontFamily="@font/ziti6"
+                android:gravity="center"
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="5dp"
                 android:text="种豆南山下，草盛豆苗稀。\n晨兴理荒秽，带月荷锄归。\n道狭草木长，夕露沾我衣。\n衣沾不足惜，但使愿无违。"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="22sp"
-                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_poetrydetails_author" />
@@ -105,6 +109,7 @@
                 android:fontFamily="@font/ziti6"
                 android:text="种豆南山下，草盛豆苗稀。"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -123,6 +128,7 @@
                 android:maxLines="4"
                 android:text="豆：指的是大豆（学名：Glycine max），是豆科大豆属的一年生草本植物，原产于中国，已有数千年的栽培历史。它是全球重要的粮食作物之一，广泛用于食品加工、油料提取和饲料生产。大豆富含蛋白质、油脂和多种营养素，尤其是其高蛋白含量，使其成为重要的植物性蛋白来源。大豆的种子可以作为直接食用的食材，常见的加工食品有豆腐、豆浆、黄豆芽等。此外，大豆还用于提取大豆油和大豆蛋白，广泛应用于食品工业和其他领域。"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -201,6 +207,7 @@
                 android:maxLines="4"
                 android:text="我在南山下种豆，但杂草长得很旺盛，豆苗生长得很稀少。清晨我起床整理荒废的土地，带着月光回家。小路狭窄，草木繁茂，傍晚的露水沾湿了我的衣服。衣服湿了不在乎，只要我的心愿没有违背。"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -276,6 +283,7 @@
                 android:lineSpacingExtra="5dp"
                 android:text="这首诗反映了陶渊明归隐田园后的理想生活，表达了他对田园生活的喜爱与向往。"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
