@@ -10,6 +10,7 @@ import com.example.module.homepageview.model.classes.Recommend;
 import com.example.module.libBase.bean.Crop;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresenter {
@@ -55,7 +56,14 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
             @Override
             public void onNewsLoaded(List<News.Item> data) {
                 if (homeFirstView != null && data != null) {
-                    homeFirstView.setupNewsRecyclerView(data);
+
+                    List<News.Item> datas = new ArrayList<>();
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    homeFirstView.setupNewsRecyclerView(datas);
                 }
             }
             @Override

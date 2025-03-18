@@ -40,6 +40,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VideoShowFragment extends Fragment {
 
@@ -50,7 +52,7 @@ public class VideoShowFragment extends Fragment {
     private ExoPlayer exoPlayer;
 
     private ImageView like, collect, message;
-    private TextView likeCount, collectCount;
+    private TextView likeCount, collectCount, messageCount, commentCount;
 
     private ImageView pause;
     private GestureDetector gestureDetector;
@@ -135,6 +137,8 @@ public class VideoShowFragment extends Fragment {
         pause = view.findViewById(R.id.iv_video_pause);
         likeCount = view.findViewById(R.id.tv_video_like_count);
         collectCount = view.findViewById(R.id.tv_video_collect_count);
+        messageCount = view.findViewById(R.id.tv_video_message_count);
+        commentCount = view.findViewById(R.id.tv_video_comment_count);
 
         playerView = view.findViewById(R.id.pv_video_show);
         exoPlayer = new ExoPlayer.Builder(getContext()).build();
@@ -220,6 +224,19 @@ public class VideoShowFragment extends Fragment {
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();
                         }
+                        Pattern pattern = Pattern.compile("\\d+"); // 匹配数字
+                        Matcher matcher = pattern.matcher(commentCount.getText().toString());
+
+                        if (matcher.find()) { // 先检查是否匹配成功
+                            int count = Integer.parseInt(matcher.group()); // 转换成整数
+                            commentCount.setText(String.valueOf(count + 1) + "条评论"); // 递增后再设置
+                            messageCount.setText(String.valueOf(count + 1));
+                        } else {
+                            commentCount.setText("1" + "条评论"); // 如果没有数字，则默认从1开始
+                            messageCount.setText("1");
+                        }
+                        commentRecyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+
                     }
                 });
             }
@@ -235,6 +252,7 @@ public class VideoShowFragment extends Fragment {
                 }
             }
         });
+
     }
 
     private void toggleLike() {

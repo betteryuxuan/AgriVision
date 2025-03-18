@@ -57,7 +57,7 @@ public class PoetryRecyclerViewAdapter extends RecyclerView.Adapter<PoetryRecycl
                 }
             }
         });
-        holder.layout.setBackgroundResource(drawableList.get(position % drawableList.size()));
+//        holder.layout.setBackgroundResource(drawableList.get(position % drawableList.size()));
 
     }
     @Override

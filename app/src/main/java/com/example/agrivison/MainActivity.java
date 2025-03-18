@@ -1,11 +1,12 @@
 package com.example.agrivison;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +18,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.libBase.bean.SwitchPageEvent;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isExit = false;
     private static final long TIME = 2000;
     private int pageIndex;  // 目标页面索引
+    private ImageView add;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         viewPager2 = findViewById(R.id.vp_main);
         bottomNavigationView = findViewById(R.id.bnv_main);
+        add = findViewById(R.id.iv_main_add);
 
         bottomNavigationView.setItemIconTintList(null);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+        bottomNavigationView.setOnLongClickListener(v -> true);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -96,20 +101,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewPager2.setOffscreenPageLimit(5);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(2); // 索引 2 表示第三个菜单项
+        menuItem.setEnabled(false);
+        menuItem.setIcon(android.R.color.transparent);
+        menuItem.setTitle("");
 
-        @SuppressLint("RestrictedApi")
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
-        for (int i = 0; i < menuView.getChildCount(); i++) {
-            View item = menuView.getChildAt(i);
-            item.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return true;
-                }
-            });
-        }
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
+            }
+        });
     }
 
     @Override

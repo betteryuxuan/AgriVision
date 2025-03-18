@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/card_bac_paper1"/>
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@color/mise2"/>
     </androidx.cardview.widget.CardView>
 
     <ImageView
@@ -35,12 +36,16 @@
         android:id="@+id/tv_homepage_cropname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
+        android:shadowColor="@color/gray"
+        android:letterSpacing="0.4"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
         android:text="草莓"
         android:textColor="@color/black"
-        android:letterSpacing="0.3"
+        android:textSize="18dp"
         android:textStyle="bold"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_homepage_cropimage" />

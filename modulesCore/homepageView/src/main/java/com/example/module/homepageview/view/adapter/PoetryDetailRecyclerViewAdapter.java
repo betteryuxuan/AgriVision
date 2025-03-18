@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.module.homepageview.R;
@@ -26,9 +28,9 @@ public class PoetryDetailRecyclerViewAdapter extends RecyclerView.Adapter<Poetry
         this.poetryList = poetryList;
         this.clickListener = clickListener;
         this.mContext = mContext;
-        drawableList.add(R.drawable.peotry_bac1);
-        drawableList.add(R.drawable.peotry_bac2);
-        drawableList.add(R.drawable.poetry_bac3);
+        drawableList.add(R.drawable.poetry_bac4);
+        drawableList.add(R.drawable.poetry_bac5);
+        drawableList.add(R.drawable.poetry_bac6);
     }
 
     @NonNull
@@ -41,6 +43,19 @@ public class PoetryDetailRecyclerViewAdapter extends RecyclerView.Adapter<Poetry
     @Override
     public void onBindViewHolder(@NonNull PoetryDetailRecyclerViewAdapter.PoetryDetailViewHolder holder, int position) {
         int drawable = drawableList.get(position % drawableList.size());
+        holder.constraintLayout.setBackgroundResource(drawable);
+        Poetry.Item poetry = poetryList.get(position);
+        holder.title.setText(poetry.getTitle());
+        holder.author.setText(poetry.getAuthor());
+        holder.content.setText(poetry.getText());
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null) {
+                    clickListener.onItemClick(poetry);
+                }
+            }
+        });
     }
 
     @Override
@@ -54,8 +69,15 @@ public class PoetryDetailRecyclerViewAdapter extends RecyclerView.Adapter<Poetry
 
 
     public class PoetryDetailViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView title, author, content;
+        private ConstraintLayout constraintLayout;
         public PoetryDetailViewHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.tv_poetry_detail_title);
+            author = itemView.findViewById(R.id.tv_poetry_detail_author);
+            content = itemView.findViewById(R.id.tv_poetry_detail_text);
+            constraintLayout = itemView.findViewById(R.id.cl_poetry_detail_layout);
         }
     }
 }
