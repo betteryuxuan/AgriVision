@@ -6,76 +6,6 @@
     android:background="@color/white">
 
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/green_4"
-        app:elevation="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_scrollFlags="scroll|enterAlways">
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            app:contentInsetStart="0dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/ic_my_lancher" />
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:id="@+id/ll_homepage_search"
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="50dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/rounded_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/cardView2"
-                    app:layout_constraintTop_toTopOf="parent" >
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/ic_search"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="种植技术"
-                        android:textColor="@color/gray"
-                        android:textSize="15sp"
-                        android:layout_marginLeft="8dp"/>
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/ncv_homefirst_layout"
         android:layout_width="match_parent"
@@ -91,6 +21,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.youth.banner.Banner
+                android:id="@+id/banner_homefirst_top"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="20dp"
+                app:banner_auto_loop="true"
+                app:banner_indicator_gravity="right"
+                app:banner_indicator_normal_color="@color/gray"
+                app:banner_indicator_normal_width="5dp"
+                app:banner_indicator_selected_color="@color/green_3"
+                app:banner_indicator_selected_width="7dp"
+                app:banner_radius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_homefirst_name_text"
                 android:layout_width="wrap_content"
@@ -103,7 +49,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/banner_homefirst_top" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_homefirst_recommend"
@@ -177,7 +123,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView5"
                 android:layout_width="330dp"
-                android:layout_height="170dp"
+                android:layout_height="160dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
@@ -192,7 +138,7 @@
                     android:id="@+id/vp_homepage_recommend"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/pic_bg1"
+                    android:background="#C8E3C4"
                     android:nestedScrollingEnabled="false" />
             </androidx.cardview.widget.CardView>
 
@@ -215,13 +161,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
+                android:fontFamily="@font/ziti3"
                 android:text="更多 >"
                 android:textColor="@color/black"
                 android:textSize="16dp"
-                android:fontFamily="@font/ziti3"
+                app:layout_constraintBottom_toBottomOf="@+id/homepage_text5"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/homepage_text5"
-                app:layout_constraintBottom_toBottomOf="@+id/homepage_text5"/>
+                app:layout_constraintTop_toTopOf="@+id/homepage_text5"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_homefirst_poetry"
@@ -254,9 +200,9 @@
                 android:id="@+id/rv_homepage_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:background="@drawable/corner_background"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/corner_background"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/homepage_text3"/>

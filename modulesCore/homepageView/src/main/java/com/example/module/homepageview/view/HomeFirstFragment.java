@@ -2,14 +2,12 @@ package com.example.module.homepageview.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,9 +42,14 @@ import com.example.module.libBase.bean.SpaceItemDecoration;
 import com.example.module.libBase.bean.SwitchPageEvent;
 import com.fangxu.library.DragContainer;
 import com.fangxu.library.DragListener;
+import com.youth.banner.Banner;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.holder.BannerImageHolder;
+import com.youth.banner.indicator.CircleIndicator;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = "/HomePageView/HomeFirstFragment")
@@ -60,7 +63,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     private ViewPager2 viewPager2;
     private DragContainer dragContainer;
     private TextView nameTextView, text3, poetryMore, cropMore;
-    private LinearLayout layout;
+    private Banner banner;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +96,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         text3 = view.findViewById(R.id.homepage_text3);
         poetryMore = view.findViewById(R.id.tv_homefirst_poetry_more);
         cropMore = view.findViewById(R.id.tv_homefirst_crop_more);
-        layout = view.findViewById(R.id.ll_homepage_search);
+        banner = view.findViewById(R.id.banner_homefirst_top);
 
         initView();
         initListener();
@@ -110,12 +113,31 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             nameTextView.setText(time + "好");
         }
 
+
         mPresenter.loadRecommendRecyclerViewDatas();
         mPresenter.loadCropRecyclerViewDatas();
         mPresenter.loadNewsRecyclerViewDatas();
         mPresenter.loadProverbViewPagerDatas();
         mPresenter.loadPoetryRecyclerViewDatas();
+        setupBanner();
     }
+
+    private void setupBanner() {
+        List<Integer> list = new ArrayList<>();
+        list.add(R.drawable.banner_img1);
+        list.add(R.drawable.banner_img2);
+        list.add(R.drawable.banner_img3);
+        banner.setAdapter(new BannerImageAdapter<Integer>(list) {
+                    @Override
+                    public void onBindView(BannerImageHolder holder, Integer data, int position, int size) {
+                        holder.imageView.setImageResource(data);
+                    }
+                }).addBannerLifecycleObserver(this)
+                .setIndicator(new CircleIndicator(getContext()))
+                .addBannerLifecycleObserver(this)
+                .setLoopTime(3000);
+    }
+
 
     @Override
     public void initListener() {
@@ -123,8 +145,8 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         dragContainer.setDragListener(new DragListener() {
             @Override
             public void onDragEvent() {
-                EventBus.getDefault().post(new SwitchPageEvent(1));
-                Log.d(TAG, "onDragEvent: ");
+                ViewPager2 viewPager2 = (ViewPager2) getActivity().findViewById(R.id.vp_homepage_main);
+                viewPager2.setCurrentItem(1);
             }
         });
 
@@ -135,12 +157,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             }
         });
 
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build("/HomePageView/SearchActivity").navigation(getContext());
-            }
-        });
+
     }
 
     @Override
@@ -159,7 +176,8 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             public void OnItemClick(int position) {
                 switch (position) {
                     case 0:
-                        EventBus.getDefault().post(new SwitchPageEvent(1));
+                        ViewPager2 viewPager2 = (ViewPager2) getActivity().findViewById(R.id.vp_homepage_main);
+                        viewPager2.setCurrentItem(1);
                         break;
                     case 1:
                         ARouter.getInstance().build("/HomePageView/PoetryActivity").navigation(getContext());
@@ -168,7 +186,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
                         scrollView.smoothScrollTo(0, text3.getTop());
                         break;
                     case 3:
-                        EventBus.getDefault().post(new SwitchPageEvent(2));
+                        EventBus.getDefault().post(new SwitchPageEvent(1));
                         break;
                     default:
                         break;

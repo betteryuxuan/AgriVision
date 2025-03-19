@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setItemIconTintList(null);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Fragment fragment = (Fragment) ARouter.getInstance().build("/HomePageView/HomeFirstFragment").navigation(this);
+        Fragment fragment = (Fragment) ARouter.getInstance().build("/HomePageView/HomePageFragment").navigation(this);
         Fragment chatpageFragment = (Fragment) ARouter.getInstance().build("/chatpageview/chatPage").navigation(this);
         Fragment personalInfoFragment = (Fragment) ARouter.getInstance().build("/personalinfoview/PersonalInfoFragment").navigation(this);
         Fragment videoFragment = (Fragment) ARouter.getInstance().build("/videoview/VideoFragment").navigation(this);
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         fragments = new ArrayList<>();
         fragments.add(fragment);
-        fragments.add(classificationFragment);
         fragments.add(videoFragment);
+        fragments.add(new Fragment());
         fragments.add(chatpageFragment);
         fragments.add(personalInfoFragment);
 
