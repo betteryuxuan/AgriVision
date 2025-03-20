@@ -8,16 +8,16 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_myinfo_avatar"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="100dp"
+        android:layout_marginStart="30dp"
         android:layout_gravity="center_horizontal"
         android:elevation="6dp"
         android:translationZ="4dp"
         android:outlineProvider="bounds"
         android:src="@drawable/default_user2"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,8 @@
         android:id="@+id/tv_myinfo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
         android:text="@string/username_placeholder"
         android:textColor="@color/black_blue"
         android:textSize="26sp"
@@ -35,16 +36,14 @@
         android:shadowRadius="1"
         android:shadowDx="1"
         android:shadowDy="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_myinfo_email"
-        app:layout_constraintTop_toBottomOf="@id/img_myinfo_avatar" />
+        app:layout_constraintStart_toEndOf="@id/img_myinfo_avatar"
+        app:layout_constraintTop_toTopOf="@id/img_myinfo_avatar"/>
 
     <TextView
         android:id="@+id/tv_myinfo_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:text="邮箱"
         android:textColor="@color/gray_1"
         android:textSize="16sp"
@@ -53,21 +52,18 @@
         android:shadowDx="1"
         android:shadowDy="1"
         app:layout_constraintTop_toBottomOf="@id/tv_myinfo_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/tv_myinfo_name" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rlv_menuList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/corner_personal_bg"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_myinfo_email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
