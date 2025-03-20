@@ -8,7 +8,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 public class MyView extends LinearLayout {
-    private float startX, startY, endY, endX;
+    private float startX, startY;
+
     public MyView(Context context) {
         super(context);
     }
@@ -27,40 +28,29 @@ public class MyView extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-//        boolean shouldIntercept = false; // 默认不拦截
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startX = event.getX();
+                startY = event.getY();
+                getParent().requestDisallowInterceptTouchEvent(true); // 不让父布局拦截事件
+                break;
 
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                // 记录手指按下时的坐标
-//                startX = event.getX();
-//                startY = event.getY();
-//                break;
-//
-//            case MotionEvent.ACTION_MOVE:
-//                // 计算手指滑动的距离
-//                endX = event.getX();
-//                endY = event.getY();
-//                float diffX = endX - startX;
-//                float diffY = endY - startY;
-//
-//                // 判断滑动方向，横向滑动让子视图处理，竖向滑动让父视图处理
-//                if (Math.abs(diffX) > Math.abs(diffY)) {
-//                    // 横向滑动，子视图处理
-//                    shouldIntercept = true; // 子视图拦截
-//                } else {
-//                    // 竖向滑动，父视图处理
-//                    shouldIntercept = false; // 父视图拦截
-//                }
-//                break;
-//        }
+            case MotionEvent.ACTION_MOVE:
+                float endX = event.getX();
+                float endY = event.getY();
+                float diffX = Math.abs(endX - startX);
+                float diffY = Math.abs(endY - startY);
 
-        // 告诉父视图是否需要拦截
-        getParent().requestDisallowInterceptTouchEvent(true);
-
-        return false;
+                if (diffX > diffY) {
+                    // 水平方向滑动，交给 ViewPager2 处理，不拦截
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                } else {
+                    // 垂直方向滑动，父布局处理，拦截事件
+                    getParent().requestDisallowInterceptTouchEvent(false);
+                    return true;
+                }
+        }
+        return super.onInterceptTouchEvent(event);
     }
-
-
-
-
 }

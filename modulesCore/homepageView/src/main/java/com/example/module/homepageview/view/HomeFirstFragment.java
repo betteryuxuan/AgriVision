@@ -64,7 +64,8 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     private DragContainer dragContainer;
     private TextView nameTextView, text3, poetryMore, cropMore;
     private Banner banner;
-
+    private float startX = 0;
+    private float startY = 0;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +92,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
         cropRecyclerView = view.findViewById(R.id.rv_homepage_crop);
         newsRecyclerView = view.findViewById(R.id.rv_homepage_news);
         poetryRecyclerView = view.findViewById(R.id.rv_homefirst_poetry);
-        viewPager2 = view.findViewById(R.id.vp_homepage_recommend);
+        viewPager2 = view.findViewById(R.id.vp_homepage_proverb);
         dragContainer = (DragContainer) view.findViewById(R.id.dc_home_drag);
         text3 = view.findViewById(R.id.homepage_text3);
         poetryMore = view.findViewById(R.id.tv_homefirst_poetry_more);
@@ -157,6 +158,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
             }
         });
 
+        
 
     }
 

@@ -60,16 +60,9 @@
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
                 android:textSize="15sp"/>
-            <ImageButton
-                android:id="@+id/ib_search_clear"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/ic_clear"
-                android:visibility="gone"/>
         </LinearLayout>
         <TextView
+            android:id="@+id/tv_find_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -77,7 +70,7 @@
             android:letterSpacing="0.02"
             android:text="搜索"
             android:textColor="#EE3D5F"
-            android:textSize="15sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <View
@@ -101,9 +94,10 @@
         app:layout_constraintTop_toBottomOf="@+id/view1" />
 
     <TextView
+        android:id="@+id/tv_search_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="啥都没有嘻嘻"
+        android:text="想了解点什么呢~"
         android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

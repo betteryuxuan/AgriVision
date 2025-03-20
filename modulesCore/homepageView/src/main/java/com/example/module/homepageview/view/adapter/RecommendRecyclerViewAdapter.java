@@ -1,5 +1,8 @@
 package com.example.module.homepageview.view.adapter;
 
+
+import static com.example.module.libBase.AnimationUtils.applyClickAnimation;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +63,8 @@ public class RecommendRecyclerViewAdapter extends RecyclerView.Adapter<Recommend
                 }
             }
         });
+        applyClickAnimation(holder.itemView); // 绑定动画
+
     }
 
     @Override

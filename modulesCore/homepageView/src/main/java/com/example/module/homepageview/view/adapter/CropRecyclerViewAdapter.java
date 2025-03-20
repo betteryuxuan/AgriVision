@@ -1,5 +1,7 @@
 package com.example.module.homepageview.view.adapter;
 
+import static com.example.module.libBase.AnimationUtils.applyClickAnimation;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +73,7 @@ public class CropRecyclerViewAdapter extends RecyclerView.Adapter<CropRecyclerVi
                 }
             }
         });
-//        holder.constraintLayout.setBackgroundColor(Color.parseColor(colors.get(position % colors.size())));
+        applyClickAnimation(holder.itemView); // 绑定动画
 
     }
     @Override

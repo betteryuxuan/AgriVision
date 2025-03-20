@@ -51,15 +51,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/banner_homefirst_top" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_homefirst_recommend"
+            <com.example.module.homepageview.custom.MyView
+                android:id="@+id/myview1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_homefirst_name_text"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_homefirst_name_text">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_homefirst_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+            </com.example.module.homepageview.custom.MyView>
+
 
             <TextView
                 android:id="@+id/homepage_text2"
@@ -73,7 +79,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_homefirst_recommend" />
+                app:layout_constraintTop_toBottomOf="@+id/myview1" />
 
             <TextView
                 android:id="@+id/tv_homefirst_crop_more"
@@ -135,7 +141,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/homepage_text4">
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_homepage_recommend"
+                    android:id="@+id/vp_homepage_proverb"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#C8E3C4"
