@@ -44,15 +44,23 @@ public class PostsModel implements IPostsContract.Model {
     public void getData(int communityId, int page, int pageSize) {
         String token = TokenManager.getToken(mContext);
         String URL;
-        if (communityId == 5) {
+
+        if (communityId == 7) {
+            // 赞过
+            URL = URLUtils.GET_LIKED_POSTS_URL + "?page=" + page + "&size=" + pageSize + "&order=" + "time";
+        } else if (communityId == 6) {
+            // 当前用户的帖子
+            URL = URLUtils.GET_USER_POSTS_URL + "?page=" + page + "&size=" + pageSize + "&order=" + "time";
+        } else if (communityId == 5) {
             // 热榜
-            URL = URLUtils.GET_POSTS_URL + "?page=" + page + "&size=" + pageSize ;
+            URL = URLUtils.GET_POSTS_URL + "?page=" + page + "&size=" + pageSize + "&order=" + "time";
         } else if (communityId == 4) {
             // 全部
-            URL = URLUtils.GET_USERPOSTS_URL + "?page=" + page + "&size=" + pageSize + "&order=" + "time";
+            URL = URLUtils.GET_POSTS_URL + "?page=" + page + "&size=" + pageSize + "&order=" + "score";
         } else {
             URL = URLUtils.GET_SPECIFIC_POSTS_URL + "/" + communityId + "/posts" + "?page=" + page + "&size=" + pageSize;
         }
+        Log.d(TAG, URL);
 
         Request request = new Request.Builder()
                 .url(URL)

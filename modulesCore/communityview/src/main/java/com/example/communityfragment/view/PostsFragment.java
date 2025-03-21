@@ -132,10 +132,8 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onPostPublished(PostPublishedEvent event) {
-
-        Log.d(TAG, "onPostPublished: ");
         binding.swipePostsRefresh.autoRefresh();
     }
 
@@ -152,6 +150,10 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
                 return 4;
             case "全部":
                 return 5;
+            case "帖子":
+                return 6;
+            case "赞过":
+                return 7;
         }
         return 0;
     }
