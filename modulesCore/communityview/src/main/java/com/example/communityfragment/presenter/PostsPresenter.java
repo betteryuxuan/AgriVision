@@ -41,11 +41,6 @@ public class PostsPresenter implements IPostsContract.Presenter {
     }
 
     @Override
-    public String getUserName() {
-        return mModel.getUserName();
-    }
-
-    @Override
     public void onDataReceivedFailure() {
         mView.onDataReceivedFailure();
     }

@@ -43,7 +43,7 @@ public class CommunityFragemnt extends Fragment {
 
         MyPagerAdapter adapter = new MyPagerAdapter(this, titles);
         binding.vpCommunity.setAdapter(adapter);
-        binding.vpCommunity.setOffscreenPageLimit(5);
+        binding.vpCommunity.setOffscreenPageLimit(1);
 
         new TabLayoutMediator(binding.tbCommunity, binding.vpCommunity,
                 (tab, position) -> tab.setText(titles.get(position))
@@ -52,7 +52,9 @@ public class CommunityFragemnt extends Fragment {
         binding.btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build("/communityPageView/PublishActivity").navigation();
+                ARouter.getInstance()
+                        .build("/communityPageView/PublishActivity")
+                        .navigation();
             }
         });
 

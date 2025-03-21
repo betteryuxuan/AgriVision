@@ -28,12 +28,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.communityfragment.R;
 import com.example.communityfragment.bean.Post;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_layout, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -69,8 +69,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         holder.userName.setText(mPostList.get(position).getUserName());
         Glide.with(holder.itemView.getContext())
                 .load(mPostList.get(position).getUserAvatar())
-                .placeholder(R.drawable.ic_default)
-                .error(R.drawable.ic_default)
+                .placeholder(R.drawable.default_user2)
+                .error(R.drawable.default_user2)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.userAvatar);
 
         String content = mPostList.get(position).getContent();
@@ -116,10 +117,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
         if (currentPost.getCommunityId().equals("1")) {
             holder.tvCommunityId.setText("农友杂谈");
+            holder.communityPost.setImageResource(R.drawable.ic_communityid);
         } else if (currentPost.getCommunityId().equals("2")) {
             holder.tvCommunityId.setText("种植交流");
+            holder.communityPost.setImageResource(R.drawable.ic_plant);
         } else if (currentPost.getCommunityId().equals("3")) {
             holder.tvCommunityId.setText("农业资讯");
+            holder.communityPost.setImageResource(R.drawable.ic_news);
         }
 
         holder.cvPost.setOnClickListener(new View.OnClickListener() {
@@ -323,6 +327,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         private TextView tvCommunityId;
         private ImageView postLike;
         private ImageView postMore;
+        private ImageView communityPost;
         private LinearLayout llLike;
         private LinearLayout llComment;
         private LinearLayout llShare;
@@ -343,6 +348,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             llComment = view.findViewById(R.id.ll_post_comment);
             llShare = view.findViewById(R.id.ll_post_share);
             rlvImages = view.findViewById(R.id.rlv_post_image);
+            communityPost = view.findViewById(R.id.img_post_community);
         }
     }
 }

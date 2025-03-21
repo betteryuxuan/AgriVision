@@ -23,8 +23,8 @@ public class PostPresenter implements IPostContract.Presenter {
     }
 
     @Override
-    public void comment(int postId, String userId, String comment) {
-        mModel.comment(postId, userId, comment);
+    public void comment(int postId, String comment, String parentId, String rootId) {
+        mModel.comment(postId, comment, parentId, rootId);
     }
 
     public void getComments(int postId) {

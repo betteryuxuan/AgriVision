@@ -1,5 +1,7 @@
 package com.example.communityfragment.utils;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -11,14 +13,14 @@ import java.util.regex.Pattern;
 
 public class TimeUtils {
     public static String getFormatTime(String createdTime) {
-        String regex = "(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):\\d{2}.*";
-
+        String regex = "(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
+//        2025-03-20 17:16:46
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(createdTime);
         if (matcher.find()) {
             String year = matcher.group(1);
-            int month = Integer.parseInt(matcher.group(2));
-            int day = Integer.parseInt(matcher.group(3));
+            String month =matcher.group(2);
+            String day = matcher.group(3);
             String hour = matcher.group(4);
             String minute = matcher.group(5);
 
@@ -29,11 +31,11 @@ public class TimeUtils {
     }
 
     public static String getRelativeTime(String timeStr) {
-        String regex = "(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):\\d{2}.*";
+        String regex = "(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(timeStr);
         if (!matcher.matches()) {
-            return "时间格式错误";
+            return timeStr;
         }
         int year = Integer.parseInt(matcher.group(1));
         int month = Integer.parseInt(matcher.group(2));
@@ -48,7 +50,7 @@ public class TimeUtils {
         long diffSeconds = duration.getSeconds();
 
         if (diffSeconds < 0) {
-            return "时间错误";
+            return timeStr;
         }
 
         long diffMinutes = diffSeconds / 60;

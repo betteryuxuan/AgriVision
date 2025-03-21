@@ -22,8 +22,6 @@ public interface IPostsContract {
 
         void votePost(int postId, Boolean direction);
 
-        String getUserName();
-
         void onDataReceivedFailure();
     }
 

@@ -29,7 +29,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,7 +39,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.content.setText(comment.getContent());
         Glide.with(mContext)
                 .load(comment.getUserAavatar())
-                .placeholder(R.drawable.ic_default)
+                .placeholder(R.drawable.default_user2)
                 .into(holder.avatar);
         holder.UserName.setText(comment.getUserName());
         holder.time.setText(TimeUtils.getRelativeTime(comment.getTime()));
