@@ -1,71 +1,108 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".view.PersonalInfoFragment">
+    android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_myinfo_avatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginStart="30dp"
-        android:layout_gravity="center_horizontal"
-        android:elevation="6dp"
-        android:translationZ="4dp"
-        android:outlineProvider="bounds"
-        android:src="@drawable/default_user2"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_myinfo_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:text="@string/username_placeholder"
-        android:textColor="@color/black_blue"
-        android:textSize="26sp"
-        android:letterSpacing="0.1"
-        android:layout_gravity="center"
-        android:shadowColor="#494949"
-        android:shadowRadius="1"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        app:layout_constraintStart_toEndOf="@id/img_myinfo_avatar"
-        app:layout_constraintTop_toTopOf="@id/img_myinfo_avatar"/>
-
-    <TextView
-        android:id="@+id/tv_myinfo_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="邮箱"
-        android:textColor="@color/gray_1"
-        android:textSize="16sp"
-        android:letterSpacing="0.08"
-        android:shadowRadius="1"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        app:layout_constraintTop_toBottomOf="@id/tv_myinfo_name"
-        app:layout_constraintStart_toStartOf="@id/tv_myinfo_name" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rlv_menuList"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/corner_personal_bg"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".view.PersonalInfoFragment">
+
+            <ImageView
+                android:id="@+id/img_myinfo_setup"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_setup_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_myinfo_avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="20dp"
+                android:elevation="6dp"
+                android:outlineProvider="bounds"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_user2"
+                android:translationZ="4dp"
+                app:layout_constraintBottom_toTopOf="@id/tab_myinfo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_myinfo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/misans"
+                android:letterSpacing="0.1"
+                android:shadowColor="@color/gray_2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="@string/username_placeholder"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@id/img_myinfo_avatar"
+                app:layout_constraintTop_toTopOf="@id/img_myinfo_avatar" />
+
+            <TextView
+                android:id="@+id/tv_myinfo_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/misans"
+                android:letterSpacing="0.08"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="邮箱"
+                android:textColor="@color/gray_1"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/tv_myinfo_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_myinfo_name" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_myinfo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="220dp"
+                android:background="@drawable/tab_background"
+                android:paddingTop="3dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintBottom_toTopOf="@id/vp_myinfo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabIndicator="@drawable/shape_tab_indicator_2"
+                app:tabIndicatorColor="#f62844"
+                app:tabMode="scrollable"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextColor="#333333"
+                app:tabTextAppearance="@style/MyTabLayout"
+                app:tabTextColor="#999999"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_myinfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab_myinfo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

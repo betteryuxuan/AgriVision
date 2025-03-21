@@ -11,12 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.communityfragment.databinding.FragmentCommunityBinding;
 import com.example.communityfragment.adapter.MyPagerAdapter;
-import com.google.android.material.tabs.TabLayout;
+import com.example.communityfragment.databinding.FragmentCommunityBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = "/communityPageView/CommunityFragment")

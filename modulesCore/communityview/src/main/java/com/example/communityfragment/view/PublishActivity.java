@@ -137,7 +137,6 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
         binding.rlvImage.setAdapter(imageAdapter);
 
 
-
         // 注册拍照权限请求
         cameraPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
             if (result) {
@@ -293,12 +292,12 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                EventBus.getDefault().postSticky(new PostPublishedEvent());
                 Toast.makeText(PublishActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                 binding.imgPublishSend.setEnabled(true);
                 if (dialogLoading != null && dialogLoading.isShowing()) {
                     dialogLoading.dismiss();
                 }
-                EventBus.getDefault().post(new PostPublishedEvent());
                 finish();
             }
         });

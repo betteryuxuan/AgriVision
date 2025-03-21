@@ -1,8 +1,5 @@
 package com.example.personalinfoview.view;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,16 +9,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -29,10 +23,13 @@ import com.bumptech.glide.Glide;
 import com.example.module.libBase.AnimationUtils;
 import com.example.module.libBase.bean.User;
 import com.example.personalinfoview.R;
-import com.example.personalinfoview.adapter.MenuAdapter;
+import com.example.personalinfoview.adapter.MyVPAdapter;
 import com.example.personalinfoview.bean.MenuItem;
 import com.example.personalinfoview.contract.IInfoContract;
+import com.example.personalinfoview.databinding.FragmentPersonalInfoBinding;
 import com.example.personalinfoview.presenter.PersonalInfoPresenter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +39,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 @Route(path = "/personalinfoview/PersonalInfoFragment")
 public class PersonalInfoFragment extends Fragment implements IInfoContract.View {
     private static final String TAG = "PersonalInfoFragmentTAG";
+    private FragmentPersonalInfoBinding binding;
 
     private IInfoContract.Presenter presenter;
-    private RecyclerView rlv;
+    private List<String> categories = new ArrayList<>();
+    //    private RecyclerView rlv;
     private List<MenuItem> items = new ArrayList<>();
     private TextView tvUsername;
     private TextView tvEmail;
     private User user;
 
-    private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private CircleImageView imgAvatar;
 
     public PersonalInfoFragment() {
@@ -66,12 +64,12 @@ public class PersonalInfoFragment extends Fragment implements IInfoContract.View
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rlv = view.findViewById(R.id.rlv_menuList);
+//        rlv = view.findViewById(R.id.rlv_menuList);
         tvUsername = view.findViewById(R.id.tv_myinfo_name);
         tvEmail = view.findViewById(R.id.tv_myinfo_email);
         imgAvatar = view.findViewById(R.id.img_myinfo_avatar);
 
-        rlv.setLayoutManager(new LinearLayoutManager(getContext()));
+//        rlv.setLayoutManager(new LinearLayoutManager(getContext()));
         presenter.loadMenuItems();
 
         presenter.setUserInfo();
@@ -120,12 +118,33 @@ public class PersonalInfoFragment extends Fragment implements IInfoContract.View
             }
             AnimationUtils.setLikeAnimate(v);
         });
+
+        binding.imgMyinfoSetup.setOnClickListener(v -> {
+            ARouter.getInstance()
+                    .build("/personalinfoview/MyInfoActivity")
+                    .withSerializable("user", getUser())
+                    .navigation();
+        });
+
+
+        categories = List.of("帖子", "赞过", "收藏");
+        binding.vpMyinfo.setAdapter(new MyVPAdapter(this, categories));
+        binding.vpMyinfo.setOffscreenPageLimit(1);
+        new TabLayoutMediator(binding.tabMyinfo, binding.vpMyinfo, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                tab.setText(categories.get(position));
+            }
+        }).attach();
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_personal_info, container, false);
+        binding = FragmentPersonalInfoBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -148,7 +167,7 @@ public class PersonalInfoFragment extends Fragment implements IInfoContract.View
 
     @Override
     public void showMenuItems(List<MenuItem> items) {
-        rlv.setAdapter(new MenuAdapter(items, position -> presenter.onMenuItemClick(position)));
+//        rlv.setAdapter(new MenuAdapter(items, position -> presenter.onMenuItemClick(position)));
     }
 
     public void UpdateUserInfo(User user) {

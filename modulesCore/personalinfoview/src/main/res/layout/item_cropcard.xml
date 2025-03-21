@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_personal_cropcard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/gradient_background"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
+
+    <FrameLayout
+        android:id="@+id/cl_personal_cropcard"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ripple_cropcard"
+        android:orientation="vertical">
+
+        <net.center.blurview.ShapeBlurView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:blur_corner_radius_bottom_left="10dp"
+            app:blur_corner_radius_bottom_right="10dp"
+            app:blur_down_sample="1.0"
+            app:blur_mode="rectangle"
+            app:blur_overlay_color="@color/gray_transparent"
+            app:blur_radius="2dp" />
+
+        <ImageView
+            android:id="@+id/iv_personal_cropimage"
+            android:layout_width="52dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/tv_personal_cropname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ziti1"
+            android:gravity="center"
+            android:letterSpacing="0.6"
+            android:text="草莓"
+            android:textColor="@color/black2"
+            android:textSize="25sp" />
+
+
+    </FrameLayout>
+</androidx.cardview.widget.CardView>
