@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.communityfragment.R;
 import com.example.communityfragment.adapter.PostAdapter;
 import com.example.communityfragment.bean.Post;
 import com.example.communityfragment.bean.PostPublishedEvent;
@@ -39,7 +40,7 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
     public static final String TAG = "PostsFuctionTAG";
     private PostsPresenter mPresenter;
     private FragmentPostsBinding binding;
-    private PostAdapter adapter;
+    private PostAdapter adapter = new PostAdapter(getContext());
     @Autowired
     public String category;
 
@@ -74,10 +75,15 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
 //        if (category != null)
 //            Log.d("MyPagerAdapterTAG", "onViewCreated: " + category);
 
-        adapter = new PostAdapter(1);
+        adapter = new PostAdapter(getContext());
 //        adapter.setHasStableIds(true);
         binding.rlvPosts.setLayoutManager(manager);
         binding.rlvPosts.setAdapter(adapter);
+
+        if (category.equals("全部")) {
+            View headerView = LayoutInflater.from(getContext()).inflate(R.layout.header_ai, binding.rlvPosts, false);
+            adapter.setHeaderView(headerView);
+        }
 
         adapter.setOnPostActionListener(new PostAdapter.OnPostActionListener() {
             @Override

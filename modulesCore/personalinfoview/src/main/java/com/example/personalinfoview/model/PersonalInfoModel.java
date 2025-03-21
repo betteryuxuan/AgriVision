@@ -109,10 +109,6 @@ public class PersonalInfoModel implements IInfoContract.Model {
             }
         });
     }
-
-    public void Logout() {
-        SPUtils.clear(mContext);
-    }
 }
 
 

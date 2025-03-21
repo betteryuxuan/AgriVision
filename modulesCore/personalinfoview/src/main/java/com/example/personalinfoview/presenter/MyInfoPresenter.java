@@ -36,6 +36,11 @@ public class MyInfoPresenter implements IMyInfoContract.Presenter {
         mModel.modifyUserAvatar(avatarPath);
     }
 
+    @Override
+    public void logout() {
+        mModel.logout();
+    }
+
     public void onModifyInfoSuccess(String username) {
 
         mView.onModifyInfoSuccess(username);

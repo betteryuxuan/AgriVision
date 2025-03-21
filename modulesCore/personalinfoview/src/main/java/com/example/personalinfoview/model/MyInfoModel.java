@@ -136,6 +136,11 @@ public class MyInfoModel implements IMyInfoContract.Model {
             }
         });
     }
+
+    @Override
+    public void logout() {
+        SPUtils.clear(mContext);
+    }
 }
 
 

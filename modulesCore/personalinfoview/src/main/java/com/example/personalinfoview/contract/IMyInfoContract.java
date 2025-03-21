@@ -17,6 +17,8 @@ public interface IMyInfoContract {
         String getUserAvatar();
 
         void modifyUserAvatar(String avatarPath);
+
+        void logout();
     }
 
     interface Model {
@@ -27,6 +29,8 @@ public interface IMyInfoContract {
         String getUserAvatar();
 
         void modifyUserAvatar(String avatarPath);
+
+        void logout();
     }
 
 }

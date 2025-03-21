@@ -16,10 +16,6 @@ public interface IInfoContract {
     }
 
     interface Presenter {
-        void loadMenuItems();
-
-        void onMenuItemClick(int position);
-
         void setUserInfo();
 
         void getUser(User user);
