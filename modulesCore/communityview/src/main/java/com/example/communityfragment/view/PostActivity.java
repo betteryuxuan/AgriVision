@@ -155,7 +155,7 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
         binding.imgMypostMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!getUserId().equals(post.getUserid())) {
+                if (!isPostOwner(post)) {
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                     popupMenu.getMenuInflater().inflate(R.menu.popup_menu_share, popupMenu.getMenu());
 
@@ -319,10 +319,12 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
         return super.dispatchTouchEvent(ev);
     }
 
-    private String getUserId() {
-        return SPUtils.getString(PostActivity.this, SPUtils.USERNAME_KEY, "");
+    private boolean isPostOwner(Post currentPost) {
+        String username = SPUtils.getString(this, SPUtils.USERNAME_KEY, "");
+        String avatar = SPUtils.getString(this, SPUtils.AVATAR_KEY, "");
+        Log.d("PostAdapter", "isPostOwner: " + username + " " + avatar+ " " + currentPost.getUserName() + " " + currentPost.getUserAvatar());
+        return username.equals(currentPost.getUserName()) && avatar.equals(currentPost.getUserAvatar());
     }
-
 
     private List<String> getImagesUrl(String jsonImages) {
         List<String> images = new ArrayList<>();

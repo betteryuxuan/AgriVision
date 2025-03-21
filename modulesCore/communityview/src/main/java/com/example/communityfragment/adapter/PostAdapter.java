@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.communityfragment.R;
 import com.example.communityfragment.bean.Post;
+import com.example.module.libBase.SPUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,41 +41,60 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Post> mPostList = new ArrayList<>();
-    private int type;
+    private Context mContext;
+    private View mHeaderView;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    public PostAdapter(int type) {
-        this.type = type;
+    public PostAdapter(Context context) {
+        this.mContext = context;
+    }
+
+    public void setHeaderView(View headerView) {
+        mHeaderView = headerView;
+        notifyItemInserted(0);
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_layout, parent, false);
-        return new MyViewHolder(view);
+        if (viewType == TYPE_HEADER) {
+            return new MyHeadViewHolder(mHeaderView);
+        } else if (viewType == TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_layout, parent, false);
+            return new MyViewHolder(view);
+        } else {
+            throw new IllegalArgumentException("Invalid view type");
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        int pos = holder.getAdapterPosition();
-        Post currentPost = mPostList.get(pos);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder mHolder, int position) {
+        if (getItemViewType(position) == TYPE_HEADER)
+            return;
+
+        // 强制类型转换
+        MyViewHolder holder = (MyViewHolder) mHolder;
+
+        int realPosition = mHeaderView == null ? position : position - 1;
+        if (realPosition < 0 || realPosition >= mPostList.size())
+            return;
+        Post currentPost = mPostList.get(realPosition);
         Log.d("PostsFuctionTAG", "onBindViewHolder: " + position);
 
-        holder.userName.setText(mPostList.get(position).getUserid());
-        holder.postLikeCount.setText(mPostList.get(position).getLikeConunt());
-        holder.postComment.setText(mPostList.get(position).getCommentCount());
-        holder.userName.setText(mPostList.get(position).getUserName());
+        holder.userName.setText(currentPost.getUserid());
+        holder.postLikeCount.setText(currentPost.getLikeConunt());
+        holder.postComment.setText(currentPost.getCommentCount());
         Glide.with(holder.itemView.getContext())
-                .load(mPostList.get(position).getUserAvatar())
+                .load(currentPost.getUserAvatar())
                 .placeholder(R.drawable.default_user2)
                 .error(R.drawable.default_user2)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.userAvatar);
 
-        String content = mPostList.get(position).getContent();
+        String content = currentPost.getContent();
         if (content.length() >= 100) {
             SpannableString spannableString = new SpannableString("...查看更多");
             spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(holder.itemView.getContext(), R.color.grenn1)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -87,7 +107,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             holder.postContent.setText(content);
         }
 
-        String jsonImages = mPostList.get(position).getImageUrls();
+        String jsonImages = currentPost.getImageUrls();
         if (!TextUtils.isEmpty(jsonImages)) {
             holder.rlvImages.setVisibility(View.VISIBLE);
 
@@ -105,9 +125,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             ImageDisplayAdapter imageAdapter = new ImageDisplayAdapter(holder.itemView.getContext(), imagesUrl);
             holder.rlvImages.setLayoutManager(layoutManager);
             holder.rlvImages.setAdapter(imageAdapter);
+        } else {
+            holder.rlvImages.setVisibility(View.GONE);
         }
 
-        if (mPostList.get(position).getIsLiked()) {
+        if (currentPost.getIsLiked()) {
             holder.postLike.setImageResource(R.drawable.ic_like_green);
             holder.postLikeCount.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.grenn1));
         } else {
@@ -175,51 +197,51 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         holder.llLike.setOnClickListener(listener);
 
 
-//        if (!userId.equals(currentPost.getUserid())) {
-//            holder.postMore.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-//                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-//
-//                    popupMenu.setOnMenuItemClickListener(item -> {
-//                        if (item.getItemId() == R.id.item_copy) {
-//                            Toast.makeText(v.getContext(), "复制成功", Toast.LENGTH_SHORT).show();
-//                            ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-//                            ClipData content = ClipData.newPlainText("content", currentPost.getContent());
-//                            clipboard.setPrimaryClip(content);
-//                            return true;
-//                        }
-//                        return false;
-//                    });
-//                    popupMenu.show();
-//                }
-//            });
-//        } else {
-        holder.postMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_2, popupMenu.getMenu());
+        if (!isPostOwner(currentPost)) {
+            holder.postMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
 
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    if (item.getItemId() == R.id.item_copy) {
-                        Toast.makeText(v.getContext(), "复制成功", Toast.LENGTH_SHORT).show();
-                        ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData content = ClipData.newPlainText("content", currentPost.getContent());
-                        clipboard.setPrimaryClip(content);
-                        return true;
-                    } else if (item.getItemId() == R.id.item_delete) {
-                        if (mActionListener != null) {
-                            mActionListener.onDeleteClick(currentPost.getId());
+                    popupMenu.setOnMenuItemClickListener(item -> {
+                        if (item.getItemId() == R.id.item_copy) {
+                            Toast.makeText(v.getContext(), "复制成功", Toast.LENGTH_SHORT).show();
+                            ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData content = ClipData.newPlainText("content", currentPost.getContent());
+                            clipboard.setPrimaryClip(content);
+                            return true;
                         }
-                    }
-                    return false;
-                });
-                popupMenu.show();
-            }
-        });
-//        }
+                        return false;
+                    });
+                    popupMenu.show();
+                }
+            });
+        } else {
+            holder.postMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu_2, popupMenu.getMenu());
+
+                    popupMenu.setOnMenuItemClickListener(item -> {
+                        if (item.getItemId() == R.id.item_copy) {
+                            Toast.makeText(v.getContext(), "复制成功", Toast.LENGTH_SHORT).show();
+                            ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData content = ClipData.newPlainText("content", currentPost.getContent());
+                            clipboard.setPrimaryClip(content);
+                            return true;
+                        } else if (item.getItemId() == R.id.item_delete) {
+                            if (mActionListener != null) {
+                                mActionListener.onDeleteClick(currentPost.getId());
+                            }
+                        }
+                        return false;
+                    });
+                    popupMenu.show();
+                }
+            });
+        }
 
 
         holder.llShare.setOnClickListener(new View.OnClickListener() {
@@ -255,6 +277,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
     }
 
+    private boolean isPostOwner(Post currentPost) {
+        String username = SPUtils.getString((mContext), SPUtils.USERNAME_KEY, "");
+        String avatar = SPUtils.getString((mContext), SPUtils.AVATAR_KEY, "");
+        Log.d("PostAdapter", "isPostOwner: " + username + " " + avatar + " " + currentPost.getUserName() + " " + currentPost.getUserAvatar());
+        return username.equals(currentPost.getUserName()) && avatar.equals(currentPost.getUserAvatar());
+    }
+
     private List<String> getImagesUrl(String jsonImages) {
         List<String> images = new ArrayList<>();
         try {
@@ -270,7 +299,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mPostList.size();
+        return mHeaderView == null ? mPostList.size() : mPostList.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mHeaderView != null && position == 0) {
+            return TYPE_HEADER;
+        }
+        return TYPE_ITEM;
     }
 
     @Override
@@ -292,7 +329,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     public void addData(List<Post> postList) {
         int startPos = mPostList.size();
         mPostList.addAll(postList);
-        notifyItemRangeInserted(startPos, postList.size());
+        notifyItemRangeInserted(mHeaderView != null ? startPos + 1 : startPos, postList.size());
     }
 
     public void removeData(int postId) {
@@ -304,6 +341,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             }
         }
     }
+
 
     public interface OnPostActionListener {
         void onLikeClick(int postId, boolean isLiked);
@@ -349,6 +387,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             llShare = view.findViewById(R.id.ll_post_share);
             rlvImages = view.findViewById(R.id.rlv_post_image);
             communityPost = view.findViewById(R.id.img_post_community);
+        }
+    }
+
+    private class MyHeadViewHolder extends MyViewHolder {
+        private CardView cvAi1;
+        private CardView cvAi2;
+        private CardView cvAi3;
+        private CardView cvAi4;
+
+        public MyHeadViewHolder(View mHeaderView) {
+            super(mHeaderView);
+            cvAi1 = mHeaderView.findViewById(R.id.card_ai_1);
+            cvAi2 = mHeaderView.findViewById(R.id.card_ai_2);
+            cvAi3 = mHeaderView.findViewById(R.id.card_ai_3);
+            cvAi4 = mHeaderView.findViewById(R.id.card_ai_4);
+            cvAi1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ARouter.getInstance()
+                            .build("/communityPageView/PublishActivity")
+                            .navigation();
+                }
+            });
         }
     }
 }

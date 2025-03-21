@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.example.module.libBase.customview.CustomRecyclerView
             android:id="@+id/rlv_posts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

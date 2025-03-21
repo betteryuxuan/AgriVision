@@ -1,108 +1,164 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    android:orientation="vertical">
+    android:background="#f2f1f6">
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abl_myinfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".view.PersonalInfoFragment">
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <ImageView
-                android:id="@+id/img_myinfo_setup"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                android:padding="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_setup_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/img_myinfo_setup"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:padding="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_setup_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_myinfo_avatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="20dp"
+                    android:elevation="6dp"
+                    android:outlineProvider="bounds"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_user2"
+                    android:translationZ="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_myinfo_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/misans"
+                    android:letterSpacing="0.1"
+                    android:shadowColor="@color/gray_2"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:text="@string/username_placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toEndOf="@id/img_myinfo_avatar"
+                    app:layout_constraintTop_toTopOf="@id/img_myinfo_avatar" />
+
+                <TextView
+                    android:id="@+id/tv_myinfo_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/misans"
+                    android:letterSpacing="0.08"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:text="邮箱"
+                    android:textColor="@color/gray_1"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="@id/tv_myinfo_name"
+                    app:layout_constraintTop_toBottomOf="@id/tv_myinfo_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_myinfo_avatar"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="20dp"
-                android:elevation="6dp"
-                android:outlineProvider="bounds"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_user2"
-                android:translationZ="4dp"
-                app:layout_constraintBottom_toTopOf="@id/tab_myinfo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_myinfo_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/img_top_useravatar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="15dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/misans"
-                android:letterSpacing="0.1"
-                android:shadowColor="@color/gray_2"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"
-                android:text="@string/username_placeholder"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                app:layout_constraintStart_toEndOf="@id/img_myinfo_avatar"
-                app:layout_constraintTop_toTopOf="@id/img_myinfo_avatar" />
+                android:padding="3dp"
+                android:src="@drawable/default_user2"
+                android:visibility="invisible" />
 
             <TextView
-                android:id="@+id/tv_myinfo_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/misans"
-                android:letterSpacing="0.08"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"
-                android:text="邮箱"
-                android:textColor="@color/gray_1"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@id/tv_myinfo_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_myinfo_name" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_myinfo"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="220dp"
-                android:background="@drawable/tab_background"
-                android:paddingTop="3dp"
-                android:paddingBottom="5dp"
-                app:layout_constraintBottom_toTopOf="@id/vp_myinfo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicator="@drawable/shape_tab_indicator_2"
-                app:tabIndicatorColor="#f62844"
-                app:tabMode="scrollable"
-                app:tabRippleColor="@android:color/transparent"
-                app:tabSelectedTextColor="#333333"
-                app:tabTextAppearance="@style/MyTabLayout"
-                app:tabTextColor="#999999"/>
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_myinfo"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_top_useraname"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tab_myinfo" />
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:text="用户名"
+                android:fontFamily="@font/misans"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:visibility="invisible" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+            <ImageView
+                android:id="@+id/img_top_setup"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="25dp"
+                android:visibility="invisible"
+                android:src="@drawable/ic_setup_white" />
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_myinfo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/tab_background"
+            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            app:tabIndicator="@drawable/shape_tab_indicator_2"
+            app:tabIndicatorColor="#f62844"
+            app:tabMode="scrollable"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabSelectedTextColor="#333333"
+            app:tabTextAppearance="@style/MyTabLayout"
+            app:tabTextColor="#999999" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:context=".view.PersonalInfoFragment">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_myinfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
