@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,12 +38,15 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.example.communityfragment.R;
 import com.example.communityfragment.adapter.ImageAdapter;
+import com.example.communityfragment.bean.PostPublishedEvent;
 import com.example.communityfragment.contract.IPublishContract;
 import com.example.communityfragment.databinding.ActivityPublishBinding;
 import com.example.communityfragment.presenter.PublishPresenter;
 import com.example.communityfragment.utils.FileUtils;
 import com.example.module.libBase.SPUtils;
 import com.yalantis.ucrop.UCrop;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,6 +66,8 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private AlertDialog.Builder builder;
     private AlertDialog dialogPick;
+    private AlertDialog dialogLoading;
+    private ImageAdapter imageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +85,7 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
 
         Glide.with(this)
                 .load(getAvatar())
-                .error(R.drawable.ic_default)
+                .error(R.drawable.default_user2)
                 .into(binding.imgPublishAvatar);
         binding.tvPublishUsername.setText(getUserName());
 
@@ -95,6 +102,9 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
                     Toast.makeText(PublishActivity.this, "上传中", Toast.LENGTH_SHORT).show();
                     binding.imgPublishSend.setImageResource(R.drawable.ic_publish_gray);
                     binding.imgPublishSend.setEnabled(false);
+                    if (imagePaths.size() != 0) {
+                        showPublishDialog();
+                    }
 
                     mPresenter.publish(content, imagePaths, getCommunityId());
                 }
@@ -110,7 +120,7 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
 
         binding.rlvImage.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        ImageAdapter imageAdapter = new ImageAdapter(this, imageUrls, new ImageAdapter.OnImageActionListener() {
+        imageAdapter = new ImageAdapter(this, imageUrls, new ImageAdapter.OnImageActionListener() {
             @Override
             public void onAddImageClick() {
                 if (imageUrls.size() < 9) {
@@ -126,21 +136,54 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
         binding.rlvImage.setLayoutManager(layoutManager);
         binding.rlvImage.setAdapter(imageAdapter);
 
+
+
+        // 注册拍照权限请求
+        cameraPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
+            if (result) {
+                launchCamera();
+            } else {
+                Toast.makeText(PublishActivity.this, "请允许摄像头权限以拍照", Toast.LENGTH_SHORT).show();
+            }
+        });
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             if (uri != null) {
                 Log.d(TAG, "选中的图片 URI: " + uri);
                 ContentResolver contentResolver = getApplicationContext().getContentResolver();
                 contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 // 配置uCrop
+//                UCrop.Options options = new UCrop.Options();
+//                options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
+//                options.setCompressionQuality(50);
+////                options.setToolbarColor(getResources().getColor(R.color.grenn1));
+////                options.setRootViewBackgroundColor(getResources().getColor(R.color.grenn1));
+//
+//                // 构造裁剪后图片的保存地址
+//                Uri destinationUri = Uri.fromFile(new File(getCacheDir(), "cropped_" + System.currentTimeMillis() + ".jpg"));
+//
+//                UCrop.of(uri, destinationUri)
+//                        .withOptions(options)
+//                        .start(PublishActivity.this);
+                if (uri != null) {
+                    cameraImageUri = uri;
+                    imageUrls.add(uri.toString());
+                    imageAdapter.notifyItemChanged(imageUrls.size() - 1);
+
+                    if (dialogPick != null && dialogPick.isShowing()) {
+                        dialogPick.dismiss();
+                    }
+                }
+            }
+        });
+        // 注册拍照Launcher
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
+            if (result) {
+                // 裁剪
                 UCrop.Options options = new UCrop.Options();
                 options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
-                options.setCompressionQuality(100);
-
-                // 构造裁剪后图片的保存地址
+                options.setCompressionQuality(50);
                 Uri destinationUri = Uri.fromFile(new File(getCacheDir(), "cropped_" + System.currentTimeMillis() + ".jpg"));
-
-                UCrop.of(uri, destinationUri)
-                        .withAspectRatio(1, 1)
+                UCrop.of(cameraImageUri, destinationUri)
                         .withOptions(options)
                         .start(PublishActivity.this);
             }
@@ -164,30 +207,6 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
 
             }
         });
-
-        // 注册拍照权限请求
-        cameraPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
-            if (result) {
-                launchCamera();
-            } else {
-                Toast.makeText(PublishActivity.this, "请允许摄像头权限以拍照", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // 注册拍照Launcher
-        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
-            if (result) {
-                // 裁剪
-                UCrop.Options options = new UCrop.Options();
-                options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
-                options.setCompressionQuality(100);
-                Uri destinationUri = Uri.fromFile(new File(getCacheDir(), "cropped_" + System.currentTimeMillis() + ".jpg"));
-                UCrop.of(cameraImageUri, destinationUri)
-                        .withOptions(options)
-                        .start(PublishActivity.this);
-            }
-        });
-
         binding.llPublishSelsect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,7 +262,7 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
         return SPUtils.getString(PublishActivity.this, SPUtils.USERNAME_KEY, "");
     }
 
-    // 拍照和相册裁剪选择回调
+    // 拍照裁剪的选择回调
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -253,7 +272,7 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
             if (resultUri != null) {
                 cameraImageUri = resultUri;
                 imageUrls.add(resultUri.toString());
-                binding.rlvImage.getAdapter().notifyDataSetChanged();
+                imageAdapter.notifyItemChanged(imageUrls.size() - 1);
 
                 if (dialogPick != null && dialogPick.isShowing()) {
                     dialogPick.dismiss();
@@ -276,6 +295,10 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
             public void run() {
                 Toast.makeText(PublishActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                 binding.imgPublishSend.setEnabled(true);
+                if (dialogLoading != null && dialogLoading.isShowing()) {
+                    dialogLoading.dismiss();
+                }
+                EventBus.getDefault().post(new PostPublishedEvent());
                 finish();
             }
         });
@@ -286,9 +309,12 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Toast.makeText(PublishActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
                 binding.imgPublishSend.setEnabled(true);
                 binding.imgPublishSend.setImageResource(R.drawable.ic_publish);
-                Toast.makeText(PublishActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                if (dialogLoading != null && dialogLoading.isShowing()) {
+                    dialogLoading.dismiss();
+                }
             }
         });
     }
@@ -338,6 +364,17 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
         dialogPick = builder.create();
         dialogPick.getWindow().setBackgroundDrawableResource(R.drawable.default_dialog_background);
         dialogPick.show();
+    }
+
+    private void showPublishDialog() {
+        builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_loading, null, false);
+        builder.setView(dialogView);
+        dialogLoading = builder.create();
+        dialogLoading.getWindow().setBackgroundDrawableResource(R.drawable.default_dialog_background);
+        dialogLoading.setCanceledOnTouchOutside(false);
+        dialogLoading.setCancelable(false);
+        dialogLoading.show();
     }
 
     // 打开相机

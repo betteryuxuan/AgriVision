@@ -21,6 +21,7 @@ public interface IPublishContract {
         void onSuccess();
 
         void onFailure();
+
     }
 
 }

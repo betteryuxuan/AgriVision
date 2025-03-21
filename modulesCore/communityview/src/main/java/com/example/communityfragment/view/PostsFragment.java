@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.communityfragment.adapter.PostAdapter;
 import com.example.communityfragment.bean.Post;
+import com.example.communityfragment.bean.PostPublishedEvent;
 import com.example.communityfragment.contract.IPostsContract;
 import com.example.communityfragment.databinding.FragmentPostsBinding;
 import com.example.communityfragment.presenter.PostsPresenter;
@@ -26,6 +27,10 @@ import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -39,7 +44,7 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
     public String category;
 
     private int currentPage = 1;
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 5;
     private boolean isLastPage = false;
 
     public PostsFragment() {
@@ -110,14 +115,30 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
             }
         });
 
-//        mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+        mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+        Log.d(TAG, "register: ");
+        EventBus.getDefault().register(this);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "unregister: ");
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPostPublished(PostPublishedEvent event) {
+
+        Log.d(TAG, "onPostPublished: ");
+        binding.swipePostsRefresh.autoRefresh();
+    }
+
 
     private int getCommunityId() {
         switch (category) {
@@ -127,8 +148,10 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
                 return 2;
             case "农业资讯":
                 return 3;
+            case "热榜":
+                return 4;
             case "全部":
-                return 0;
+                return 5;
         }
         return 0;
     }

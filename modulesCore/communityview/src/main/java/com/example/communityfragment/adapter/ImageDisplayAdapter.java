@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.communityfragment.R;
 
 import java.util.List;
@@ -39,6 +40,9 @@ public class ImageDisplayAdapter extends RecyclerView.Adapter<ImageDisplayAdapte
     public void onBindViewHolder(@NonNull DisplayViewHolder holder, int position) {
         Glide.with(context)
                 .load(imageUrls.get(position))
+                .placeholder(R.drawable.bg_white)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .thumbnail(0.8f)
                 .into(holder.imageView);
         holder.cardView.setOnClickListener(v -> setImageDialog(position));
     }

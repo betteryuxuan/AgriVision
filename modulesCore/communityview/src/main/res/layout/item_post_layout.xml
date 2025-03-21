@@ -124,6 +124,7 @@
                         android:padding="3dp">
 
                         <ImageView
+                            android:id="@+id/img_post_community"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_margin="2dp"
