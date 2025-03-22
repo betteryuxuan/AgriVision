@@ -14,10 +14,6 @@
 
     <application>
         <activity
-            android:name=".view.IndividualPostActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
             android:name=".TestCommunityActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />

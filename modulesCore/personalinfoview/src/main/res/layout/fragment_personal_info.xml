@@ -9,9 +9,10 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/abl_myinfo"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_background">
+        android:background="@drawable/gradient_background"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -22,7 +23,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="240dp">
 
                 <ImageView
                     android:id="@+id/img_myinfo_setup"
@@ -30,7 +31,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
-                    android:padding="10dp"
+                    android:padding="11dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_setup_white"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -41,12 +42,12 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="55dp"
                     android:elevation="6dp"
                     android:outlineProvider="bounds"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_user2"
                     android:translationZ="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,27 +81,90 @@
                     android:shadowDy="1"
                     android:shadowRadius="1"
                     android:text="邮箱"
-                    android:textColor="@color/gray_1"
+                    android:textColor="@color/gray_3"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="@id/tv_myinfo_name"
                     app:layout_constraintTop_toBottomOf="@id/tv_myinfo_name" />
 
+                <TextView
+                    android:id="@+id/tv_myinfo_signature"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="你的签名正在赶来的路上～"
+                    android:textColor="@color/gray_1"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/img_myinfo_avatar"
+                    app:layout_constraintTop_toBottomOf="@id/img_myinfo_avatar" />
+
+                <LinearLayout
+                    android:id="@+id/ll_myinfo_count"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@id/img_myinfo_avatar"
+                    app:layout_constraintTop_toBottomOf="@id/tv_myinfo_signature">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_following_count"
+                        style="@style/SocialStatsStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="0\n关注"
+                        android:textColor="@color/gray_1"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_followers_count"
+                        style="@style/SocialStatsStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="0\n粉丝"
+                        android:textColor="@color/gray_1"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_posts_count"
+                        style="@style/SocialStatsStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="0\n发帖"
+                        android:textColor="@color/gray_1"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:orientation="horizontal">
+            android:paddingBottom="2dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_top_useravatar"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="15dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="15dp"
                 android:padding="3dp"
                 android:src="@drawable/default_user2"
                 android:visibility="invisible" />
@@ -112,9 +176,9 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/misans"
                 android:gravity="center_vertical|left"
                 android:text="用户名"
-                android:fontFamily="@font/misans"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:visibility="invisible" />
@@ -125,8 +189,8 @@
                 android:layout_height="22dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="25dp"
-                android:visibility="invisible"
-                android:src="@drawable/ic_setup_white" />
+                android:src="@drawable/ic_setup_white"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
