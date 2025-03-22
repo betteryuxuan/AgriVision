@@ -31,7 +31,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.libBase.AnimationUtils;
 import com.example.module.libBase.TokenManager;
-import com.example.module.login.ILoginContract;
+import com.example.module.login.contract.ILoginContract;
 import com.example.module.login.R;
 import com.example.module.login.presenter.LoginPresenter;
 import com.github.boybeak.skbglobal.SoftKeyboardGlobal;
@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         QueryLoginStatus();

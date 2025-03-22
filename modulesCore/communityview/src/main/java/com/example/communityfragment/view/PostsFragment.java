@@ -174,7 +174,13 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
                     isLastPage = true;
                     binding.swipePostsRefresh.finishLoadMoreWithNoMoreData();
                     binding.swipePostsRefresh.finishRefresh(true);
-                    binding.tvPostsEmpty.setText("暂无帖子");
+                    if(category.equals("赞过")){
+                        binding.tvPostsEmpty.setText("当前暂无赞过的帖子");
+                    }else if(category.equals("帖子")){
+                        binding.tvPostsEmpty.setText("把田里的经验写成故事！\uD83D\uDCDA\n分享您的种植笔记\uD83C\uDF31");
+                    }else {
+                        binding.tvPostsEmpty.setText("当前暂无帖子");
+                    }
                     binding.rlvPosts.setVisibility(View.GONE);
                     binding.tvPostsEmpty.setVisibility(View.VISIBLE);
                 } else {
@@ -216,7 +222,7 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
                 if (currentPage == 1) {
                     adapter.clearData();
                     binding.tvPostsEmpty.setVisibility(View.VISIBLE);
-                    binding.tvPostsEmpty.setText("加载失败");
+                    binding.tvPostsEmpty.setText("加载失败，请稍后重试");
                 }
             }
         });

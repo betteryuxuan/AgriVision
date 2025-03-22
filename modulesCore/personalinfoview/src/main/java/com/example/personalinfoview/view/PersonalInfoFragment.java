@@ -137,10 +137,12 @@ public class PersonalInfoFragment extends Fragment implements IInfoContract.View
                     binding.imgTopUseravatar.setVisibility(View.VISIBLE);
                     binding.tvTopUseraname.setVisibility(View.VISIBLE);
                     binding.imgTopSetup.setVisibility(View.VISIBLE);
+                    binding.llMyinfoCount.setVisibility(View.INVISIBLE);
                 } else {
                     binding.imgTopUseravatar.setVisibility(View.INVISIBLE);
                     binding.tvTopUseraname.setVisibility(View.INVISIBLE);
                     binding.imgTopSetup.setVisibility(View.INVISIBLE);
+                    binding.llMyinfoCount.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -204,7 +206,7 @@ public class PersonalInfoFragment extends Fragment implements IInfoContract.View
         } else {
             binding.tvMyinfoName.setText("未登录");
             binding.tvTopUseraname.setText("未登录");
-            binding.tvMyinfoEmail.setText("");
+            binding.tvMyinfoEmail.setText("立即登录，解锁完整体验✨");
         }
     }
 

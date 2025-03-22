@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -391,6 +393,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private class MyHeadViewHolder extends MyViewHolder {
+        private HorizontalScrollView mNestedScrollView;
         private CardView cvAi1;
         private CardView cvAi2;
         private CardView cvAi3;
@@ -398,6 +401,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public MyHeadViewHolder(View mHeaderView) {
             super(mHeaderView);
+            mNestedScrollView = mHeaderView.findViewById(R.id.card_layout);
             cvAi1 = mHeaderView.findViewById(R.id.card_ai_1);
             cvAi2 = mHeaderView.findViewById(R.id.card_ai_2);
             cvAi3 = mHeaderView.findViewById(R.id.card_ai_3);
@@ -406,10 +410,36 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     ARouter.getInstance()
-                            .build("/communityPageView/PublishActivity")
+                            .build("/chatpageview/ChatPageActivity")
                             .navigation();
                 }
             });
+            cvAi2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ARouter.getInstance()
+                            .build("/chatpageview/ChatPageActivity")
+                            .navigation();
+                }
+            });
+            cvAi3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ARouter.getInstance()
+                            .build("/chatpageview/ChatPageActivity")
+                            .navigation();
+                }
+            });
+            cvAi4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ARouter.getInstance()
+                            .build("/chatpageview/ChatPageActivity")
+                            .navigation();
+                }
+            });
+
+
         }
     }
 }

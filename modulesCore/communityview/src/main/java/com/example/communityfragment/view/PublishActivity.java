@@ -44,6 +44,7 @@ import com.example.communityfragment.databinding.ActivityPublishBinding;
 import com.example.communityfragment.presenter.PublishPresenter;
 import com.example.communityfragment.utils.FileUtils;
 import com.example.module.libBase.SPUtils;
+import com.example.module.libBase.SoftHideKeyBoardUtil;
 import com.yalantis.ucrop.UCrop;
 
 import org.greenrobot.eventbus.EventBus;

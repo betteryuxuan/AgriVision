@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import com.example.communityfragment.databinding.ActivityPostBinding;
 import com.example.communityfragment.presenter.PostPresenter;
 import com.example.communityfragment.utils.TimeUtils;
 import com.example.module.libBase.SPUtils;
+import com.example.module.libBase.SoftHideKeyBoardUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
@@ -63,8 +65,8 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         binding = ActivityPostBinding.inflate(getLayoutInflater());
+        EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

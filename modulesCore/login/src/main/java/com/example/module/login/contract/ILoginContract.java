@@ -1,11 +1,10 @@
-package com.example.module.login;
+package com.example.module.login.contract;
 
-public interface IForgetContract {
+public interface ILoginContract {
     interface View {
         void showToast(String msg);
 
         void startMainActivity();
-
     }
 
     interface Presenter {
@@ -17,22 +16,28 @@ public interface IForgetContract {
 
         void login(String email, String password);
 
-        void changePassword(String email, String password, String code);
+        void register(String email, String password, String username, String code);
+
     }
 
     interface Model {
         void sendVerificationCode(String destinationEmail);
 
-        void login(String email, String password, IForgetContract.Model.Callback callback);
+        void login(String email, String password, LoginCallback callback);
 
-        void changePassword(String email, String password, String code, IForgetContract.Model.Callback callback);
+        void register(String email, String password, String username, String code, RegisterCallback callback);
 
         void saveLoginState(String email, String token);
 
-        interface Callback {
+        public interface LoginCallback {
             void onSuccess(String token);
-
             void onFailure();
         }
+        public interface RegisterCallback {
+            void onSuccess();
+            void onFailure();
+        }
+
     }
+
 }

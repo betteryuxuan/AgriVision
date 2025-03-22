@@ -5,7 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.module.login.IForgetContract;
+import com.example.module.login.contract.IForgetContract;
 import com.example.module.login.model.ForgetModel;
 import com.example.module.login.view.ForgetActivity;
 
