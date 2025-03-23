@@ -15,7 +15,7 @@
             <option value="$PROJECT_DIR$/modulesBase/libBase" />
             <option value="$PROJECT_DIR$/modulesCore" />
             <option value="$PROJECT_DIR$/modulesCore/chatpageview" />
-            <option value="$PROJECT_DIR$/modulesCore/classificationview" />
+            <option value="$PROJECT_DIR$/modulesCore/communityview" />
             <option value="$PROJECT_DIR$/modulesCore/homepageView" />
             <option value="$PROJECT_DIR$/modulesCore/login" />
             <option value="$PROJECT_DIR$/modulesCore/personalinfoview" />

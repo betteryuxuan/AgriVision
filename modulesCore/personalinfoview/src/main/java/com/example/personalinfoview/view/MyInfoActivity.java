@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -56,8 +57,8 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
     private ActivityResultLauncher<Uri> cameraLauncher;
     private ActivityResultLauncher<String> cameraPermissionLauncher;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
-    private AlertDialog imageDialog;
     private AlertDialog.Builder builder;
+    private AlertDialog imageDialog;
     private AlertDialog dialogPick;
 
     @Override
@@ -197,6 +198,40 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
                 }
             }
         });
+
+        binding.rlExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user == null) {
+                    Toast.makeText(MyInfoActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                    logout();
+                } else {
+                    LayoutInflater inflater = LayoutInflater.from(MyInfoActivity.this);
+                    View customView = inflater.inflate(R.layout.dialog_logout_layout, null);
+                    AlertDialog dialog = new AlertDialog.Builder(MyInfoActivity.this)
+                            .setView(customView)
+                            .create();
+                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.default_dialog_background);
+                    Button btnConfirm = customView.findViewById(R.id.btn_logout_confirm);
+                    Button btnCancel = customView.findViewById(R.id.btn_logout_cancel);
+
+                    btnConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            logout();
+                            dialog.dismiss();
+                        }
+                    });
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+        });
     }
 
     // 选择更换图片方式
@@ -224,6 +259,7 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageDialog.dismiss();
                 if (ContextCompat.checkSelfPermission(MyInfoActivity.this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
                     cameraPermissionLauncher.launch(Manifest.permission.CAMERA);
@@ -235,6 +271,7 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageDialog.dismiss();
                 requestPermissions();
             }
         });
@@ -294,7 +331,7 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
                 binding.imgInfoPhoto.setImageURI(resultUri);
 
                 // 存本地
-                mPresenter.saveUserAvatar(resultUri);
+//                mPresenter.saveUserAvatar(resultUri);
 
                 // 存网络
                 String realPath = FileUtils.getRealPathFromUri(MyInfoActivity.this, resultUri);
@@ -304,10 +341,10 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
                 if (imageDialog != null && imageDialog.isShowing()) {
                     imageDialog.dismiss();
                 }
-                if(dialogPick != null && dialogPick.isShowing()){
+                if (dialogPick != null && dialogPick.isShowing()) {
                     dialogPick.dismiss();
                 }
-                setImageDialog();
+//                setImageDialog();
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Throwable cropError = UCrop.getError(data);
@@ -420,4 +457,15 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
             }
         });
     }
+
+
+    private void logout() {
+        mPresenter.logout();
+        finishAffinity();
+
+        ARouter.getInstance()
+                .build("/login/LoginActivity")
+                .navigation();
+    }
+
 }

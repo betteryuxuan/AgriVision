@@ -7,10 +7,10 @@
       </SelectionState>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-03-17T12:44:59.058336400Z">
+        <DropdownSelection timestamp="2025-03-18T06:29:37.764018Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=ONLNGUHEPB4LDYEU" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=9b4674a0" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -20,9 +20,6 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="modulesCore.chatpageview">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="modulesCore.classificationview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

@@ -3,7 +3,7 @@ package com.example.module.login.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.module.login.ILoginContract;
+import com.example.module.login.contract.ILoginContract;
 import com.example.module.login.model.LoginModel;
 import com.example.module.login.view.LoginActivity;
 

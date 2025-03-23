@@ -10,16 +10,10 @@ import java.util.List;
 
 public interface IInfoContract {
     interface View {
-        void showMenuItems(List<MenuItem> items);
-
         void showUserInfo(User user);
     }
 
     interface Presenter {
-        void loadMenuItems();
-
-        void onMenuItemClick(int position);
-
         void setUserInfo();
 
         void getUser(User user);
