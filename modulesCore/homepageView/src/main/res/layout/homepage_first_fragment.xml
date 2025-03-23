@@ -51,7 +51,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/banner_homefirst_top" />
 
-            <com.example.module.homepageview.custom.MyView
+            <com.example.module.libBase.MyView
                 android:id="@+id/myview1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />
-            </com.example.module.homepageview.custom.MyView>
+            </com.example.module.libBase.MyView>
 
 
             <TextView
@@ -93,24 +93,28 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_homefirst_recommend"/>
+                app:layout_constraintTop_toBottomOf="@+id/myview1"/>
 
-            <com.fangxu.library.DragContainer
-                android:id="@+id/dc_home_drag"
+            <com.example.module.libBase.MyView
+                android:id="@+id/myview2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="#00000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/homepage_text2">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_homepage_crop"
-                    android:layout_width="wrap_content"
+                <com.fangxu.library.DragContainer
+                    android:id="@+id/dc_home_drag"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false" />
-            </com.fangxu.library.DragContainer>
-
+                    android:background="#00000000">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_homepage_crop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </com.fangxu.library.DragContainer>
+            </com.example.module.libBase.MyView>
 
             <TextView
                 android:id="@+id/homepage_text4"
@@ -124,29 +128,33 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dc_home_drag" />
+                app:layout_constraintTop_toBottomOf="@+id/myview2" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView5"
-                android:layout_width="330dp"
-                android:layout_height="160dp"
-                android:layout_marginStart="20dp"
+            <com.example.module.libBase.MyView
+                android:id="@+id/myview3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:elevation="0dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/homepage_text4">
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_homepage_proverb"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#C8E3C4"
-                    android:nestedScrollingEnabled="false" />
-            </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView5"
+                    android:layout_width="330dp"
+                    android:layout_height="160dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_homepage_proverb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#C8E3C4"
+                        android:nestedScrollingEnabled="false" />
+                </androidx.cardview.widget.CardView>
+            </com.example.module.libBase.MyView>
 
             <TextView
                 android:id="@+id/homepage_text5"
@@ -160,7 +168,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView5" />
+                app:layout_constraintTop_toBottomOf="@+id/myview3" />
 
             <TextView
                 android:id="@+id/tv_homefirst_poetry_more"

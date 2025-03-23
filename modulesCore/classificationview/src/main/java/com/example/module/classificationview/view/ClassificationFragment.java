@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,10 +34,15 @@ import java.util.List;
 @Route(path = "/classificationView/ClassificationFragment")
 public class ClassificationFragment extends Fragment implements IClassificationContract.IClassificationView {
 
+    private static final String TAG = "ClassificationFragment";
     private IClassificationContract.IClassificationPresenter presenter;
     private RecyclerView foodRecyclerView, oilRecyclerView, vegetableRecyclerView, fruitRecyclerView, wildFruitRecyclerView, seedRecyclerView, medicinalRecyclerView;
     private ImageView foodButton, oilButton, vegetableButton, fruitButton, wildFruitButton, seedButton, medicinalButton;
     private Banner banner;
+    private NestedScrollView nestedScrollView;
+    private float scaleFactor = 1f; // 初始缩放比例
+    private final float MIN_SCALE = 1f; // 最小缩放比例
+    private final float MAX_SCALE = 2f; // 最大缩放比例
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
 
         banner = view.findViewById(R.id.banner_classification_top);
 
+        nestedScrollView = view.findViewById(R.id.nsv_classification_fragment);
         foodRecyclerView = view.findViewById(R.id.rv_category_food);
         oilRecyclerView = view.findViewById(R.id.rv_category_oil);
         vegetableRecyclerView = view.findViewById(R.id.rv_category_vegetable);
@@ -83,7 +90,29 @@ public class ClassificationFragment extends Fragment implements IClassificationC
 
     @Override
     public void initListener() {
+        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // 计算滚动距离变化量
+                float scrollDelta = scrollY - oldScrollY;
 
+                // 根据滚动方向调整缩放比例
+                if (scrollDelta > 0) {
+                    // 向下滚动，放大图片
+                    scaleFactor += 0.01f;  // 增加缩放比例
+                } else if (scrollDelta < 0) {
+                    // 向上滚动，缩小图片
+                    scaleFactor -= 0.01f;  // 减少缩放比例
+                }
+
+                // 限制缩放比例的范围
+                scaleFactor = Math.max(MIN_SCALE, Math.min(scaleFactor, MAX_SCALE)); // 限制在1倍到2倍之间
+
+                // 更新图片的缩放
+                banner.setScaleX(scaleFactor);
+                banner.setScaleY(scaleFactor);
+            }
+        });
     }
 
     @Override

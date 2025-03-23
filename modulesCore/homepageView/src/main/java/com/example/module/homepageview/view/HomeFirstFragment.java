@@ -2,6 +2,7 @@ package com.example.module.homepageview.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ import com.example.module.libBase.bean.SpaceItemDecoration;
 import com.example.module.libBase.bean.SwitchPageEvent;
 import com.fangxu.library.DragContainer;
 import com.fangxu.library.DragListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.holder.BannerImageHolder;
@@ -49,6 +52,7 @@ import com.youth.banner.indicator.CircleIndicator;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -237,6 +241,26 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
                 }
             }
         });
+        String jsonList = SPUtils.getString(getContext(), SPUtils.CROP_DETAIL_LIST_KEY, "");
+        // 使用 Gson 将 JSON 字符串转换回 List
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Crop.CropDetail>>() {
+        }.getType();
+        List<Crop.CropDetail> cropDetailList = gson.fromJson(jsonList, listType);
+        Log.d(TAG, "cropDetailList: " + cropDetailList);
+        if (cropDetailList == null) {
+            cropDetailList = new ArrayList<>();
+            cropDetailList.add(list.get(0).getCropDetail().get(1));
+            cropDetailList.add(list.get(1).getCropDetail().get(1));
+            cropDetailList.add(list.get(2).getCropDetail().get(0));
+            cropDetailList.add(list.get(2).getCropDetail().get(1));
+            cropDetailList.add(list.get(3).getCropDetail().get(0));
+            cropDetailList.add(list.get(3).getCropDetail().get(1));
+            cropDetailList.add(list.get(4).getCropDetail().get(0));
+            cropDetailList.add(list.get(4).getCropDetail().get(1));
+            String jsonListAfterAdd = gson.toJson(cropDetailList);
+            SPUtils.putString(getContext(), SPUtils.CROP_DETAIL_LIST_KEY, jsonListAfterAdd);
+        }
     }
 
     @Override

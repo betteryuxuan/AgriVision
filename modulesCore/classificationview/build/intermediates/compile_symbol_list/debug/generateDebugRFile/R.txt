@@ -51,7 +51,7 @@ int id iv_category_wild_fruit 0x0
 int id iv_classification_cropimage 0x0
 int id linearLayout 0x0
 int id main 0x0
-int id nestedScrollView 0x0
+int id nsv_classification_fragment 0x0
 int id rv_category_details 0x0
 int id rv_category_food 0x0
 int id rv_category_fruit 0x0

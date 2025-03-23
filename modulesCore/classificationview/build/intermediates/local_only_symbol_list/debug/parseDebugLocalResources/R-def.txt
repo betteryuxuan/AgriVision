@@ -53,7 +53,7 @@ id iv_category_wild_fruit
 id iv_classification_cropimage
 id linearLayout
 id main
-id nestedScrollView
+id nsv_classification_fragment
 id rv_category_details
 id rv_category_food
 id rv_category_fruit
