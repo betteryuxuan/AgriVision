@@ -92,6 +92,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
     // 展示当前照片
     private void setImageDialog(int position) {
+        if (imageDialog != null && imageDialog.isShowing()) {
+            imageDialog.dismiss();
+        }
         String imageUri = imageUrls.get(position);
 
         builder = new AlertDialog.Builder(context);

@@ -57,8 +57,8 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
     private ActivityResultLauncher<Uri> cameraLauncher;
     private ActivityResultLauncher<String> cameraPermissionLauncher;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
-    private AlertDialog imageDialog;
     private AlertDialog.Builder builder;
+    private AlertDialog imageDialog;
     private AlertDialog dialogPick;
 
     @Override
@@ -259,6 +259,7 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageDialog.dismiss();
                 if (ContextCompat.checkSelfPermission(MyInfoActivity.this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
                     cameraPermissionLauncher.launch(Manifest.permission.CAMERA);
@@ -270,6 +271,7 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageDialog.dismiss();
                 requestPermissions();
             }
         });
@@ -342,7 +344,7 @@ public class MyInfoActivity extends AppCompatActivity implements IMyInfoContract
                 if (dialogPick != null && dialogPick.isShowing()) {
                     dialogPick.dismiss();
                 }
-                setImageDialog();
+//                setImageDialog();
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Throwable cropError = UCrop.getError(data);

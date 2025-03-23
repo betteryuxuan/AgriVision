@@ -26,6 +26,11 @@ public class PostsPresenter implements IPostsContract.Presenter {
     }
 
     @Override
+    public void getGuestData(int communityId, int page, int pageSize) {
+        mModel.getGuestData(communityId, page, pageSize);
+    }
+
+    @Override
     public void onDataReceived(List<Post> postList) {
         mView.onDataReceived(postList);
     }
@@ -48,6 +53,4 @@ public class PostsPresenter implements IPostsContract.Presenter {
     public void deletePost(int postId) {
         mModel.deletePost(postId);
     }
-
-
 }

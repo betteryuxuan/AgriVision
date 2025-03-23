@@ -53,6 +53,9 @@ public class ImageDisplayAdapter extends RecyclerView.Adapter<ImageDisplayAdapte
     }
 
     private void setImageDialog(int position) {
+        if (imageDialog != null && imageDialog.isShowing()) {
+            imageDialog.dismiss();
+        }
         String imageUri = imageUrls.get(position);
 
         builder = new AlertDialog.Builder(context);

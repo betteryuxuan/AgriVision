@@ -37,16 +37,24 @@ public class PersonalInfoModel implements IInfoContract.Model {
 
     @Override
     public void getUserInfo() {
-        String username = SPUtils.getString(mContext, "username", null);
-        String email = SPUtils.getString(mContext, "email", null);
-        String avatar = SPUtils.getString(mContext, "avatar", null);
+        String username = SPUtils.getString(mContext, SPUtils.USERNAME_KEY, null);
+        String email = SPUtils.getString(mContext, SPUtils.EMAIL_KEY, null);
+        String avatar = SPUtils.getString(mContext, SPUtils.AVATAR_KEY, null);
 
-        if (username != null && email != null) {
-            // 本地已登录直接获
-            User user = new User(email, username, avatar);
-            mPresenter.getUser(user);
-            mPresenter.updateUserInfo(user);
-        } else if (username == null && email == null) {
+        // 帖子数要经常更新
+//        int postNum = SPUtils.getInt(mContext, SPUtils.POSTNUM_KEY, 0);
+//        if (username != null && email != null && avatar != null) {
+//            // 本地已登录直接获
+//            User user = new User();
+//            user.setUserName(username);
+//            user.setEmail(email);
+//            user.setAvatar(avatar);
+//            user.setPostnum(postNum);
+//
+//            mPresenter.getUser(user);
+//            mPresenter.updateUserInfo(user);
+//        } else
+            if (username == null && email == null && avatar == null) {
             // 未登录
             mPresenter.getUser(null);
             mPresenter.updateUserInfo(null);
@@ -88,15 +96,21 @@ public class PersonalInfoModel implements IInfoContract.Model {
                         String username = data.getString("username");
                         String email = data.getString("email");
                         String avatar = data.getString("avatar");
+                        int postNum = data.getInt("post_num");
                         if (avatar.equals("")) {
                             avatar = null;
                             Log.d(TAG, "avatar is null");
                         }
-                        User user = new User(email, username, avatar);
+                        User user = new User();
+                        user.setUserName(username);
+                        user.setEmail(email);
+                        user.setAvatar(avatar);
+                        user.setPostnum(postNum);
 
                         SPUtils.putString(mContext, SPUtils.USERNAME_KEY, username);
                         SPUtils.putString(mContext, SPUtils.EMAIL_KEY, email);
                         SPUtils.putString(mContext, SPUtils.AVATAR_KEY, avatar);
+//                        SPUtils.putInt(mContext, SPUtils.POSTNUM_KEY, postNum);
 
                         Log.d(TAG, responseBody);
 

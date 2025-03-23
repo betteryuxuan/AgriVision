@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface IInfoContract {
     interface View {
-        void showMenuItems(List<MenuItem> items);
-
         void showUserInfo(User user);
     }
 

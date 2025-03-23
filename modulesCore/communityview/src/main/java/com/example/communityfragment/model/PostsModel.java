@@ -77,7 +77,7 @@ public class PostsModel implements IPostsContract.Model {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseBody = response.body().string();
-                Log.d(TAG, "onResponse: " + responseBody);
+//                Log.d(TAG, "onResponse: " + responseBody);
                 if (response.isSuccessful()) {
                     try {
                         JSONObject object = new JSONObject(responseBody);
@@ -86,6 +86,59 @@ public class PostsModel implements IPostsContract.Model {
                             List<Post> posts = new ArrayList<>();
                             for (int i = 0; i < data.length(); i++) {
                                 posts.add(fromJson(data.getJSONObject(i)));
+                                Log.d(TAG, "onResponse: " + posts.get(i).toString());
+                            }
+                            mPresenter.onDataReceived(posts);
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    mPresenter.onDataReceivedFailure();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getGuestData(int communityId, int page, int pageSize) {
+        String URL;
+
+         if (communityId == 5) {
+            // 热榜
+            URL = URLUtils.GET_GUEST_POSTS_URL + "?page=" + page + "&size=" + pageSize + "&order=" + "time";
+        } else if (communityId == 4) {
+            // 全部
+            URL = URLUtils.GET_GUEST_POSTS_URL + "?page=" + page + "&size=" + pageSize + "&order=" + "score";
+        } else {
+            URL = URLUtils.GET_GUEST_SPECIFIC_POSTS_URL + "/" + communityId + "/posts/guest" + "?page=" + page + "&size=" + pageSize;
+        }
+        Log.d(TAG, URL);
+
+        Request request = new Request.Builder()
+                .url(URL)
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                mPresenter.onDataReceivedFailure();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String responseBody = response.body().string();
+//                Log.d(TAG, "onResponse: " + responseBody);
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject object = new JSONObject(responseBody);
+                        if (object.getInt("code") == 1) {
+                            JSONArray data = object.getJSONObject("data").getJSONArray("posts");
+                            List<Post> posts = new ArrayList<>();
+                            for (int i = 0; i < data.length(); i++) {
+                                posts.add(fromJson(data.getJSONObject(i)));
+                                Log.d(TAG, "onResponse: " + posts.get(i).toString());
                             }
                             mPresenter.onDataReceived(posts);
                         }
@@ -147,8 +200,9 @@ public class PostsModel implements IPostsContract.Model {
 
     @Override
     public void votePost(int postId, Boolean isLiked) {
+        Log.d(TAG, "votePost: " + postId + " " + isLiked);
         JSONObject json = new JSONObject();
-        int directionInt = isLiked ? 0 : 1;
+        int directionInt = isLiked ? 1 : 0;
         try {
             json.put("post_id", postId);
             json.put("direction", directionInt);
@@ -172,7 +226,7 @@ public class PostsModel implements IPostsContract.Model {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseBody = response.body().string();
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "点赞成功" + responseBody);
+                    Log.d(TAG, "vote " + directionInt + " 成功" + responseBody);
                 }
             }
         });

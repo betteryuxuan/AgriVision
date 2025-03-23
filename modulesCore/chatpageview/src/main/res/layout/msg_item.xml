@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingEnd="60dp">
+        android:paddingEnd="60dp"
+        android:paddingBottom="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/left_layout"
@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="本试文本试文本试文本试文本试文本试文本试文本试文本试文本试文本试文本试文本试文本试文本试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本本测试文本测试文本测试文本"
                 android:textColor="#000000"
+                android:textIsSelectable="true"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,14 +57,14 @@
         android:gravity="right"
         android:orientation="horizontal"
         android:paddingStart="50dp"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:paddingEnd="15dp">
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp">
 
         <View
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/right_layout"
@@ -82,6 +83,7 @@
                 android:layout_marginStart="3dp"
                 android:text="测试文本测试文本测试文本"
                 android:textColor="#004bbd"
+                android:textIsSelectable="true"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,8 +110,8 @@
         android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingEnd="60dp">
+        android:paddingEnd="60dp"
+        android:paddingBottom="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/thinking_layout"
