@@ -97,13 +97,12 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
                 if (content.trim().isEmpty()) {
                     Toast.makeText(PublishActivity.this, "请输入内容", Toast.LENGTH_SHORT).show();
                 } else {
+                    binding.imgPublishSend.setEnabled(false);
+                    binding.imgPublishSend.setImageResource(R.drawable.ic_publish_gray);
                     List<String> imagePaths = new ArrayList<>(imageUrls);
 
-                    binding.imgPublishSend.setEnabled(false);
                     Toast.makeText(PublishActivity.this, "上传中", Toast.LENGTH_SHORT).show();
-                    binding.imgPublishSend.setImageResource(R.drawable.ic_publish_gray);
-                    binding.imgPublishSend.setEnabled(false);
-                    if (imagePaths.size() != 0) {
+                    if (!imagePaths.isEmpty()) {
                         showPublishDialog();
                     }
 
@@ -309,7 +308,10 @@ public class PublishActivity extends AppCompatActivity implements IPublishContra
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(PublishActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                if (dialogLoading != null && dialogLoading.isShowing()) {
+                    dialogLoading.dismiss();
+                }
+                Toast.makeText(PublishActivity.this, "发布失败，请重试", Toast.LENGTH_SHORT).show();
                 binding.imgPublishSend.setEnabled(true);
                 binding.imgPublishSend.setImageResource(R.drawable.ic_publish);
                 if (dialogLoading != null && dialogLoading.isShowing()) {

@@ -23,6 +23,7 @@ import com.example.communityfragment.bean.PostPublishedEvent;
 import com.example.communityfragment.contract.IPostsContract;
 import com.example.communityfragment.databinding.FragmentPostsBinding;
 import com.example.communityfragment.presenter.PostsPresenter;
+import com.example.module.libBase.TokenManager;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -106,7 +107,11 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
                 currentPage = 1;
                 isLastPage = false;
                 binding.swipePostsRefresh.setNoMoreData(false);
-                mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+                if (TokenManager.getLoginStatus(getContext())) {
+                    mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+                } else {
+                    mPresenter.getGuestData(getCommunityId(), currentPage, PAGE_SIZE);
+                }
             }
         });
         binding.swipePostsRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -114,14 +119,22 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (!isLastPage) {
                     currentPage++;
-                    mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+                    if (TokenManager.getLoginStatus(getContext())) {
+                        mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+                    } else {
+                        mPresenter.getGuestData(getCommunityId(), currentPage, PAGE_SIZE);
+                    }
                 } else {
                     binding.swipePostsRefresh.finishLoadMore();
                 }
             }
         });
 
-        mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+        if (TokenManager.getLoginStatus(getContext())) {
+            mPresenter.getData(getCommunityId(), currentPage, PAGE_SIZE);
+        } else {
+            mPresenter.getGuestData(getCommunityId(), currentPage, PAGE_SIZE);
+        }
     }
 
     @Override
@@ -140,6 +153,7 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onPostPublished(PostPublishedEvent event) {
+        binding.rlvPosts.smoothScrollToPosition(0);
         binding.swipePostsRefresh.autoRefresh();
     }
 
@@ -174,11 +188,11 @@ public class PostsFragment extends Fragment implements IPostsContract.View {
                     isLastPage = true;
                     binding.swipePostsRefresh.finishLoadMoreWithNoMoreData();
                     binding.swipePostsRefresh.finishRefresh(true);
-                    if(category.equals("赞过")){
+                    if (category.equals("赞过")) {
                         binding.tvPostsEmpty.setText("当前暂无赞过的帖子");
-                    }else if(category.equals("帖子")){
+                    } else if (category.equals("帖子")) {
                         binding.tvPostsEmpty.setText("把田里的经验写成故事！\uD83D\uDCDA\n分享您的种植笔记\uD83C\uDF31");
-                    }else {
+                    } else {
                         binding.tvPostsEmpty.setText("当前暂无帖子");
                     }
                     binding.rlvPosts.setVisibility(View.GONE);

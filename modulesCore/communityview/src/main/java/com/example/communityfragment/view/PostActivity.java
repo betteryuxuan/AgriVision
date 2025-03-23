@@ -40,6 +40,7 @@ import com.example.communityfragment.presenter.PostPresenter;
 import com.example.communityfragment.utils.TimeUtils;
 import com.example.module.libBase.SPUtils;
 import com.example.module.libBase.SoftHideKeyBoardUtil;
+import com.example.module.libBase.TokenManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
@@ -144,12 +145,16 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
         binding.tvPostSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!TokenManager.getLoginStatus(PostActivity.this)) {
+                    Toast.makeText(PostActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String content = binding.etPostText.getText().toString();
                 if (content.trim().isEmpty()) {
                     Toast.makeText(PostActivity.this, "请输入内容", Toast.LENGTH_SHORT).show();
                 } else {
 //                    binding.tvPostSend.setEnabled(false);
-                    mPresenter.comment(post.getId(), content,null, null);
+                    mPresenter.comment(post.getId(), content, null, null);
                 }
             }
         });
@@ -324,7 +329,7 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
     private boolean isPostOwner(Post currentPost) {
         String username = SPUtils.getString(this, SPUtils.USERNAME_KEY, "");
         String avatar = SPUtils.getString(this, SPUtils.AVATAR_KEY, "");
-        Log.d("PostAdapter", "isPostOwner: " + username + " " + avatar+ " " + currentPost.getUserName() + " " + currentPost.getUserAvatar());
+        Log.d("PostAdapter", "isPostOwner: " + username + " " + avatar + " " + currentPost.getUserName() + " " + currentPost.getUserAvatar());
         return username.equals(currentPost.getUserName()) && avatar.equals(currentPost.getUserAvatar());
     }
 

@@ -70,7 +70,7 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     public class CropViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         private ImageView imageView;
-        private FrameLayout frameLayout;
+        private ConstraintLayout frameLayout;
 
         public CropViewHolder(@NonNull View itemView) {
             super(itemView);

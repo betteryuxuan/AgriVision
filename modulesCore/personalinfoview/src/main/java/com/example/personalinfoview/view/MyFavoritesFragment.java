@@ -49,6 +49,7 @@ public class MyFavoritesFragment extends Fragment {
 
     private void initData() {
         String jsonList = SPUtils.getString(requireContext(), SPUtils.CROP_DETAIL_LIST_KEY, "");
+
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Crop.CropDetail>>() {}.getType();
         favoritesCropsList = gson.fromJson(jsonList, listType);

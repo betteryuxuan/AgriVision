@@ -16,7 +16,7 @@ public class TokenManager {
     }
 
     public static String getToken(Context context) {
-        return  SPUtils.getString(context, KEY_TOKEN);
+        return SPUtils.getString(context, KEY_TOKEN, null);
     }
 
     public static void clearToken(Context context) {

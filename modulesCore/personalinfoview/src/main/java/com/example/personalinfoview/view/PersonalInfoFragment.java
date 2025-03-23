@@ -40,8 +40,8 @@ public class PersonalInfoFragment extends Fragment implements IInfoContract.View
 
     private IInfoContract.Presenter presenter;
     private List<String> categories = new ArrayList<>();
-    private List<MenuItem> items = new ArrayList<>();
     private User user;
+
     public PersonalInfoFragment() {
     }
 
@@ -173,36 +173,24 @@ public class PersonalInfoFragment extends Fragment implements IInfoContract.View
         }
     }
 
-    @Override
-    public void showMenuItems(List<MenuItem> items) {
-//        rlv.setAdapter(new MenuAdapter(items, position -> presenter.onMenuItemClick(position)));
-    }
-
     public void UpdateUserInfo(User user) {
         if (user != null) {
             binding.tvMyinfoName.setText(user.getUserName());
             binding.tvTopUseraname.setText(user.getUserName());
             binding.tvMyinfoEmail.setText(user.getEmail());
+            binding.tvPostsCount.setText(String.format("%s\n发帖", String.valueOf(user.getPostnum())));
 
             String avatarUri = user.getAvatar();
-            if (avatarUri != null) {
-                Log.d(TAG, "有图片 " + avatarUri);
-                Glide.with(this)
-                        .load(avatarUri)
-                        .error(R.drawable.default_user2)
-                        .fallback(R.drawable.default_user2)
-                        .into(binding.imgMyinfoAvatar);
-                Glide.with(this)
-                        .load(avatarUri)
-                        .error(R.drawable.default_user2)
-                        .fallback(R.drawable.default_user2)
-                        .into(binding.imgTopUseravatar);
-            } else {
-                Log.d(TAG, "无图片: " + avatarUri);
-                Glide.with(this)
-                        .load(R.drawable.default_user2)
-                        .into(binding.imgMyinfoAvatar);
-            }
+            Glide.with(this)
+                    .load(avatarUri)
+                    .error(R.drawable.default_user2)
+                    .fallback(R.drawable.default_user2)
+                    .into(binding.imgMyinfoAvatar);
+            Glide.with(this)
+                    .load(avatarUri)
+                    .error(R.drawable.default_user2)
+                    .fallback(R.drawable.default_user2)
+                    .into(binding.imgTopUseravatar);
         } else {
             binding.tvMyinfoName.setText("未登录");
             binding.tvTopUseraname.setText("未登录");

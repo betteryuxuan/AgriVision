@@ -23,6 +23,8 @@ public interface IPostsContract {
         void votePost(int postId, Boolean direction);
 
         void onDataReceivedFailure();
+
+        void getGuestData(int communityId, int page, int pageSize);
     }
 
     public interface Model {
@@ -31,6 +33,8 @@ public interface IPostsContract {
         void deletePost(int postId);
 
         void votePost(int postId, Boolean isliked);
+
+        void getGuestData(int communityId, int page, int pageSize);
 
         String getUserName();
     }

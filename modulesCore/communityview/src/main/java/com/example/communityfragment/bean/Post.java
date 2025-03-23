@@ -121,15 +121,16 @@ public class Post implements Serializable {
     public String toString() {
         return "Post{" +
                 "commentCount='" + commentCount + '\'' +
+                ", communityId='" + communityId + '\'' +
+                ", isLiked=" + isLiked +
+                ", content='" + content + '\'' +
+//                ", createdTime='" + createdTime + '\'' +
                 ", id=" + id +
+//                ", imageUrls='" + imageUrls + '\'' +
+                ", likeConunt='" + likeConunt + '\'' +
+//                ", userAvatar='" + userAvatar + '\'' +
                 ", userid='" + userid + '\'' +
                 ", userName='" + userName + '\'' +
-                ", userAvatar='" + userAvatar + '\'' +
-                ", content='" + content + '\'' +
-                ", createdTime='" + createdTime + '\'' +
-                ", imageUrls='" + imageUrls + '\'' +
-                ", likeConunt='" + likeConunt + '\'' +
-                ", isLiked=" + isLiked +
                 '}';
     }
 }

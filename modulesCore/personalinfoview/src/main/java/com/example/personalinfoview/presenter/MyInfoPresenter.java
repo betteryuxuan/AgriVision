@@ -42,7 +42,6 @@ public class MyInfoPresenter implements IMyInfoContract.Presenter {
     }
 
     public void onModifyInfoSuccess(String username) {
-
         mView.onModifyInfoSuccess(username);
     }
 

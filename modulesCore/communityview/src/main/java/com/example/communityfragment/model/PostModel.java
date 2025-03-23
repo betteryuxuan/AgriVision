@@ -86,7 +86,6 @@ public class PostModel implements IPostContract.Model {
                                 comment.setUserName(userObj.getString("username"));
                                 comment.setUserAavatar(userObj.getString("avatar"));
 
-
                                 comments.add(comment);
                                 Log.d(TAG, "帖子 : " + comment.toString());
                             }
@@ -144,23 +143,24 @@ public class PostModel implements IPostContract.Model {
 
     @Override
     public void deletePost(int postId) {
-//        String MYDELETE_URL = DELETE_URL + "?id=" +postId;
-//        Request request = new Request.Builder()
-//                .url(MYDELETE_URL)
-//                .delete()
-//                .build();
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if (response.isSuccessful()) {
-//                    mPresenter.deletePostSuccess(postId);
-//                }
-//            }
-//        });
+        String URL = URLUtils.DELETE_POST_URL + "/" + postId;
+        Request request = new Request.Builder()
+                .url(URL)
+                .delete()
+                .addHeader("Authorization", "Bearer " + TokenManager.getToken(mContext))
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, response.toString());
+                if (response.isSuccessful()) {
+                    mPresenter.deletePostSuccess(postId);
+                }
+            }
+        });
     }
 }

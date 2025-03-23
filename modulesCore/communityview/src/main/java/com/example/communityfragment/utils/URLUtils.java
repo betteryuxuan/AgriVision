@@ -10,6 +10,11 @@ public class URLUtils {
     public static final String GET_USER_POSTS_URL = BASE_URL + "/community-post/user/posts";
     // 查询当前用户点赞帖子列表
     public static final String GET_LIKED_POSTS_URL = BASE_URL + "/community-post/user/likes";
+    // 游客查询帖子列表
+    public static final String GET_GUEST_POSTS_URL = BASE_URL + "/community-post/posts/guest";
+    // 游客查询社区下的帖子列表
+    public static final String GET_GUEST_SPECIFIC_POSTS_URL = BASE_URL + "/community-post/community";
+
     // 发布帖子
     public static final String PUBLISH_POST_URL = BASE_URL + "/community-post/post";
     // 删除帖子

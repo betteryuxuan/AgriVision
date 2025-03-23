@@ -1,5 +1,7 @@
 package com.example.communityfragment.adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -34,6 +36,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.communityfragment.R;
 import com.example.communityfragment.bean.Post;
 import com.example.module.libBase.SPUtils;
+import com.example.module.libBase.TokenManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,7 +89,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Post currentPost = mPostList.get(realPosition);
         Log.d("PostsFuctionTAG", "onBindViewHolder: " + position);
 
-        holder.userName.setText(currentPost.getUserid());
+        holder.userName.setText(currentPost.getUserName());
         holder.postLikeCount.setText(currentPost.getLikeConunt());
         holder.postComment.setText(currentPost.getCommentCount());
         Glide.with(holder.itemView.getContext())
@@ -131,6 +134,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.rlvImages.setVisibility(View.GONE);
         }
 
+        Log.d("PostsFuctionTAG1111", "点赞: " + currentPost.getIsLiked() + "  " + currentPost.getContent());
         if (currentPost.getIsLiked()) {
             holder.postLike.setImageResource(R.drawable.ic_like_green);
             holder.postLikeCount.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.grenn1));
@@ -174,8 +178,13 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mActionListener != null) {
-                    mActionListener.onLikeClick(currentPost.getId(), currentPost.getIsLiked());
+//                ObjectAnimator scaleX = ObjectAnimator.ofFloat(holder.postLike, "scaleX", 1f, 1.1f, 1f);
+//                ObjectAnimator scaleY = ObjectAnimator.ofFloat(holder.postLike, "scaleY", 1f, 1.1f, 1f);
+//                AnimatorSet set = new AnimatorSet();
+//                set.playTogether(scaleX, scaleY);
+//                set.setDuration(300).start();
+                if(!TokenManager.getLoginStatus(holder.itemView.getContext())){
+                   Toast.makeText(holder.itemView.getContext(), "请先登录", Toast.LENGTH_SHORT).show();
                 }
 
                 if (currentPost.getIsLiked()) {
@@ -192,6 +201,9 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     String likeConunt = String.valueOf(Integer.parseInt(currentPost.getLikeConunt()) + 1);
                     currentPost.setLikeConunt(likeConunt);
                     holder.postLikeCount.setText(likeConunt);
+                }
+                if (mActionListener != null) {
+                    mActionListener.onLikeClick(currentPost.getId(), currentPost.getIsLiked());
                 }
             }
         };
@@ -338,7 +350,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         for (int i = 0; i < mPostList.size(); i++) {
             if (mPostList.get(i).getId() == postId) {
                 mPostList.remove(i);
-                notifyItemRemoved(i);
+                notifyItemRemoved(mHeaderView == null ? i : i + 1);
                 break;
             }
         }
@@ -411,6 +423,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     ARouter.getInstance()
                             .build("/chatpageview/ChatPageActivity")
+                            .withInt("role", 2)
                             .navigation();
                 }
             });
@@ -419,6 +432,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     ARouter.getInstance()
                             .build("/chatpageview/ChatPageActivity")
+                            .withInt("role", 1)
                             .navigation();
                 }
             });
@@ -427,6 +441,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     ARouter.getInstance()
                             .build("/chatpageview/ChatPageActivity")
+                            .withInt("role", 3)
                             .navigation();
                 }
             });
@@ -435,6 +450,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     ARouter.getInstance()
                             .build("/chatpageview/ChatPageActivity")
+                            .withInt("role", 4)
                             .navigation();
                 }
             });
