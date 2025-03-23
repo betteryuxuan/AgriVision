@@ -59,16 +59,16 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Fragment fragment = (Fragment) ARouter.getInstance().build("/HomePageView/HomePageFragment").navigation(this);
-        Fragment chatpageFragment = (Fragment) ARouter.getInstance().build("/chatpageview/chatPage").navigation(this);
         Fragment personalInfoFragment = (Fragment) ARouter.getInstance().build("/personalinfoview/PersonalInfoFragment").navigation(this);
         Fragment shoppingFragment = (Fragment) ARouter.getInstance().build("/shoppingview/ShoppingFragment").navigation(this);
         Fragment videoFragment = (Fragment) ARouter.getInstance().build("/videoview/VideoFragment").navigation(this);
+        Fragment communityFragment = (Fragment) ARouter.getInstance().build("/communityPageView/CommunityFragment").navigation(this);
 
         fragments = new ArrayList<>();
         fragments.add(fragment);
         fragments.add(shoppingFragment);
         fragments.add(videoFragment);
-        fragments.add(chatpageFragment);
+        fragments.add(communityFragment);
         fragments.add(personalInfoFragment);
 
         PagesAdapter pagesAdapter = new PagesAdapter(getSupportFragmentManager(), getLifecycle(), fragments);
@@ -90,16 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                bottomNavigationView.getMenu().getItem(position).setChecked(true);
-                viewPager2.setUserInputEnabled(position != 0);
-            }
-        });
+
+        viewPager2.setUserInputEnabled(false);
 
         viewPager2.setOffscreenPageLimit(5);
+        viewPager2.setCurrentItem(3);
 
         @SuppressLint("RestrictedApi")
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
@@ -152,10 +147,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
+            // 判断当前焦点是否为EditText
             if (v instanceof EditText) {
+                // 将outRect设置为视图根视图坐标空间中该视图的非剪裁区域的坐标,即 EditText 在屏幕上的可见区域
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)ev.getRawX(), (int)ev.getRawY())) {
+                // 触摸点不在 EditText 的可见区域
+                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
                     v.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
@@ -166,6 +164,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
-
-
 }

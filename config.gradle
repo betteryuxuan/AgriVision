@@ -29,7 +29,8 @@ ext {
             "chatpage"        : "com.example.chatpageview",
             "personalinfopage": "com.example.personalinfoview",
             "shopping"        : "com.example.module.shoppingview",
-            "videopage"       : "com.example.module.videoview"
+            "videopage"       : "com.example.module.videoview",
+            "communityview"   : "com.example.communityfragment"
 
     ]
 
@@ -46,6 +47,8 @@ ext {
             "exoplayer"       : "com.google.android.exoplayer:exoplayer:2.18.1",
             "circleimage"     : "de.hdodenhof:circleimageview:3.1.0",
             "ucrop"           : "com.github.yalantis:ucrop:2.2.9-native",
+            "blurview"        : "com.github.centerzx:ShapeBlurView:1.0.5"
+
 
     ]
 

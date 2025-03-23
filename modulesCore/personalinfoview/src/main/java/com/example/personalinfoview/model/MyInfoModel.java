@@ -48,7 +48,6 @@ public class MyInfoModel implements IMyInfoContract.Model {
         try {
             object.put("username", username);
             object.put("email", email);
-
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -70,9 +69,9 @@ public class MyInfoModel implements IMyInfoContract.Model {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("MyInfoActivityTAG", "onResponse: " + response.body().string());
-                mPresenter.onModifyInfoSuccess(username);
+                Log.d("MyInfoActivityTAG", "onResponse: " + username + response.body().string());
                 SPUtils.putString(mContext, SPUtils.USERNAME_KEY, username);
+                mPresenter.onModifyInfoSuccess(username);
             }
         });
     }
@@ -135,6 +134,11 @@ public class MyInfoModel implements IMyInfoContract.Model {
                 }
             }
         });
+    }
+
+    @Override
+    public void logout() {
+        SPUtils.clear(mContext);
     }
 }
 
