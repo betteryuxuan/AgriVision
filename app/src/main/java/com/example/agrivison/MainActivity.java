@@ -1,6 +1,5 @@
 package com.example.agrivison;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
@@ -8,8 +7,11 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -24,11 +26,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.example.module.libBase.bean.SwitchPageEvent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,17 +121,20 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setEnabled(false);
         menuItem.setIcon(android.R.color.transparent);
         menuItem.setTitle("");
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
         // 适配底部小白条颜色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.white_gray));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
             }
+        }
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+
         });
     }
 
@@ -142,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     private void exitByTwoClick() {
         if (!isExit) {
             isExit = true;
-            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
             Timer tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override
@@ -182,10 +189,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
-            @Override
-            protected void onDestroy() {
-                super.onDestroy();
-                EventBus.getDefault().unregister(this);
-            }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
