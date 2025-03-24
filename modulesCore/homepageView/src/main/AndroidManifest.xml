@@ -10,10 +10,16 @@
             android:name="com.example.module.homepageview.view.NewsActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.module.homepageview.view.CategoryDetailsActivity"
+            android:name="com.example.module.homepageview.view.CropDetailsActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.module.homepageview.view.CropDetailsActivity"
+            android:name="com.example.module.homepageview.view.PoetryActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.example.module.homepageview.view.PoetryDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.example.module.homepageview.view.SearchActivity"
             android:exported="true" />
     </application>
 

@@ -2,10 +2,15 @@ package com.example.module.videoview.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -15,13 +20,28 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.module.libBase.SPUtils;
 import com.example.module.videoview.R;
-import com.example.module.videoview.custom.CommentFragment;
+import com.example.module.videoview.custom.CommentCommitFragment;
+import com.example.module.videoview.model.classes.Comment;
+import com.example.module.videoview.view.adapter.CommentRecyclerViewAdapter;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.ui.PlayerView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VideoShowFragment extends Fragment {
 
@@ -32,10 +52,22 @@ public class VideoShowFragment extends Fragment {
     private ExoPlayer exoPlayer;
 
     private ImageView like, collect, message;
-    private TextView likeCount, collectCount;
+    private TextView likeCount, collectCount, messageCount, commentCount;
 
     private ImageView pause;
+    private GestureDetector gestureDetector;
+    private RecyclerView commentRecyclerView;
+    private List<Comment> comments = new ArrayList<>();
+    private ImageView close;
+    private ConstraintLayout layout, commentLayout;
+    private CommentRecyclerViewAdapter adapter;
 
+    private boolean isCommentOpen = false;
+    private float originalVideoY;
+
+    private boolean isDoubleTapped = false;  // 标记是否双击
+    private boolean isSingleTap = false;    // 标记是否是单击
+    private Handler handler = new Handler();  // 用于延时
     public VideoShowFragment() {
     }
 
@@ -87,6 +119,16 @@ public class VideoShowFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (exoPlayer != null) {
+            exoPlayer.release();
+            exoPlayer = null;
+        }
+    }
+
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         like = view.findViewById(R.id.iv_video_like);
@@ -95,6 +137,8 @@ public class VideoShowFragment extends Fragment {
         pause = view.findViewById(R.id.iv_video_pause);
         likeCount = view.findViewById(R.id.tv_video_like_count);
         collectCount = view.findViewById(R.id.tv_video_collect_count);
+        messageCount = view.findViewById(R.id.tv_video_message_count);
+        commentCount = view.findViewById(R.id.tv_video_comment_count);
 
         playerView = view.findViewById(R.id.pv_video_show);
         exoPlayer = new ExoPlayer.Builder(getContext()).build();
@@ -103,6 +147,11 @@ public class VideoShowFragment extends Fragment {
         exoPlayer.setMediaItem(mediaItem);
         exoPlayer.prepare();
 
+
+        commentRecyclerView = view.findViewById(R.id.rv_videoshow_comment);
+        close = view.findViewById(R.id.iv_video_comment_close);
+        layout = view.findViewById(R.id.cl_video_bottom_layout);
+        commentLayout = view.findViewById(R.id.cl_video_comment);
 
 
 
@@ -121,7 +170,6 @@ public class VideoShowFragment extends Fragment {
                 showHeartAnimation(like, R.drawable.ic_heart_full);
                 like.setTag("liked");
                 likeCount.setText(String.valueOf(Integer.parseInt(likeCount.getText().toString()) + 1));
-
             }
         });
 
@@ -142,29 +190,204 @@ public class VideoShowFragment extends Fragment {
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentFragment commentFragment = CommentFragment.newInstance();
-                commentFragment.show(getParentFragmentManager(), "comment");
+                toggleCommentSection();
             }
         });
 
-        playerView.setOnClickListener(new View.OnClickListener() {
+        playerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (exoPlayer.isPlaying()) {
-                    exoPlayer.pause();
-                    pause.setVisibility(View.VISIBLE);
-                } else {
-                    exoPlayer.play();
-                    pause.setVisibility(View.GONE);
+                toggleCommentSection();
+            }
+        });
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentCommitFragment commentCommitFragment = CommentCommitFragment.newInstance();
+                commentCommitFragment.show(getChildFragmentManager(), "commentCommitFragment");
+                commentCommitFragment.setOnCommentDataListener(new CommentCommitFragment.OnCommentDataListener() {
+                    @Override
+                    public void onCommentDataReturned(String s) {
+                        String name = SPUtils.getString(getContext(), SPUtils.USERNAME_KEY);
+                        String avatar = SPUtils.getString(getContext(), SPUtils.AVATAR_KEY);
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+                        String formattedDate = sdf.format(new Date());
+                        comments.add(new Comment(avatar, name, s, formattedDate));
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
+                        Pattern pattern = Pattern.compile("\\d+"); // 匹配数字
+                        Matcher matcher = pattern.matcher(commentCount.getText().toString());
+
+                        if (matcher.find()) { // 先检查是否匹配成功
+                            int count = Integer.parseInt(matcher.group()); // 转换成整数
+                            commentCount.setText(String.valueOf(count + 1) + "条评论"); // 递增后再设置
+                            messageCount.setText(String.valueOf(count + 1));
+                        } else {
+                            commentCount.setText("1" + "条评论"); // 如果没有数字，则默认从1开始
+                            messageCount.setText("1");
+                        }
+                        commentRecyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+
+                    }
+                });
+            }
+        });
+
+        exoPlayer.addListener(new Player.Listener() {
+            @Override
+            public void onPlaybackStateChanged(int playbackState) {
+                if (playbackState == Player.STATE_ENDED) {
+                    // 视频播放完毕后，重新开始播放
+                    exoPlayer.seekTo(0);  // 将播放进度条归零
+                    exoPlayer.play();     // 重新播放
                 }
             }
         });
 
     }
 
-    public void initView() {
+    private void toggleLike() {
+        if (like.getTag() == null || like.getTag().equals("unliked")) {
+            // 点赞
+            like.setImageResource(R.drawable.ic_heart_full);
+            like.setTag("liked");
+            showHeartAnimation(like, R.drawable.ic_heart_full);
+            // 更新点赞数量
+            int count = Integer.parseInt(likeCount.getText().toString()) + 1;
+            likeCount.setText(String.valueOf(count));
+        } else if (like.getTag().equals("liked")) {
+            // 已经点赞，再次点击取消动画（如果有取消动画的需求）
+            showHeartAnimation(like, R.drawable.ic_heart_full);
+        }
 
     }
+
+    public void initView() {
+
+
+        adapter = new CommentRecyclerViewAdapter(comments, getContext());
+
+        commentRecyclerView.setAdapter(adapter);
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true; // 必须返回true才能接收到后续事件
+            }
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                // 如果已经是双击事件，直接返回，不处理单击事件
+                if (isDoubleTapped) {
+                    return false;
+                }
+
+                // 标记为单击
+                isSingleTap = true;
+
+                // 延时执行单击操作，避免双击快速点击时触发单击
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isSingleTap) {
+                            handleClick();  // 执行暂停操作
+                        }
+                    }
+                }, 200);  // 延时200ms执行单击操作
+
+                Log.d(TAG, "onSingleTapUp: ");
+
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTap(@NonNull MotionEvent e) {
+                // 双击时，立即执行点赞
+                isDoubleTapped = true;
+                toggleLike();
+
+                // 重置单击标志，防止执行单击事件
+                isSingleTap = false;
+
+                // 延时清除双击标志
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isDoubleTapped = false;
+                    }
+                }, 300); // 延时300ms重置双击标志
+
+                Log.d(TAG, "onDoubleTap: ");
+
+                return true;
+            }
+        });
+    }
+
+    private void handleClick() {
+        if (isCommentOpen) {
+            toggleCommentSection();
+        } else {
+            if (exoPlayer.isPlaying()) {
+                exoPlayer.pause();
+                pause.setVisibility(View.VISIBLE);
+            } else {
+                exoPlayer.play();
+                pause.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void toggleCommentSection() {
+        if (!isCommentOpen) {
+            // 记录初始Y位置，方便回到全屏
+            originalVideoY = playerView.getY();
+
+            // 评论区从底部弹出，确保初始位置在屏幕外
+            commentLayout.setTranslationY(commentLayout.getHeight());
+            commentLayout.setVisibility(View.VISIBLE);
+
+            ObjectAnimator translationUp = ObjectAnimator.ofFloat(commentLayout, "translationY", commentLayout.getHeight(), 0);
+
+            ViewPager2 vp = getActivity().findViewById(R.id.vp_video_show);
+            vp.setUserInputEnabled(false);
+
+            // 不对视频进行缩放或位移操作
+            AnimatorSet set = new AnimatorSet();
+            set.play(translationUp);
+            set.setDuration(300);
+            set.start();
+        } else {
+            // 评论区隐藏
+            ObjectAnimator translationDown = ObjectAnimator.ofFloat(commentLayout, "translationY", 0, commentLayout.getHeight());
+            ViewPager2 vp = getActivity().findViewById(R.id.vp_video_show);
+            vp.setUserInputEnabled(true);
+
+            AnimatorSet set = new AnimatorSet();
+            set.play(translationDown);
+            set.setDuration(300);
+            set.start();
+
+            set.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    commentLayout.setVisibility(View.GONE);
+                }
+            });
+        }
+
+        isCommentOpen = !isCommentOpen;
+    }
+
 
     private void showHeartAnimation(View likeButton, int drawableResId) {
         ImageView heart = new ImageView(likeButton.getContext());
@@ -202,7 +425,5 @@ public class VideoShowFragment extends Fragment {
 
         animator.start();
     }
-
-
 
 }

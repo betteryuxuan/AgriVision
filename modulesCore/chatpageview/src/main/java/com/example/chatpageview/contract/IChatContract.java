@@ -16,24 +16,39 @@ public interface IChatContract {
     }
 
     interface Presenter {
-        List<Msg> initMessages();
+        List<Msg> initMessages(int role);
 
-        void sendMessage(String content);
+        void sendMessage(String content, int role);
 
         void detachView();
 
-        void chat(String content);
-
         void cancelCurrentRequest();
 
-        List<Msg> loadLocalMsg();
+        void saveToLocal(List<Msg> msgList,int role);
 
-        void saveToLocal(List<Msg> msgList);
-
-        void clearLocalMsg();
+        void clearLocalMsg(int role);
 
         boolean getLoginStatus();
+
+        void removeThinkingMsg();
+
+        void addMessage(Msg msg);
+
+        void stopRequest();
     }
 
+    interface Model {
+        List<Msg> initMessages(int role);
+
+        void chat(String content, int role);
+
+        void saveToLocal(List<Msg> msgList, int role);
+
+        void clearLocalMsg(int role);
+
+        boolean getLoginStatus();
+
+        void stopRequest();
+    }
 
 }

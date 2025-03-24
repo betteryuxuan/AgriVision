@@ -33,7 +33,7 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
-            android:name="com.example.module.login.view.LoginActivity"
+            android:name=".LoadActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +43,9 @@
         </activity>
         <activity
             android:name="com.example.module.login.view.ForgetActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.example.module.login.view.LoginActivity"
             android:exported="true" />
     </application>
 

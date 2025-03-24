@@ -25,10 +25,6 @@ public class HomePageActivity extends AppCompatActivity {
             return insets;
         });
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        HomePageFragment fragment = new HomePageFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
     }
 }
 

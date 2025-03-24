@@ -1,7 +1,6 @@
 package com.example.module.homepageview.view;
 
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -136,7 +135,8 @@ public class CropDetailsActivity extends AppCompatActivity {
         collect = findViewById(R.id.iv_cropdetails_collect);
 
         ARouter.getInstance().inject(this);
-
+        Log.d(TAG, "dataItem: " + dataItem);
+        Log.d(TAG, "cropDetail: " + cropDetail);
 
         if (dataItem != null) {
             name.setText(dataItem.getCropDetail().get(0).getName());
