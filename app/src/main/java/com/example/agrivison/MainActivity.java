@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private static final long TIME = 2000;
     private int pageIndex;  // 目标页面索引
     private ImageView add;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,8 +132,9 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                ARouter.getInstance()
+                        .build("/communityPageView/PublishActivity")
+                        .navigation();
             }
 
         });

@@ -21,15 +21,6 @@
         app:tabTextAppearance="@style/MyTabLayout"
         app:tabTextColor="#666666" />
 
-    <Button
-        android:id="@+id/btn_test"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tb_community"/>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_community"
         android:layout_width="match_parent"
