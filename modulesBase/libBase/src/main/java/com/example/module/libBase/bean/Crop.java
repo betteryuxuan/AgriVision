@@ -146,7 +146,7 @@ public class Crop implements Parcelable {
         private String introduction;
         private String image1;
         private String image2;
-        private Boolean isCollected = false;
+        private Boolean isCollected = true;
 
         public CropDetail() {
         }

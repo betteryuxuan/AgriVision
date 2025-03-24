@@ -3,7 +3,6 @@ package com.example.module.libBase;
 import android.content.Context;
 
 public class TokenManager {
-    private static final String PREFS_NAME = "loginInfo";
     private static final String KEY_TOKEN = "userToken";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
 
@@ -17,7 +16,7 @@ public class TokenManager {
     }
 
     public static String getToken(Context context) {
-        return  SPUtils.getString(context, KEY_TOKEN);
+        return SPUtils.getString(context, KEY_TOKEN, null);
     }
 
     public static void clearToken(Context context) {

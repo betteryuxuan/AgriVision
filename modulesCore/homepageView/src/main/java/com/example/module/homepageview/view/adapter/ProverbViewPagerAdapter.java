@@ -14,10 +14,7 @@ public class ProverbViewPagerAdapter extends FragmentStateAdapter {
 
     private List<Proverb.ProverbData> proverbList;
 
-    // 定义一个接口来传递点击事件
-    public interface OnProverbClickListener {
-        void onProverbClick(Proverb proverb);
-    }
+
 
     public ProverbViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, List<Proverb.ProverbData> proverbList) {
         super(fragmentActivity);

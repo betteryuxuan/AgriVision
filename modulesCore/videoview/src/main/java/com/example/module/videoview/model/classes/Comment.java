@@ -2,21 +2,23 @@ package com.example.module.videoview.model.classes;
 
 public class Comment {
 
-    private int image;
+    private String image;
     private String name;
     private String comment;
+    private String time;
 
-    public Comment(int image, String name, String comment) {
+    public Comment(String image, String name, String comment, String time) {
         this.image = image;
         this.name = name;
         this.comment = comment;
+        this.time = time;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -34,5 +36,23 @@ public class Comment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                ", comment='" + comment + '\'' +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

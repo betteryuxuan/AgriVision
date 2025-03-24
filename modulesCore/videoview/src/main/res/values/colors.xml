@@ -17,4 +17,5 @@
     <color name="yellow">#FCBD54</color>
     <color name="white_shallow">#30000000</color>
     <color name="red_deep">#FE2B54</color>
+    <color name="gray_light">#A09E9F</color>
 </resources>

@@ -3,7 +3,7 @@ package com.example.module.homepageview.contract;
 import com.example.module.homepageview.base.BaseView;
 
 public interface IHomePageContract {
-    interface IHomePageView extends BaseView<IHomePageContract.IHomePagePresenter> {
+    interface IHomePageView extends BaseView<IHomePagePresenter> {
 
         void initView();
 

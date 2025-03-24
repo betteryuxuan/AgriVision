@@ -99,11 +99,12 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/ziti3"
+                android:lineSpacingExtra="3dp"
                 android:text="  小麦是一种重要的粮食作物，具有丰富的营养价值和广泛的用途。它富含碳水化合物、蛋白质、膳食纤维以及多种维生素和矿物质，如维生素B群和矿物质如铁、锌、镁等，对维持身体健康至关重要。小麦的用途不仅限于食品加工，如制作面包、面条、饼干、糕点等，还在饲料生产、工业制造和环保应用中发挥着重要作用。\n
   在种植技术方面，小麦的种植包括选种、整地、施肥、。例如，精细整地是确保麦田达到耕层深厚、土壤松紧适度、地面平整，为苗全、苗壮及植株良好生长创造条件。此外，小麦的规范化播种技术，包括耕作整地、深松、耕翻等，也是提高小麦产量的重要措施。"
                 android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:textSize="19sp"
-                android:lineSpacingExtra="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/banner_crop_details" />
@@ -147,6 +148,7 @@
                         android:layout_marginRight="20dp"
                         android:text="简介"
                         android:textColor="@color/gray"
+                        android:textIsSelectable="true"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"

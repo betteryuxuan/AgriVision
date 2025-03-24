@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +19,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private static final String ARG_TITLE = "arg_title";
     private static final String ARG_CONTENT = "arg_content";
 
+    private LinearLayout layout;
+
     private String title;
     private String content;
 
-    private ImageView close;
 
     public static BottomSheetFragment newInstance(String title, String content) {
         BottomSheetFragment fragment = new BottomSheetFragment();
@@ -31,6 +32,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         args.putString(ARG_CONTENT, content);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -56,12 +62,5 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         TextView textViewContent = view.findViewById(R.id.tv_homefirst_proverb_meaning);
         textViewContent.setText(content);
 
-        close = view.findViewById(R.id.iv_proverb_close);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
     }
 }

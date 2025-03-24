@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_root"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/bnv_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_main"
@@ -19,13 +24,30 @@
         android:layout_height="wrap_content"
         android:background="@color/white_gray"
         app:itemIconTint="@color/main_color_selector"
-        app:itemTextColor="@color/main_color_selector"
         app:itemRippleColor="@color/dark_white"
-        app:itemPaddingTop="9dp"
-        app:itemPaddingBottom="7dp"
         app:itemTextAppearanceActive="@style/BottomNavItemTextStyleActive"
         app:itemTextAppearanceInactive="@style/BottomNavItemTextStyleInactive"
-        app:labelVisibilityMode="selected"
-        app:menu="@menu/main_menu" />
+        app:itemTextColor="@color/main_color_selector"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/main_menu"
+        app:elevation="0dp"/>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_main_add"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_add"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/bnv_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bnv_main" />
+</androidx.constraintlayout.widget.ConstraintLayout>

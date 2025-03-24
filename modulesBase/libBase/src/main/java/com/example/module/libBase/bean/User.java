@@ -6,20 +6,9 @@ public class User implements Serializable {
     private String email;
     private String userName;
     private String avatar;
-
+    private int postnum;
 
     public User() {
-    }
-
-    public User(String email, String userName) {
-        this.email = email;
-        this.userName = userName;
-    }
-
-    public User( String email, String userName,String avatar) {
-        this.avatar = avatar;
-        this.email = email;
-        this.userName = userName;
     }
 
     public String getEmail() {
@@ -46,12 +35,22 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
+    public int getPostnum() {
+        return postnum;
+    }
+
+    public void setPostnum(int postnum) {
+        this.postnum = postnum;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "avatar='" + avatar + '\'' +
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
+                ", postnum=" + postnum +
                 '}';
     }
+
 }
