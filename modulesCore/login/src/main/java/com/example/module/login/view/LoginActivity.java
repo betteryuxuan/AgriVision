@@ -31,8 +31,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.libBase.AnimationUtils;
 import com.example.module.libBase.TokenManager;
-import com.example.module.login.contract.ILoginContract;
 import com.example.module.login.R;
+import com.example.module.login.contract.ILoginContract;
 import com.example.module.login.presenter.LoginPresenter;
 import com.github.boybeak.skbglobal.SoftKeyboardGlobal;
 import com.google.android.material.textfield.TextInputLayout;
@@ -78,8 +78,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         QueryLoginStatus();
 
         btnLoginRegister = findViewById(R.id.btn_login_loginaccount);
@@ -553,7 +554,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
     public void startMainActivity() {
         ARouter.getInstance()
                 .build("/main/MainActivity")
-                .withTransition(R.anim.slide_in_left, R.anim.slide_out_left)
+//                .withTransition(R.anim.slide_in_left, R.anim.slide_out_left)
                 .navigation();
         finish();
     }
@@ -561,7 +562,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
     @Override

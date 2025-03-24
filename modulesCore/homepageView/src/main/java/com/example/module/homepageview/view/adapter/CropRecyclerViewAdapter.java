@@ -1,5 +1,7 @@
 package com.example.module.homepageview.view.adapter;
 
+import static com.example.module.libBase.AnimationUtils.applyClickAnimation;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +53,7 @@ public class CropRecyclerViewAdapter extends RecyclerView.Adapter<CropRecyclerVi
     @Override
     public CropRecyclerViewAdapter.CropViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cropcard_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cropcard_item_home, parent, false);
         CropRecyclerViewAdapter.CropViewHolder viewHolder = new CropViewHolder(view);
         return viewHolder;
     }
@@ -61,7 +63,7 @@ public class CropRecyclerViewAdapter extends RecyclerView.Adapter<CropRecyclerVi
         Crop.DataItem crop = cropList.get(position);
         holder.textView.setText(crop.getCropDetail().get(0).getName());
         Glide.with(mContext)
-                .load(crop.getCropDetail().get(0).getIcon())  // news.getImage() 返回的是图片的 URL 或文件路径
+                .load(crop.getCropDetail().get(0).getIcon())
                 .into(holder.imageView); // 将图片加载到 ImageView
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +73,7 @@ public class CropRecyclerViewAdapter extends RecyclerView.Adapter<CropRecyclerVi
                 }
             }
         });
-//        holder.constraintLayout.setBackgroundColor(Color.parseColor(colors.get(position % colors.size())));
+        applyClickAnimation(holder.itemView); // 绑定动画
 
     }
     @Override

@@ -3,11 +3,14 @@ package com.example.module.homepageview.presenter;
 import android.content.Context;
 
 import com.example.module.homepageview.contract.IHomeFirstContract;
-import com.example.module.libBase.bean.Crop;
 import com.example.module.homepageview.model.classes.News;
+import com.example.module.homepageview.model.classes.Poetry;
 import com.example.module.homepageview.model.classes.Proverb;
+import com.example.module.homepageview.model.classes.Recommend;
+import com.example.module.libBase.bean.Crop;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresenter {
@@ -23,9 +26,11 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
     }
 
     @Override
-    public void loadBannerDatas() {
-        List<Integer> bannerDatas = homeFirstModel.getBannerDatas();
-        homeFirstView.setupBanner(bannerDatas);
+    public void loadRecommendRecyclerViewDatas() {
+        List<Recommend> recommendDatas = homeFirstModel.getRecommendRecyclerViewDatas();
+        if (homeFirstView != null && recommendDatas != null) {
+            homeFirstView.setupRecommendRecyclerView(recommendDatas);
+        }
     }
 
     @Override
@@ -33,7 +38,9 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
         homeFirstModel.getCropRecyclerViewDatas(new IHomeFirstContract.IHomeFirstModel.CropsCallback() {
             @Override
             public void onCropsLoaded(List<Crop.DataItem> data) {
-                homeFirstView.setupCropRecyclerView(data);
+                if (homeFirstView != null && data != null) {
+                    homeFirstView.setupCropRecyclerView(data);
+                }
             }
 
             @Override
@@ -48,8 +55,15 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
         homeFirstModel.getNewsRecyclerViewDatas(new IHomeFirstContract.IHomeFirstModel.NewsCallback() {
             @Override
             public void onNewsLoaded(List<News.Item> data) {
-                if (homeFirstView != null) {
-                    homeFirstView.setupNewsRecyclerView(data);
+                if (homeFirstView != null && data != null) {
+
+                    List<News.Item> datas = new ArrayList<>();
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    datas.addAll(data);
+                    homeFirstView.setupNewsRecyclerView(datas);
                 }
             }
             @Override
@@ -64,7 +78,7 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
         homeFirstModel.getProverbViewPagerDatas(new IHomeFirstContract.IHomeFirstModel.ProverbCallback() {
             @Override
             public void onProverbsLoaded(List<Proverb.ProverbData> data) {
-                if (homeFirstView != null) {
+                if (homeFirstView != null && data != null) {
                     homeFirstView.setupProverbViewPager(data);
                 }
             }
@@ -74,6 +88,14 @@ public class HomeFirstPresenter implements IHomeFirstContract.IHomeFirstPresente
 
             }
         });
+    }
+
+    @Override
+    public void loadPoetryRecyclerViewDatas() {
+        List<Poetry.Item> poetryDatas = homeFirstModel.getPoetryRecyclerViewDatas();
+        if (homeFirstView != null && poetryDatas != null) {
+            homeFirstView.setupPoetryRecyclerView(poetryDatas);
+        }
     }
 }
 

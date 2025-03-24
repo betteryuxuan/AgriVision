@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.homepageview.R;
 import com.example.module.homepageview.contract.IHomePageContract;
-import com.example.module.homepageview.model.CategoryModel;
-import com.example.module.homepageview.model.HomeFirstModel;
-import com.example.module.homepageview.presenter.CategoryPresenter;
-import com.example.module.homepageview.presenter.HomeFirstPresenter;
 import com.example.module.homepageview.view.adapter.MyViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -32,12 +30,7 @@ public class HomePageFragment extends Fragment implements IHomePageContract.IHom
     private TabLayout tabLayout;
     private List<Fragment> fragmentList;
     private HomeFirstFragment homeFirstFragment;
-    private HomeFirstModel homeFirstModel;
-    private HomeFirstPresenter homeFirstPresenter;
-    private CategoryFragment categoryFragment;
-    private CategoryPresenter categoryPresenter;
-    private CategoryModel categoryModel;
-
+    private LinearLayout layout;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +48,7 @@ public class HomePageFragment extends Fragment implements IHomePageContract.IHom
         super.onViewCreated(view, savedInstanceState);
         viewPager2 = view.findViewById(R.id.vp_homepage_main);
         tabLayout = view.findViewById(R.id.tl_homepage_main);
+        layout = view.findViewById(R.id.ll_homepage_search);
 
 
         initView();
@@ -65,17 +59,11 @@ public class HomePageFragment extends Fragment implements IHomePageContract.IHom
     public void initView() {
 
         homeFirstFragment = new HomeFirstFragment();
-        homeFirstModel = new HomeFirstModel(getContext());
-        categoryFragment = new CategoryFragment();
-        categoryModel = new CategoryModel(getContext());
-        homeFirstPresenter = new HomeFirstPresenter(homeFirstFragment, homeFirstModel, getContext());
-        categoryPresenter = new CategoryPresenter(categoryFragment, categoryModel);
-        homeFirstFragment.setPresenter(homeFirstPresenter);
-        categoryFragment.setPresenter(categoryPresenter);
+        Fragment classificationFragment = (Fragment) ARouter.getInstance().build("/classificationView/ClassificationFragment").navigation(getContext());
 
         fragmentList = new ArrayList<>();
         fragmentList.add(homeFirstFragment);
-        fragmentList.add(categoryFragment);
+        fragmentList.add(classificationFragment);
 
         MyViewPagerAdapter adapter = new MyViewPagerAdapter(this, fragmentList);
         viewPager2.setAdapter(adapter);
@@ -98,7 +86,12 @@ public class HomePageFragment extends Fragment implements IHomePageContract.IHom
 
     @Override
     public void initListener() {
-
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/HomePageView/SearchActivity").navigation(getContext());
+            }
+        });
 
     }
 

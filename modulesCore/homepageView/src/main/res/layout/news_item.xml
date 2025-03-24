@@ -4,6 +4,7 @@
     android:id="@+id/cl_homepage_newsList"
     android:layout_width="match_parent"
     android:layout_height="120dp"
+    android:foreground="?android:attr/selectableItemBackground"
     android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="horizontal">
@@ -17,9 +18,10 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="标题"
-        android:textColor="#333333"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:fontFamily="@font/ziti2"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,10 +38,9 @@
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/iv_homepage_newsimage"
-            android:layout_width="140dp"
-            android:layout_height="90dp"
-            android:scaleType="center"
-            android:src="@drawable/news1_pic" />
+            android:layout_width="160dp"
+            android:layout_height="100dp"
+            android:scaleType="center" />
     </androidx.cardview.widget.CardView>
 
 

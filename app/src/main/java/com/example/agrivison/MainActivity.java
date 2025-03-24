@@ -1,24 +1,24 @@
 package com.example.agrivison;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
@@ -26,9 +26,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.example.module.libBase.bean.SwitchPageEvent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,30 +48,40 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private boolean isExit = false;
     private static final long TIME = 2000;
+    private int pageIndex;  // 目标页面索引
+    private ImageView add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_root), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        EventBus.getDefault().register(this);
+
 
         viewPager2 = findViewById(R.id.vp_main);
         bottomNavigationView = findViewById(R.id.bnv_main);
+        add = findViewById(R.id.iv_main_add);
 
         bottomNavigationView.setItemIconTintList(null);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Fragment fragment = (Fragment) ARouter.getInstance().build("/HomePageView/HomePageFragment").navigation(this);
+        Fragment chatpageFragment = (Fragment) ARouter.getInstance().build("/chatpageview/chatPage").navigation(this);
         Fragment personalInfoFragment = (Fragment) ARouter.getInstance().build("/personalinfoview/PersonalInfoFragment").navigation(this);
-        Fragment shoppingFragment = (Fragment) ARouter.getInstance().build("/shoppingview/ShoppingFragment").navigation(this);
         Fragment videoFragment = (Fragment) ARouter.getInstance().build("/videoview/VideoFragment").navigation(this);
         Fragment communityFragment = (Fragment) ARouter.getInstance().build("/communityPageView/CommunityFragment").navigation(this);
+        Fragment classificationFragment = (Fragment) ARouter.getInstance().build("/classificationView/ClassificationFragment").navigation(this);
 
         fragments = new ArrayList<>();
         fragments.add(fragment);
-        fragments.add(shoppingFragment);
         fragments.add(videoFragment);
+        fragments.add(new Fragment());
         fragments.add(communityFragment);
         fragments.add(personalInfoFragment);
 
@@ -91,23 +105,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager2.setUserInputEnabled(false);
+
+        bottomNavigationView.setOnLongClickListener(v -> true);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+                viewPager2.setUserInputEnabled(false);
+            }
+        });
 
         viewPager2.setOffscreenPageLimit(5);
-        viewPager2.setCurrentItem(3);
-
-        @SuppressLint("RestrictedApi")
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
-        for (int i = 0; i < menuView.getChildCount(); i++) {
-            View item = menuView.getChildAt(i);
-            item.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return true;
-                }
-            });
-        }
-
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(2); // 索引 2 表示第三个菜单项
+        menuItem.setEnabled(false);
+        menuItem.setIcon(android.R.color.transparent);
+        menuItem.setTitle("");
         // 适配底部小白条颜色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.white_gray));
@@ -115,8 +129,15 @@ public class MainActivity extends AppCompatActivity {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
             }
         }
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/communityPageView/PublishActivity")
+                        .navigation();
+            }
 
-
+        });
     }
 
     @Override
@@ -130,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     private void exitByTwoClick() {
         if (!isExit) {
             isExit = true;
-            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
             Timer tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override
@@ -142,6 +163,12 @@ public class MainActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSwitchPageEvent(SwitchPageEvent event) {
+        viewPager2.setCurrentItem(event.getPageIndex(), true);
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -163,5 +190,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -47,15 +47,6 @@ public class CommunityFragemnt extends Fragment {
                 (tab, position) -> tab.setText(titles.get(position))
         ).attach();
 
-        binding.btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/communityPageView/PublishActivity")
-                        .navigation();
-            }
-        });
-
 //        binding.tbCommunity.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 //            @Override
 //            public void onTabSelected(TabLayout.Tab tab) {

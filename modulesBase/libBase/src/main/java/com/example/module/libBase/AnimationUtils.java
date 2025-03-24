@@ -3,8 +3,10 @@ package com.example.module.libBase;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -125,4 +127,40 @@ public class AnimationUtils {
         scaleX.start();
         scaleY.start();
     }
+
+    public static void applyClickAnimation(View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: // 按下时缩小 + 透明
+                        ObjectAnimator scaleX = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0.95f);
+                        ObjectAnimator scaleY = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0.95f);
+                        ObjectAnimator alpha = ObjectAnimator.ofFloat(v, "alpha", 1f, 0.7f);
+
+                        AnimatorSet shrinkSet = new AnimatorSet();
+                        shrinkSet.playTogether(scaleX, scaleY, alpha);
+                        shrinkSet.setDuration(100);
+                        shrinkSet.start();
+                        break;
+
+                    case MotionEvent.ACTION_UP: // 松开时恢复
+                    case MotionEvent.ACTION_CANCEL:
+                        ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(v, "scaleX", 0.95f, 1f);
+                        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(v, "scaleY", 0.95f, 1f);
+                        ObjectAnimator alphaBack = ObjectAnimator.ofFloat(v, "alpha", 0.7f, 1f);
+
+                        AnimatorSet restoreSet = new AnimatorSet();
+                        restoreSet.playTogether(scaleXBack, scaleYBack, alphaBack);
+                        restoreSet.setDuration(100);
+                        restoreSet.start();
+                        break;
+                }
+                return false; // 让事件继续传递（否则点击事件可能失效）
+            }
+        });
+    }
+
+
+
 }

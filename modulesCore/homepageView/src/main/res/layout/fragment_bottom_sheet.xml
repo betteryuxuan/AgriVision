@@ -2,26 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_proverb_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:background="@drawable/corner_background"
     android:padding="16dp">
 
-    <ImageView
+    <View
         android:id="@+id/iv_proverb_close"
         android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="@drawable/ic_close"
+        android:layout_height="3dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_homefirst_proverb_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/ziti1"
         android:text="原文"
         android:textColor="@color/black"
@@ -37,21 +38,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="30dp"
+        android:layout_marginBottom="40dp"
         android:text="译文"
         android:textColor="@color/gray"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_homefirst_proverb_title" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="100dp"
-        android:background="#00000000"
-        app:layout_constraintTop_toBottomOf="@+id/tv_homefirst_proverb_meaning"
-        tools:layout_editor_absoluteX="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
