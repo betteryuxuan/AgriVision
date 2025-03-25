@@ -72,11 +72,9 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Fragment fragment = (Fragment) ARouter.getInstance().build("/HomePageView/HomePageFragment").navigation(this);
-        Fragment chatpageFragment = (Fragment) ARouter.getInstance().build("/chatpageview/chatPage").navigation(this);
         Fragment personalInfoFragment = (Fragment) ARouter.getInstance().build("/personalinfoview/PersonalInfoFragment").navigation(this);
         Fragment videoFragment = (Fragment) ARouter.getInstance().build("/videoview/VideoFragment").navigation(this);
         Fragment communityFragment = (Fragment) ARouter.getInstance().build("/communityPageView/CommunityFragment").navigation(this);
-        Fragment classificationFragment = (Fragment) ARouter.getInstance().build("/classificationView/ClassificationFragment").navigation(this);
 
         fragments = new ArrayList<>();
         fragments.add(fragment);
@@ -93,13 +91,13 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.navigation_item1) {
                     viewPager2.setCurrentItem(0, false);
                 } else if (item.getItemId() == R.id.navigation_item2) {
-                    viewPager2.setCurrentItem(1);
+                    viewPager2.setCurrentItem(1, false);
                 } else if (item.getItemId() == R.id.navigation_item3) {
-                    viewPager2.setCurrentItem(2);
+                    viewPager2.setCurrentItem(2, false);
                 } else if (item.getItemId() == R.id.navigation_item4) {
-                    viewPager2.setCurrentItem(3);
+                    viewPager2.setCurrentItem(3, false);
                 } else if (item.getItemId() == R.id.navigation_item5) {
-                    viewPager2.setCurrentItem(4);
+                    viewPager2.setCurrentItem(4, false);
                 }
                 return true;
             }
@@ -132,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ARouter.getInstance()
                         .build("/communityPageView/PublishActivity")
                         .navigation();
