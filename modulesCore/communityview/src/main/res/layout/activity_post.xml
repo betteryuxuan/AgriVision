@@ -169,6 +169,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_mypost_reply"
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -190,7 +191,6 @@
         android:id="@+id/bottom_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="#eaedf2"
         android:minHeight="60dp">
 
@@ -205,7 +205,7 @@
             android:layout_weight="1"
             android:background="@drawable/et_background"
             android:ellipsize="end"
-            android:hint="请输入消息"
+            android:hint="说说你的想法"
             android:inputType="textMultiLine"
             android:maxLines="4"
             android:minHeight="40dp"

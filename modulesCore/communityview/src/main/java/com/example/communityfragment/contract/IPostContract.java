@@ -10,7 +10,7 @@ public interface IPostContract {
 
         void onCommentsFailure();
 
-        void onPublishCommentSuccess();
+        void onPublishCommentSuccess(Comment comment);
 
         void onPublishCommentFailure();
 
@@ -18,13 +18,13 @@ public interface IPostContract {
     }
 
     interface Presenter {
-        void comment(int postId, String comment, String parentId, String rootId);
+        void comment(int postId, String comment, int parentId, int rootId);
 
         void onCommentsSuccess(List<Comment> comments);
 
         void onCommentsFailure();
 
-        void onPublishCommentSuccess();
+        void onPublishCommentSuccess(Comment comment);
 
         void onPublishCommentFailure();
 
@@ -34,7 +34,7 @@ public interface IPostContract {
     }
 
     interface Model {
-        void comment(int postId, String comment, String parentId, String rootId);
+        void comment(int postId, String comment, int parentId, int rootId);
 
         void getComments(int postId);
 

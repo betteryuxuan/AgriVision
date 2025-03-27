@@ -1,31 +1,34 @@
 package com.example.communityfragment.bean;
 
-public class Comment {
-    private String id;
-    private String userid;
-    private String content;
-    private String userName;
-    private String userAavatar;
-    private String time;
+import androidx.annotation.NonNull;
 
-    private String repliesCount;
-    private String parentId;
-    private String rootId;
-    private String postId;
+public class Comment {
+    // 帖子基本信息
+    private int id;
+    private String content;
+    private String time;
     private String likeCount;
+    private String repliesCount;
     private boolean isLiked;
+
+    // 作者
+    private String userName;
+    private int userid;
+    private String userAavatar;
+
+    // 父评论信息
+    private int parentId = 0;
+
+    // 父评论作者
+    private String parentUserName;
+    private String parentAavatar;
+
+    // 根评论
+    private int rootId= 0;
 
     public Comment() {
     }
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getContent() {
         return content;
@@ -33,6 +36,14 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getParentAavatar() {
+        return parentAavatar;
+    }
+
+    public void setParentAavatar(String parentAavatar) {
+        this.parentAavatar = parentAavatar;
     }
 
     public String getTime() {
@@ -51,13 +62,6 @@ public class Comment {
         this.userAavatar = userAavatar;
     }
 
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
 
     public String getUserName() {
         return userName;
@@ -83,22 +87,6 @@ public class Comment {
         this.likeCount = likeCount;
     }
 
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getPostId() {
-        return postId;
-    }
-
-    public void setPostId(String postId) {
-        this.postId = postId;
-    }
-
     public String getRepliesCount() {
         return repliesCount;
     }
@@ -107,28 +95,61 @@ public class Comment {
         this.repliesCount = repliesCount;
     }
 
-    public String getRootId() {
+    public int getParentId() {
+        return parentId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public int getRootId() {
         return rootId;
     }
 
-    public void setRootId(String rootId) {
+    public void setRootId(int rootId) {
         this.rootId = rootId;
     }
 
+    public String getParentUserName() {
+        return parentUserName;
+    }
+
+    public void setParentUserName(String parentUserName) {
+        this.parentUserName = parentUserName;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return "Comment{" +
                 "content='" + content + '\'' +
-                ", id='" + id + '\'' +
-                ", userid='" + userid + '\'' +
+                ", id=" + id +
+                ", userid=" + userid +
                 ", userName='" + userName + '\'' +
                 ", userAavatar='" + userAavatar + '\'' +
                 ", time='" + time + '\'' +
-                ", repliesCount='" + repliesCount + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", rootId='" + rootId + '\'' +
-                ", postId='" + postId + '\'' +
                 ", likeCount='" + likeCount + '\'' +
+                ", repliesCount='" + repliesCount + '\'' +
+                ", parentUserName='" + parentUserName + '\'' +
+                ", parentId=" + parentId +
+                ", rootId=" + rootId +
                 ", isLiked=" + isLiked +
                 '}';
     }
