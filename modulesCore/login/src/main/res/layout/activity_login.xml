@@ -48,7 +48,7 @@
             android:id="@+id/blur_login_view"
             android:layout_width="195dp"
             android:layout_height="125dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="22dp"
             android:layout_marginTop="95dp"
             app:blur_corner_radius="20dp"
             app:blur_down_sample="1.0"
