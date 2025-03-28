@@ -177,344 +177,326 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
 
         mPresenter.getComments(post.getId());
 
-        binding.imgMypostBack.setOnClickListener(new View.OnClickListener()
+        if (!TokenManager.getLoginStatus(PostActivity.this)) {
+            binding.tvMypostEmpty.setText("登录后查看评论");
+        }
 
-    {
-        @Override
-        public void onClick (View v){
-        finish();
-    }
-    });
+        binding.imgMypostBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         binding.tvMypostContent.setText(post.getContent());
         Glide.with(this)
-                .
-
-    load(post.getUserAvatar())
-            .
-
-    placeholder(R.drawable.default_user2)
-                .
-
-    error(R.drawable.default_user2)
-                .
-
-    diskCacheStrategy(DiskCacheStrategy.ALL)
-                .
-
-    thumbnail(0.8f)
-                .
-
-    into(binding.imgMypostAvatar);
+                .load(post.getUserAvatar())
+                .placeholder(R.drawable.default_user2)
+                .error(R.drawable.default_user2)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .thumbnail(0.8f)
+                .into(binding.imgMypostAvatar);
         binding.tvMypostUsername.setText(post.getUserName());
         binding.tvMypostCreatetime.setText(TimeUtils.getFormatTime(post.getCreatedTime()));
-        binding.tvMypostReply.setText(String.format("共 %s 条回复",post.getCommentCount()));
+        binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
 
-    String jsonImages = post.getImageUrls();
-        if(!TextUtils.isEmpty(jsonImages))
-
-    {
-        binding.rlvMypostImage.setVisibility(View.VISIBLE);
-        List<String> imagesUrl = getImagesUrl(jsonImages);
-        GridLayoutManager layoutManager;
-        if (imagesUrl.size() <= 2) {
-            layoutManager = new GridLayoutManager(PostActivity.this, 2);
-        } else if (imagesUrl.size() == 3) {
-            layoutManager = new GridLayoutManager(PostActivity.this, 3);
-        } else if (imagesUrl.size() == 4) {
-            layoutManager = new GridLayoutManager(PostActivity.this, 2);
-        } else {
-            layoutManager = new GridLayoutManager(PostActivity.this, 3);
-        }
-        ImageDisplayAdapter imageAdapter = new ImageDisplayAdapter(PostActivity.this, imagesUrl);
-        binding.rlvMypostImage.setLayoutManager(layoutManager);
-        binding.rlvMypostImage.setAdapter(imageAdapter);
-    }
-
-    SoftKeyBoardListener softKeyBoardListener = new SoftKeyBoardListener(this);
-        softKeyBoardListener.setOnSoftKeyBoardChangeListener(new SoftKeyBoardListener.OnSoftKeyBoardChangeListener()
-
-    {
-        @Override
-        public void keyBoardShow ( int height){
-    }
-
-        @Override
-        public void keyBoardHide ( int height){
-        // 点击回复某人后如果文本框无内容恢复评论帖子状态
-        String content = binding.etPostText.getText().toString();
-        if (content.trim().isEmpty()) {
-            isReplyMode = false;
-            currentReplyComment = null;
-            binding.etPostText.setHint("说说你的想法");
-        }
-    }
-    });
-
-        binding.tvPostSend.setOnClickListener(new View.OnClickListener()
-
-    {
-        @Override
-        public void onClick (View v){
-        if (!TokenManager.getLoginStatus(PostActivity.this)) {
-            Toast.makeText(PostActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        String content = binding.etPostText.getText().toString();
-        if (content.trim().isEmpty()) {
-            Toast.makeText(PostActivity.this, "请输入内容", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (isReplyMode && currentReplyComment != null) {
-            // 回复模式
-            if (currentReplyComment.getParentId() == 0 && currentReplyComment.getRootId() == 0) {
-                mPresenter.comment(post.getId(), content, currentReplyComment.getId(), currentReplyComment.getId());
+        String jsonImages = post.getImageUrls();
+        if (!TextUtils.isEmpty(jsonImages)) {
+            binding.rlvMypostImage.setVisibility(View.VISIBLE);
+            List<String> imagesUrl = getImagesUrl(jsonImages);
+            GridLayoutManager layoutManager;
+            if (imagesUrl.size() <= 2) {
+                layoutManager = new GridLayoutManager(PostActivity.this, 2);
+            } else if (imagesUrl.size() == 3) {
+                layoutManager = new GridLayoutManager(PostActivity.this, 3);
+            } else if (imagesUrl.size() == 4) {
+                layoutManager = new GridLayoutManager(PostActivity.this, 2);
             } else {
-                mPresenter.comment(post.getId(), content, currentReplyComment.getId(), currentReplyComment.getRootId());
+                layoutManager = new GridLayoutManager(PostActivity.this, 3);
             }
-        } else {
-            // 普通评论
-            mPresenter.comment(post.getId(), content, 0, 0);
+            ImageDisplayAdapter imageAdapter = new ImageDisplayAdapter(PostActivity.this, imagesUrl);
+            binding.rlvMypostImage.setLayoutManager(layoutManager);
+            binding.rlvMypostImage.setAdapter(imageAdapter);
         }
-        // 重置状态和提示
-        isReplyMode = false;
-        currentReplyComment = null;
-        binding.etPostText.setHint("说说你的想法");
-        binding.etPostText.setText("");
-    }
-    });
 
-        binding.imgMypostMore.setOnClickListener(new View.OnClickListener()
+        SoftKeyBoardListener softKeyBoardListener = new SoftKeyBoardListener(this);
+        softKeyBoardListener.setOnSoftKeyBoardChangeListener(new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+            }
 
-    {
-        @Override
-        public void onClick (View v){
-        if (!isPostOwner(post)) {
-            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_share, popupMenu.getMenu());
-
-            popupMenu.show();
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R.id.item_post1_share) {
-                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, post.getContent());
-                        sendIntent.setType("text/plain");
-                        Intent shareIntent = Intent.createChooser(sendIntent, "title");
-                        if (sendIntent.resolveActivity(v.getContext().getPackageManager()) != null) {
-                            v.getContext().startActivity(shareIntent);
-                        }
-                        return true;
-                    } else if (item.getItemId() == R.id.item_post1_refresh) {
-                        Toast.makeText(PostActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
-                        mPresenter.getComments(post.getId());
-                    }
-                    return false;
+            @Override
+            public void keyBoardHide(int height) {
+                // 点击回复某人后如果文本框无内容恢复评论帖子状态
+                String content = binding.etPostText.getText().toString();
+                if (content.trim().isEmpty()) {
+                    isReplyMode = false;
+                    currentReplyComment = null;
+                    binding.etPostText.setHint("说说你的想法");
                 }
-            });
-        } else {
-            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_share2, popupMenu.getMenu());
+            }
+        });
 
-            popupMenu.show();
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R.id.item_post2_share) {
-                        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, post.getContent());
-                        sendIntent.setType("text/plain");
-                        Intent shareIntent = Intent.createChooser(sendIntent, "title");
-                        if (sendIntent.resolveActivity(v.getContext().getPackageManager()) != null) {
-                            v.getContext().startActivity(shareIntent);
-                        }
-                        return true;
-                    } else if (item.getItemId() == R.id.item_post2_delete) {
-                        mPresenter.deletePost(post.getId());
-                        return true;
-                    } else if (item.getItemId() == R.id.item_post2_refresh) {
-                        Toast.makeText(PostActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
-                        mPresenter.getComments(post.getId());
-                    }
-                    return false;
+        binding.tvPostSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TokenManager.getLoginStatus(PostActivity.this)) {
+                    Toast.makeText(PostActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            });
-        }
-    }
-    });
-}
+                String content = binding.etPostText.getText().toString();
+                if (content.trim().isEmpty()) {
+                    Toast.makeText(PostActivity.this, "请输入内容", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-// 获取评论
-@Override
-public void onCommentsSuccess(List<Comment> comments) {
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            if (comments == null || comments.isEmpty()) {
+                if (isReplyMode && currentReplyComment != null) {
+                    // 回复模式
+                    if (currentReplyComment.getParentId() == 0 && currentReplyComment.getRootId() == 0) {
+                        mPresenter.comment(post.getId(), content, currentReplyComment.getId(), currentReplyComment.getId());
+                    } else {
+                        mPresenter.comment(post.getId(), content, currentReplyComment.getId(), currentReplyComment.getRootId());
+                    }
+                } else {
+                    // 普通评论
+                    mPresenter.comment(post.getId(), content, 0, 0);
+                }
+                // 重置状态和提示
+                isReplyMode = false;
+                currentReplyComment = null;
+                binding.etPostText.setHint("说说你的想法");
+                binding.etPostText.setText("");
+            }
+        });
+
+        binding.imgMypostMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isPostOwner(post)) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu_share, popupMenu.getMenu());
+
+                    popupMenu.show();
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if (item.getItemId() == R.id.item_post1_share) {
+                                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, post.getContent());
+                                sendIntent.setType("text/plain");
+                                Intent shareIntent = Intent.createChooser(sendIntent, "title");
+                                if (sendIntent.resolveActivity(v.getContext().getPackageManager()) != null) {
+                                    v.getContext().startActivity(shareIntent);
+                                }
+                                return true;
+                            } else if (item.getItemId() == R.id.item_post1_refresh) {
+                                Toast.makeText(PostActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                                mPresenter.getComments(post.getId());
+                            }
+                            return false;
+                        }
+                    });
+                } else {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu_share2, popupMenu.getMenu());
+
+                    popupMenu.show();
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if (item.getItemId() == R.id.item_post2_share) {
+                                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, post.getContent());
+                                sendIntent.setType("text/plain");
+                                Intent shareIntent = Intent.createChooser(sendIntent, "title");
+                                if (sendIntent.resolveActivity(v.getContext().getPackageManager()) != null) {
+                                    v.getContext().startActivity(shareIntent);
+                                }
+                                return true;
+                            } else if (item.getItemId() == R.id.item_post2_delete) {
+                                mPresenter.deletePost(post.getId());
+                                return true;
+                            } else if (item.getItemId() == R.id.item_post2_refresh) {
+                                Toast.makeText(PostActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                                mPresenter.getComments(post.getId());
+                            }
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    // 获取评论
+    @Override
+    public void onCommentsSuccess(List<Comment> comments) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (comments == null || comments.isEmpty()) {
+                    binding.tvMypostEmpty.setVisibility(View.VISIBLE);
+                    binding.rvMypostReply.setVisibility(View.GONE);
+                } else {
+                    binding.tvMypostEmpty.setVisibility(View.GONE);
+                    binding.rvMypostReply.setVisibility(View.VISIBLE);
+
+                    adapter.updateData(comments);
+
+                    post.setCommentCount(String.valueOf(comments.size()));
+                    binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onCommentsFailure() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 binding.tvMypostEmpty.setVisibility(View.VISIBLE);
                 binding.rvMypostReply.setVisibility(View.GONE);
-            } else {
-                binding.tvMypostEmpty.setVisibility(View.GONE);
-                binding.rvMypostReply.setVisibility(View.VISIBLE);
-
-                adapter.updateData(comments);
-
-                post.setCommentCount(String.valueOf(comments.size()));
-                binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
             }
-        }
-    });
-}
+        });
+    }
 
-@Override
-public void onCommentsFailure() {
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            binding.tvMypostEmpty.setVisibility(View.VISIBLE);
-            binding.rvMypostReply.setVisibility(View.GONE);
-        }
-    });
-}
-
-// 发步评论
-@Override
-public void onPublishCommentSuccess(Comment comment) {
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(binding.etPostText.getWindowToken(), 0);
-            }
-
-            binding.etPostText.setText("");
-
-            post.setCommentCount(String.valueOf(Integer.parseInt(post.getCommentCount()) + 1));
-
-            binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
-
-
-            List<Comment> comments = adapter.getCurrentList();
-            List<Comment> finalList = new ArrayList<>(comments);
-            Log.d("PostActivity", "onPublishCommentSuccess: " + comments);
-            if (finalList.isEmpty()) {
-                binding.tvMypostEmpty.setVisibility(View.GONE);
-                binding.rvMypostReply.setVisibility(View.VISIBLE);
-                finalList.add(comment);
-                adapter.updateData(finalList);
-            } else {
-                finalList.add(0, comment);
-                finalList = mPresenter.flattenComments(finalList);
-                adapter.updateData(finalList);
-            }
-        }
-    });
-}
-
-@Override
-public void onPublishCommentFailure() {
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            Toast.makeText(PostActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
-        }
-    });
-}
-
-@Override
-public void onDeletePostSuccess(int postId) {
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            finish();
-        }
-    });
-}
-
-@Override
-public void onDeleteCommentSuccess(Comment comment) {
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            List<Comment> comments = adapter.getCurrentList();
-            List<Comment> finalList = new ArrayList<>(comments);
-            finalList.remove(comment);
-            adapter.updateData(finalList);
-            post.setCommentCount(String.valueOf(Integer.parseInt(post.getCommentCount()) - 1));
-
-            binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
-        }
-    });
-}
-
-private void showKeyboard(EditText editText) {
-    editText.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            if (!editText.hasFocus()) {
-                editText.setFocusable(true);
-                editText.setFocusableInTouchMode(true);
-                editText.requestFocus();
-            }
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-            }
-        }
-    }, 300);
-}
-
-@Override
-protected void onDestroy() {
-    super.onDestroy();
-    EventBus.getDefault().unregister(this);
-}
-
-@Override
-public boolean dispatchTouchEvent(MotionEvent ev) {
-    if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-        View v = getCurrentFocus();
-        if (v instanceof EditText) {
-            Rect outRect = new Rect();
-            v.getGlobalVisibleRect(outRect);
-            if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-                v.clearFocus();
+    // 发步评论
+    @Override
+    public void onPublishCommentSuccess(Comment comment) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(binding.etPostText.getWindowToken(), 0);
+                }
+
+                binding.etPostText.setText("");
+
+                post.setCommentCount(String.valueOf(Integer.parseInt(post.getCommentCount()) + 1));
+
+                binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
+
+
+                List<Comment> comments = adapter.getCurrentList();
+                List<Comment> finalList = new ArrayList<>(comments);
+                Log.d("PostActivity", "onPublishCommentSuccess: " + comments);
+                if (finalList.isEmpty()) {
+                    binding.tvMypostEmpty.setVisibility(View.GONE);
+                    binding.rvMypostReply.setVisibility(View.VISIBLE);
+                    finalList.add(comment);
+                    adapter.updateData(finalList);
+                } else {
+                    finalList.add(0, comment);
+                    finalList = mPresenter.flattenComments(finalList);
+                    adapter.updateData(finalList);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onPublishCommentFailure() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(PostActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onDeletePostSuccess(int postId) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onDeleteCommentSuccess(Comment comment) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<Comment> comments = adapter.getCurrentList();
+                List<Comment> finalList = new ArrayList<>(comments);
+                finalList.remove(comment);
+                adapter.updateData(finalList);
+                post.setCommentCount(String.valueOf(Integer.parseInt(post.getCommentCount()) - 1));
+
+                binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
+            }
+        });
+    }
+
+    private void showKeyboard(EditText editText) {
+        editText.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!editText.hasFocus()) {
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+                }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        }, 300);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
                 }
             }
         }
+        return super.dispatchTouchEvent(ev);
     }
-    return super.dispatchTouchEvent(ev);
-}
 
-private boolean isPostOwner(Post currentPost) {
-    String username = SPUtils.getString(this, SPUtils.USERNAME_KEY, "");
-    String avatar = SPUtils.getString(this, SPUtils.AVATAR_KEY, "");
-    return username.equals(currentPost.getUserName()) && avatar.equals(currentPost.getUserAvatar());
-}
+    private boolean isPostOwner(Post currentPost) {
+        String username = SPUtils.getString(this, SPUtils.USERNAME_KEY, "");
+        String avatar = SPUtils.getString(this, SPUtils.AVATAR_KEY, "");
+        return username.equals(currentPost.getUserName()) && avatar.equals(currentPost.getUserAvatar());
+    }
 
-private boolean isCommentOwner(Comment comment) {
-    String username = SPUtils.getString(this, SPUtils.USERNAME_KEY, "");
-    String avatar = SPUtils.getString(this, SPUtils.AVATAR_KEY, "");
-    return username.equals(comment.getUserName()) && avatar.equals(comment.getUserAavatar());
-}
+    private boolean isCommentOwner(Comment comment) {
+        String username = SPUtils.getString(this, SPUtils.USERNAME_KEY, "");
+        String avatar = SPUtils.getString(this, SPUtils.AVATAR_KEY, "");
+        return username.equals(comment.getUserName()) && avatar.equals(comment.getUserAavatar());
+    }
 
 
-private List<String> getImagesUrl(String jsonImages) {
-    List<String> images = new ArrayList<>();
-    try {
-        JSONArray object = new JSONArray(jsonImages);
-        for (int i = 0; i < object.length(); i++) {
-            images.add(object.getString(i));
+    private List<String> getImagesUrl(String jsonImages) {
+        List<String> images = new ArrayList<>();
+        try {
+            JSONArray object = new JSONArray(jsonImages);
+            for (int i = 0; i < object.length(); i++) {
+                images.add(object.getString(i));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
-    } catch (JSONException e) {
-        throw new RuntimeException(e);
+        return images;
     }
-    return images;
-}
 }
