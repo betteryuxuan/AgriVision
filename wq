@@ -1,0 +1,64 @@
+[33mcommit 53b5ed90dc807f8ed19ed292440e773a5bf116ad[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32myuxuan[m[33m)[m
+Author: yuxuan <1790618164@qq.com>
+Date:   Fri Mar 28 17:03:06 2025 +0800
+
+    使用了lfs
+
+[33mcommit b964637f464939bd8b0cce048cca665c659012d3[m[33m ([m[1;33mtag: [m[1;33mv1.1.0[m[33m)[m
+Merge: 3e22703 2b220cf
+Author: yuxuan <1790618164@qq.com>
+Date:   Fri Mar 28 13:07:01 2025 +0800
+
+    合并进度
+
+[33mcommit 2b220cfa9ecb3e07feffba018f682d815d76d751[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 95cb355 c8d3aaa
+Author: yuxuan <1790618164@qq.com>
+Date:   Fri Mar 28 12:54:27 2025 +0800
+
+    Merge branch 'main' of github.com:betteryuxuan/AgriVison
+
+[33mcommit a393182377c2daa72115bb4ae26e8ddbe8fbc429[m
+Author: yuxuan <1790618164@qq.com>
+Date:   Fri Mar 28 11:20:56 2025 +0800
+
+    完成评论长按删除功能，修改bug
+
+[33mcommit 1921d3b85d1da650398589599941a4a25df519f9[m[33m ([m[1;33mtag: [m[1;33mv1.0.0[m[33m)[m
+Author: yuxuan <1790618164@qq.com>
+Date:   Tue Mar 25 16:44:04 2025 +0800
+
+    v1.0.0
+
+[33mcommit 95cb35544ea51a7051e12a040f22460987465241[m
+Merge: c91bb15 4727a84
+Author: yuxuan <1790618164@qq.com>
+Date:   Mon Mar 24 10:58:45 2025 +0800
+
+    本地拉取处理冲突
+
+[33mcommit bc1ba81cb9837fbc61181e2fe10be0da59ff8adc[m
+Merge: 9603126 223bffb
+Author: xiaoduyyy <2585003382@qq.com>
+Date:   Sat Feb 22 23:18:49 2025 +0800
+
+    合并分支
+
+[33mcommit 473daed985ab9129cee8f84b484765dc832e85b2[m
+Author: yuxuan <1790618164@qq.com>
+Date:   Wed Feb 19 17:16:22 2025 +0800
+
+    完成AI对话界面功能
+
+[33mcommit 0e72056ee3f4de315c22608f3e799bc448422367[m
+Merge: 2795df9 511dd0d
+Author: xiaoduyyy <2585003382@qq.com>
+Date:   Thu Feb 13 23:04:38 2025 +0800
+
+    合并处理冲突
+
+[33mcommit 93ce808f70aa7662e19722cd7cf3599632fcf531[m
+Author: yuxuan <1790618164@qq.com>
+Date:   Tue Feb 11 22:47:19 2025 +0800
+
+    完成个人页功能

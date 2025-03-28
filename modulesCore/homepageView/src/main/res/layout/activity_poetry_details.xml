@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/poetry_details_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow"
+    android:fitsSystemWindows="true">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_poetrydetails_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="90dp"
+                android:fontFamily="@font/ziti6"
+                android:text="种豆南山下"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_poetrydetails_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/ziti6"
+                android:text="陶渊明（东晋）"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_poetrydetails_title" />
+
+            <TextView
+                android:id="@+id/tv_poetrydetails_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/ziti6"
+                android:gravity="center"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="5dp"
+                android:text="种豆南山下，草盛豆苗稀。\n晨兴理荒秽，带月荷锄归。\n道狭草木长，夕露沾我衣。\n衣沾不足惜，但使愿无违。"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_poetrydetails_author" />
+
+            <View
+                android:id="@+id/poetry_details_view5"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="30dp"
+                android:background="#D8CDB1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_poetrydetails_text"/>
+
+            <View
+                android:id="@+id/poetry_details_view6"
+                android:layout_width="5dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="18dp"
+                android:background="#CD9E4F"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/poetry_details_view5"/>
+
+            <TextView
+                android:id="@+id/poetry_details_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="15dp"
+                android:text="作物"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+                app:layout_constraintStart_toEndOf="@+id/poetry_details_view6"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_view5" />
+
+            <TextView
+                android:id="@+id/poetry_details_crop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/ziti6"
+                android:text="种豆南山下，草盛豆苗稀。"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_view5" />
+
+            <TextView
+                android:id="@+id/poetry_details_crop_introduce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/ziti6"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="4"
+                android:text="豆：指的是大豆（学名：Glycine max），是豆科大豆属的一年生草本植物，原产于中国，已有数千年的栽培历史。它是全球重要的粮食作物之一，广泛用于食品加工、油料提取和饲料生产。大豆富含蛋白质、油脂和多种营养素，尤其是其高蛋白含量，使其成为重要的植物性蛋白来源。大豆的种子可以作为直接食用的食材，常见的加工食品有豆腐、豆浆、黄豆芽等。此外，大豆还用于提取大豆油和大豆蛋白，广泛应用于食品工业和其他领域。"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_crop" />
+
+            <LinearLayout
+                android:id="@+id/ll_poetry_expand_crop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/poetry_details_view1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <TextView
+                    android:id="@+id/tv_poetry_expand_crop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ziti6"
+                    android:gravity="center_vertical"
+                    android:text="展开全文"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+                <ImageView
+                    android:id="@+id/iv_poetry_expand_crop"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_open"/>
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/poetry_details_view1"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="35dp"
+                android:background="#D8CDB1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_crop_introduce"/>
+
+            <View
+                android:id="@+id/poetry_details_view2"
+                android:layout_width="5dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="19dp"
+                android:background="#CD9E4F"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/poetry_details_view1"/>
+
+            <TextView
+                android:id="@+id/poetry_details_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="15dp"
+                android:text="译文"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+                app:layout_constraintStart_toEndOf="@+id/poetry_details_view2"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_view1" />
+
+            <TextView
+                android:id="@+id/poetry_details_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="15dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/ziti6"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="4"
+                android:text="我在南山下种豆，但杂草长得很旺盛，豆苗生长得很稀少。清晨我起床整理荒废的土地，带着月光回家。小路狭窄，草木繁茂，傍晚的露水沾湿了我的衣服。衣服湿了不在乎，只要我的心愿没有违背。"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_view1" />
+
+            <LinearLayout
+                android:id="@+id/ll_poetry_expand_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/poetry_details_view3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <TextView
+                    android:id="@+id/tv_poetry_expand_translation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ziti6"
+                    android:gravity="center_vertical"
+                    android:text="展开全文"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+                <ImageView
+                    android:id="@+id/iv_poetry_expand_translation"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_open"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/poetry_details_view3"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="35dp"
+                android:background="#D8CDB1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_translation"/>
+
+            <View
+                android:id="@+id/poetry_details_view4"
+                android:layout_width="5dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="19dp"
+                android:background="#CD9E4F"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/poetry_details_view3"/>
+
+            <TextView
+                android:id="@+id/poetry_details_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="15dp"
+                android:text="赏析"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+                app:layout_constraintStart_toEndOf="@+id/poetry_details_view4"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_view3" />
+
+            <TextView
+                android:id="@+id/poetry_details_appreciation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/ziti6"
+                android:lineSpacingExtra="5dp"
+                android:text="这首诗反映了陶渊明归隐田园后的理想生活，表达了他对田园生活的喜爱与向往。"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_view3" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poetry_details_appreciation"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ImageButton
+        android:id="@+id/iv_poetrydetails_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_back_poetry"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

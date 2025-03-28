@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/modulesBase" />
+            <option value="$PROJECT_DIR$/modulesBase/libBase" />
+            <option value="$PROJECT_DIR$/modulesCore" />
+            <option value="$PROJECT_DIR$/modulesCore/chatpageview" />
+            <option value="$PROJECT_DIR$/modulesCore/classificationview" />
+            <option value="$PROJECT_DIR$/modulesCore/communityview" />
+            <option value="$PROJECT_DIR$/modulesCore/homepageView" />
+            <option value="$PROJECT_DIR$/modulesCore/login" />
+            <option value="$PROJECT_DIR$/modulesCore/personalinfoview" />
+            <option value="$PROJECT_DIR$/modulesCore/shoppingview" />
+            <option value="$PROJECT_DIR$/modulesCore/videoview" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

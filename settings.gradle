@@ -1,0 +1,35 @@
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://jitpack.io' }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+rootProject.name = "AgriVison"
+include ':app'
+include ':modulesBase'
+include ':modulesBase:libBase'
+include ':modulesCore:login'
+include ':modulesCore:homepageView'
+include ':modulesCore:personalinfoview'
+include ':modulesCore:chatpageview'
+include ':modulesCore:shoppingview'
+include ':modulesCore:videoview'
+include ':modulesCore:classificationview'
+include ':modulesCore:communityview'

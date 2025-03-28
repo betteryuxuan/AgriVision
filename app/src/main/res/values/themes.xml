@@ -1,0 +1,7 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AgriVison" parent="Theme.MaterialComponents.NoActionBar.Bridge">
+    </style>
+
+    <style name="Theme.AgriVison" parent="Base.Theme.AgriVison" />
+</resources>

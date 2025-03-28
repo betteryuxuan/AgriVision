@@ -1,0 +1,15 @@
+<resources>
+    <style name="Base.Theme.AgriVison" parent="Theme.MaterialComponents.NoActionBar">
+    </style>
+
+    <style name="Theme.AgriVison" parent="Base.Theme.AgriVison" />
+
+    <style name="CustomAlertDialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#000000</item>
+        <item name="android:selectableItemBackground">?attr/selectableItemBackground</item>
+        <item name="android:selectableItemBackgroundBorderless">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+</resources>
