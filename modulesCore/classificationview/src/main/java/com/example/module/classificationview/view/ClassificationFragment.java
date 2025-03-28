@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +40,7 @@ public class ClassificationFragment extends Fragment implements IClassificationC
     private IClassificationContract.IClassificationPresenter presenter;
     private RecyclerView foodRecyclerView, oilRecyclerView, vegetableRecyclerView, fruitRecyclerView, wildFruitRecyclerView, seedRecyclerView, medicinalRecyclerView;
     private ImageView foodButton, oilButton, vegetableButton, fruitButton, wildFruitButton, seedButton, medicinalButton;
+    private TextView foodTextView, oilTextView, vegetableTextView, fruitTextView, wildFruitTextView, seedTextView, medicinalTextView;
     private Banner banner;
     private NestedScrollView nestedScrollView;
     private float scaleFactor = 1f; // 初始缩放比例
@@ -77,6 +79,14 @@ public class ClassificationFragment extends Fragment implements IClassificationC
         wildFruitButton = view.findViewById(R.id.iv_category_wild_fruit);
         seedButton = view.findViewById(R.id.iv_category_seed);
         medicinalButton = view.findViewById(R.id.iv_category_medicinal);
+
+        foodTextView = view.findViewById(R.id.tv_category_food);
+        oilTextView = view.findViewById(R.id.tv_category_oil);
+        vegetableTextView = view.findViewById(R.id.tv_category_vegetable);
+        fruitTextView = view.findViewById(R.id.tv_category_fruit);
+        wildFruitTextView = view.findViewById(R.id.tv_category_wild_fruit);
+        seedTextView = view.findViewById(R.id.tv_category_seed);
+        medicinalTextView = view.findViewById(R.id.tv_category_medicinal);
         initView();
         initListener();
 
@@ -152,6 +162,16 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+
+        foodTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+                intent.putExtra("title", "粮食作物");
+                startActivity(intent);
+            }
+        });
         int space = 25;
         foodRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
@@ -172,6 +192,16 @@ public class ClassificationFragment extends Fragment implements IClassificationC
         oilRecyclerView.setNestedScrollingEnabled(false);
 
         oilButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+                intent.putExtra("title", "油料作物");
+                startActivity(intent);
+            }
+        });
+
+        oilTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
@@ -208,6 +238,16 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+
+        vegetableTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+                intent.putExtra("title", "蔬菜作物");
+                startActivity(intent);
+            }
+        });
         int space = 25;
         vegetableRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
@@ -228,6 +268,16 @@ public class ClassificationFragment extends Fragment implements IClassificationC
         fruitRecyclerView.setNestedScrollingEnabled(false);
 
         fruitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+                intent.putExtra("title", "水果作物");
+                startActivity(intent);
+            }
+        });
+
+        fruitTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
@@ -264,6 +314,16 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+
+        wildFruitTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+                intent.putExtra("title", "野果作物");
+                startActivity(intent);
+            }
+        });
         int space = 25;
         wildFruitRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
@@ -292,6 +352,16 @@ public class ClassificationFragment extends Fragment implements IClassificationC
                 startActivity(intent);
             }
         });
+
+        seedTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+                intent.putExtra("title", "种子作物");
+                startActivity(intent);
+            }
+        });
         int space = 25;
         seedRecyclerView.addItemDecoration(new SpaceItemDecoration(space));
     }
@@ -312,6 +382,16 @@ public class ClassificationFragment extends Fragment implements IClassificationC
         medicinalRecyclerView.setNestedScrollingEnabled(false);
 
         medicinalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);
+                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+                intent.putExtra("title", "药草作物");
+                startActivity(intent);
+            }
+        });
+
+        medicinalTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CategoryDetailsActivity.class);

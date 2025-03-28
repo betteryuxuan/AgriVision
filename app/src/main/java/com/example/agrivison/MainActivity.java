@@ -48,8 +48,15 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private boolean isExit = false;
     private static final long TIME = 2000;
-    private int pageIndex;  // 目标页面索引
     private ImageView add;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        EventBus.getDefault().register(this);
 
 
         viewPager2 = findViewById(R.id.vp_main);
@@ -155,8 +161,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && viewPager2.getCurrentItem() == 0) {
             exitByTwoClick();      //调用双击退出函数
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && viewPager2.getCurrentItem() != 0) {
+            viewPager2.setCurrentItem(0);
         }
         return false;
     }

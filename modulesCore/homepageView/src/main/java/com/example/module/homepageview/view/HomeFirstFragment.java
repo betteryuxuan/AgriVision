@@ -274,8 +274,7 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
                 intent.putExtra("htmlContent", news.getContent());
                 intent.putExtra("title", news.getTitle());
                 intent.putExtra("image", news.getImage());
-                startActivity(intent);
-            }
+                startActivity(intent);            }
         }, getContext()));
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        initAinm();
