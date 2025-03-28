@@ -70,7 +70,7 @@ public class CommentCommitFragment extends BottomSheetDialogFragment {
             if (imm != null) {
                 imm.showSoftInput(etComment, InputMethodManager.SHOW_IMPLICIT);
             }
-        }, 100);
+        }, 200);
 
         initView();
         initListener();

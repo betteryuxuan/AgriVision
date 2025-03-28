@@ -20,8 +20,6 @@
         android:text="标题"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/ziti2"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

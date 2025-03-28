@@ -30,7 +30,7 @@ public class VideoFragment extends Fragment implements IVideoContract.IVideoView
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return  inflater.inflate(R.layout.fragment_video, container, false);
+        return inflater.inflate(R.layout.fragment_video, container, false);
     }
 
     @Override
@@ -42,6 +42,7 @@ public class VideoFragment extends Fragment implements IVideoContract.IVideoView
         }
 
         viewPager2 = view.findViewById(R.id.vp_video_show);
+
 
         initView();
         initListener();

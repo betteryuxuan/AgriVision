@@ -1,7 +1,5 @@
 package com.example.module.classificationview.presenter;
 
-import android.util.Log;
-
 import com.example.module.classificationview.contract.IClassificationContract;
 import com.example.module.libBase.bean.Crop;
 
@@ -73,17 +71,24 @@ public class ClassificationPresenter implements IClassificationContract.IClassif
                 }
                 List<Crop.CropDetail> foodCategoryDatas = foodCategoryData;
                 foodCategoryDatas.addAll(foodCategoryData);
+                foodCategoryDatas.addAll(foodCategoryData);
                 List<Crop.CropDetail> oilCategoryDatas = oilCategoryData;
+                oilCategoryDatas.addAll(oilCategoryData);
                 oilCategoryDatas.addAll(oilCategoryData);
                 List<Crop.CropDetail> fruitCategoryDatas = fruitCategoryData;
                 fruitCategoryDatas.addAll(fruitCategoryData);
+                fruitCategoryDatas.addAll(fruitCategoryData);
                 List<Crop.CropDetail> wildFruitCategoryDatas = wildFruitCategoryData;
+                wildFruitCategoryDatas.addAll(wildFruitCategoryData);
                 wildFruitCategoryDatas.addAll(wildFruitCategoryData);
                 List<Crop.CropDetail> vegetableCategoryDatas = vegetableCategoryData;
                 vegetableCategoryDatas.addAll(vegetableCategoryData);
+                vegetableCategoryDatas.addAll(vegetableCategoryData);
                 List<Crop.CropDetail> seedCategoryDatas = seedCategoryData;
                 seedCategoryDatas.addAll(seedCategoryData);
+                seedCategoryDatas.addAll(seedCategoryData);
                 List<Crop.CropDetail> medicinalCategoryDatas = medicinalCategoryData;
+                medicinalCategoryDatas.addAll(medicinalCategoryData);
                 medicinalCategoryDatas.addAll(medicinalCategoryData);
                 mView.setupFoodCatergoryRecyclerView(foodCategoryData);
                 mView.setupOilCatergoryRecyclerView(oilCategoryData);

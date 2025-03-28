@@ -10,9 +10,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green_2"
+        android:background="#54B785"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:title="新闻详情"
         android:titleTextColor="#27AE61"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +27,7 @@
                 android:id="@+id/iv_category_back"
                 android:layout_width="25dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="0dp"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/ic_category_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +43,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/iv_category_back"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>

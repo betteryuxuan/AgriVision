@@ -9,12 +9,14 @@
         android:id="@+id/pv_video_show"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:resize_mode="fill"
         app:controller_layout_id="@layout/custom_player_control_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:resize_mode="fill" />
 
     <ImageView
         android:id="@+id/iv_video_collect"
@@ -31,7 +33,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/ic_message"
         app:layout_constraintBottom_toTopOf="@+id/iv_video_collect"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -41,7 +43,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="50dp"
         android:src="@drawable/ic_heart"
         app:layout_constraintBottom_toTopOf="@+id/iv_video_message"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -102,9 +104,9 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginRight="80dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         android:text="农业种植小知识"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -116,7 +118,7 @@
         android:id="@+id/cardview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="100dp"
         app:cardElevation="0dp"

@@ -141,6 +141,7 @@ public class VideoShowFragment extends Fragment {
         commentCount = view.findViewById(R.id.tv_video_comment_count);
 
         playerView = view.findViewById(R.id.pv_video_show);
+
         exoPlayer = new ExoPlayer.Builder(getContext()).build();
         playerView.setPlayer(exoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(url);
@@ -197,7 +198,7 @@ public class VideoShowFragment extends Fragment {
         playerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
+                return gestureDetector != null ? gestureDetector.onTouchEvent(event) : false;
             }
         });
 
