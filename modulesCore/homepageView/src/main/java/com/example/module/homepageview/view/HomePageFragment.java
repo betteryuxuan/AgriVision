@@ -34,7 +34,6 @@ public class HomePageFragment extends Fragment implements IHomePageContract.IHom
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -99,4 +98,5 @@ public class HomePageFragment extends Fragment implements IHomePageContract.IHom
     public void setPresenter(IHomePageContract.IHomePagePresenter presenter) {
         this.mPresenter = presenter;
     }
+
 }

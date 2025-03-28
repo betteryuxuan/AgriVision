@@ -57,7 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = "/HomePageView/HomeFirstFragment")
-public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IHomeFirstView {
+public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IHomeFirstView{
 
     private final String TAG = "HomeFirstFragment";
 
@@ -306,5 +306,4 @@ public class HomeFirstFragment extends Fragment implements IHomeFirstContract.IH
     public void setPresenter(IHomeFirstContract.IHomeFirstPresenter presenter) {
         this.mPresenter = presenter;
     }
-
 }
