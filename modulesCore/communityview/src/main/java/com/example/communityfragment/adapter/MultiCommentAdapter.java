@@ -10,15 +10,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.AsyncDifferConfig;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.communityfragment.DiffCallBack;
 import com.example.communityfragment.R;
 import com.example.communityfragment.bean.Comment;
 import com.example.communityfragment.utils.TimeUtils;
+import com.example.communityfragment.view.PostActivity;
 
 import java.util.List;
 
@@ -31,20 +32,29 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
     private static final int TYPE_LEVEL_TWO = 1;
     private Context mContext;
 
-    public MultiCommentAdapter(@NonNull DiffUtil.ItemCallback<Comment> diffCallback, Context context) {
+    private OnItemClickListenser onItemClickListenser;
+    public interface OnItemClickListenser {
+        void onItemClick(Comment comment);
+
+        void onItemLongClick(Comment comment);
+    }
+
+    public MultiCommentAdapter(@NonNull DiffUtil.ItemCallback<Comment> diffCallback, PostActivity context, OnItemClickListenser onItemClickListenser) {
         super(diffCallback);
         this.mContext = context;
+        this.onItemClickListenser = onItemClickListenser;
     }
+
 
     @Override
     public int getItemViewType(int position) {
         Comment comment = getItem(position);
         if (comment.getRootId() == 0) {
-            Log.d(TAG, "getItemViewType: 1" );
+            Log.d(TAG, "getItemViewType: 1");
             // 一级
             return TYPE_LEVEL_ONE;
-        } else if (comment.getRootId() != 0 ) {
-            Log.d(TAG, "getItemViewType: 2" );
+        } else if (comment.getRootId() != 0) {
+            Log.d(TAG, "getItemViewType: 2");
             // 多级
             return TYPE_LEVEL_TWO;
         }
@@ -80,16 +90,6 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
         submitList(comments);
     }
 
-    private OnItemClickListenser onItemClickListenser;
-
-    public interface OnItemClickListenser {
-        void onItemClick(Comment comment);
-    }
-
-    public void setListenser(OnItemClickListenser onItemClickListenser) {
-        this.onItemClickListenser = onItemClickListenser;
-    }
-
     class LevelOneViewHolder extends RecyclerView.ViewHolder {
         private TextView content, UserName, time;
         private ImageView avatar;
@@ -117,6 +117,13 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
                 @Override
                 public void onClick(View v) {
                     onItemClickListenser.onItemClick(comment);
+                }
+            });
+            parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListenser.onItemLongClick(comment);
+                    return true;
                 }
             });
         }
@@ -161,6 +168,15 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
                     onItemClickListenser.onItemClick(comment);
                 }
             });
+            parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListenser.onItemLongClick(comment);
+                    return true;
+                }
+            });
         }
     }
+
+
 }

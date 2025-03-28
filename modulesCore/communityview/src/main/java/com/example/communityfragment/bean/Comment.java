@@ -26,6 +26,9 @@ public class Comment {
     // 根评论
     private int rootId= 0;
 
+    // 交互信息
+    private boolean isExpanded = false;
+
     public Comment() {
     }
 
@@ -97,6 +100,14 @@ public class Comment {
 
     public int getParentId() {
         return parentId;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
     }
 
     public int getId() {

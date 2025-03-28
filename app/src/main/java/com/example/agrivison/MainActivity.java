@@ -27,6 +27,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.module.libBase.bean.SwitchPageEvent;
+import com.example.module.libBase.inter.Scrollable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -41,7 +42,6 @@ import java.util.TimerTask;
 
 @Route(path = "/main/MainActivity")
 public class MainActivity extends AppCompatActivity {
-
     private static final String TAG = "MainActivityTAG";
     private BottomNavigationView bottomNavigationView;
     private List<Fragment> fragments;
@@ -90,12 +90,18 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.navigation_item1) {
                     viewPager2.setCurrentItem(0, false);
+                    if (viewPager2.getCurrentItem() == 0) {
+                        scrollToTop(0);
+                    }
                 } else if (item.getItemId() == R.id.navigation_item2) {
                     viewPager2.setCurrentItem(1, false);
                 } else if (item.getItemId() == R.id.navigation_item3) {
                     viewPager2.setCurrentItem(2, false);
                 } else if (item.getItemId() == R.id.navigation_item4) {
                     viewPager2.setCurrentItem(3, false);
+                    if (viewPager2.getCurrentItem() == 3) {
+                        scrollToTop(3);
+                    }
                 } else if (item.getItemId() == R.id.navigation_item5) {
                     viewPager2.setCurrentItem(4, false);
                 }
@@ -130,13 +136,21 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ARouter.getInstance()
                         .build("/communityPageView/PublishActivity")
                         .navigation();
             }
 
         });
+
+
+    }
+
+    private void scrollToTop(int position) {
+        Fragment fragment = fragments.get(position);
+        if (fragment instanceof Scrollable) {
+            ((Scrollable) fragment).scrollToTop();
+        }
     }
 
     @Override

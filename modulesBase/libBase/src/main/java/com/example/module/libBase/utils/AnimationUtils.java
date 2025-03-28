@@ -1,4 +1,4 @@
-package com.example.module.libBase;
+package com.example.module.libBase.utils;
 
 
 import android.animation.Animator;

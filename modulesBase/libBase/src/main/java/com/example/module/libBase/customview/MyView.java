@@ -1,4 +1,4 @@
-package com.example.module.libBase;
+package com.example.module.libBase.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;

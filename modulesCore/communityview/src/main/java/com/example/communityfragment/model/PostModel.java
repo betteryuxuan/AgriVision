@@ -9,7 +9,7 @@ import com.example.communityfragment.bean.Comment;
 import com.example.communityfragment.contract.IPostContract;
 import com.example.communityfragment.presenter.PostPresenter;
 import com.example.communityfragment.utils.URLUtils;
-import com.example.module.libBase.TokenManager;
+import com.example.module.libBase.utils.TokenManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -205,7 +204,11 @@ public class PostModel implements IPostContract.Model {
     @Override
     public void deletePost(int postId) {
         String URL = URLUtils.DELETE_POST_URL + "/" + postId;
-        Request request = new Request.Builder().url(URL).delete().addHeader("Authorization", "Bearer " + TokenManager.getToken(mContext)).build();
+        Request request = new Request.Builder()
+                .url(URL)
+                .delete()
+                .addHeader("Authorization", "Bearer " + TokenManager.getToken(mContext))
+                .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -216,6 +219,29 @@ public class PostModel implements IPostContract.Model {
                 Log.d(TAG, response.toString());
                 if (response.isSuccessful()) {
                     mPresenter.deletePostSuccess(postId);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteComment(Comment comment) {
+        String URL = URLUtils.DELETE_COMMENT_URL + "/" + comment.getId();
+        Request request = new Request.Builder()
+                .url(URL)
+                .delete()
+                .addHeader("Authorization", "Bearer " + TokenManager.getToken(mContext))
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, response.toString());
+                if (response.isSuccessful()) {
+                    mPresenter.deleteCommentSuccess(comment);
                 }
             }
         });

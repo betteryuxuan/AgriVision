@@ -66,8 +66,18 @@ public class PostPresenter implements IPostContract.Presenter {
     }
 
     @Override
+    public void deleteComment(Comment comment) {
+        mModel.deleteComment(comment);
+    }
+
+    @Override
     public void deletePostSuccess(int postId) {
-        mView.onDeleteSuccess(postId);
+        mView.onDeletePostSuccess(postId);
+    }
+
+    @Override
+    public void deleteCommentSuccess(Comment comment) {
+        mView.onDeleteCommentSuccess(comment);
     }
 
     public List<Comment> flattenComments(List<Comment> comments) {
@@ -88,6 +98,14 @@ public class PostPresenter implements IPostContract.Presenter {
         for (Comment comment : levelOneComments) {
             if (childrenMap.containsKey(comment.getId())) {
                 childrenMap.put(comment.getId(), sortCommentsByTime(childrenMap.get(comment.getId())));
+            }
+        }
+
+        // 设置二级评论的展开状态
+        for (Comment parent : levelOneComments) {
+            List<Comment> children = childrenMap.get(parent.getId());
+            if (children != null && children.size() > 2) {
+                parent.setExpanded(false);
             }
         }
 

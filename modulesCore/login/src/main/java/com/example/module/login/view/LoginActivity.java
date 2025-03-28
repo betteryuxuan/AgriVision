@@ -29,8 +29,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.module.libBase.AnimationUtils;
-import com.example.module.libBase.TokenManager;
+import com.example.module.libBase.utils.AnimationUtils;
+import com.example.module.libBase.utils.TokenManager;
 import com.example.module.login.R;
 import com.example.module.login.contract.ILoginContract;
 import com.example.module.login.presenter.LoginPresenter;

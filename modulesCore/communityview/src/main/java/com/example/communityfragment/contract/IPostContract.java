@@ -14,11 +14,15 @@ public interface IPostContract {
 
         void onPublishCommentFailure();
 
-        void onDeleteSuccess(int postId);
+        void onDeletePostSuccess(int postId);
+
+        void onDeleteCommentSuccess(Comment comment);
     }
 
     interface Presenter {
         void comment(int postId, String comment, int parentId, int rootId);
+        void deletePost(int id);
+        void deleteComment(Comment comment);
 
         void onCommentsSuccess(List<Comment> comments);
 
@@ -28,9 +32,9 @@ public interface IPostContract {
 
         void onPublishCommentFailure();
 
-        void deletePost(int id);
-
         void deletePostSuccess(int postId);
+        void deleteCommentSuccess(Comment comment);
+
     }
 
     interface Model {
@@ -39,6 +43,9 @@ public interface IPostContract {
         void getComments(int postId);
 
         void deletePost(int id);
+
+        void deleteComment(Comment comment);
+
     }
 
 

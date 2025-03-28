@@ -9,8 +9,8 @@ import com.example.communityfragment.bean.Post;
 import com.example.communityfragment.contract.IPostsContract;
 import com.example.communityfragment.presenter.PostsPresenter;
 import com.example.communityfragment.utils.URLUtils;
-import com.example.module.libBase.SPUtils;
-import com.example.module.libBase.TokenManager;
+import com.example.module.libBase.utils.SPUtils;
+import com.example.module.libBase.utils.TokenManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

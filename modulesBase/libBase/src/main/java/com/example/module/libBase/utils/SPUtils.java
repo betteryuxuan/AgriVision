@@ -1,4 +1,4 @@
-package com.example.module.libBase;
+package com.example.module.libBase.utils;
 
 import static android.content.Context.MODE_PRIVATE;
 
