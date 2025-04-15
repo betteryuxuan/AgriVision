@@ -552,11 +552,16 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
     }
 
     public void startMainActivity() {
-        ARouter.getInstance()
-                .build("/main/MainActivity")
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ARouter.getInstance()
+                        .build("/main/MainActivity")
 //                .withTransition(R.anim.slide_in_left, R.anim.slide_out_left)
-                .navigation();
-        finish();
+                        .navigation();
+                finish();
+            }
+        });
     }
 
     @Override
