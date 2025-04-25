@@ -2,6 +2,9 @@ package com.example.communityfragment.bean;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Comment {
     // 帖子基本信息
     private int id;
@@ -10,6 +13,8 @@ public class Comment {
     private String likeCount;
     private String repliesCount;
     private boolean isLiked;
+    private List<Comment> childers = new ArrayList<>();
+    private boolean isMoreIndicator = false;
 
     // 作者
     private String userName;
@@ -26,12 +31,27 @@ public class Comment {
     // 根评论
     private int rootId= 0;
 
-    // 交互信息
+    // 如果当前是展开标记符，则表示当前评论的展开状态
     private boolean isExpanded = false;
 
     public Comment() {
     }
 
+    public List<Comment> getChilders() {
+        return childers != null ? childers : new ArrayList<>();
+    }
+
+    public void setChilders(List<Comment> childers) {
+        this.childers = childers;
+    }
+
+    public boolean isMoreIndicator() {
+        return isMoreIndicator;
+    }
+
+    public void setMoreIndicator(boolean moreIndicator) {
+        isMoreIndicator = moreIndicator;
+    }
 
     public String getContent() {
         return content;

@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -53,7 +53,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Route(path = "/communityPageView/PostActivity")
 public class PostActivity extends AppCompatActivity implements IPostContract.View {
@@ -71,6 +73,9 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
     // 当前需要回复的评论
     private boolean isReplyMode = false;
     private Comment currentReplyComment = null;
+
+    // 展开状态
+    private Set<Integer> expandedComments = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +177,45 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
                 });
 
                 dialog.show();
+            }
+
+            @Override
+            public void onMoreClick(Comment comment) {
+                Log.d(TAG, "onMoreClick: " + comment.getId());
+
+                List<Comment> currentList = new ArrayList<>(adapter.getCurrentList());
+                boolean found = false;
+
+                for (int i = 0; i < currentList.size(); i++) {
+                    Comment curComment = currentList.get(i);
+
+                    if (curComment.getId() == comment.getId()) {
+                        Log.d(TAG, "onMoreClick: " + curComment.getChilders());
+
+                        // 如果已经展开，则折叠
+                        if (comment.isExpanded()) {
+                            // 移除子评论
+                            int removeCount = curComment.getChilders().size() - 2;
+                            currentList.subList(i + 3, i + 3 + removeCount).clear();
+                            comment.setExpanded(false);
+                            expandedComments.remove(comment.getId());
+                        }
+                        // 如果未展开，则展开
+                        else {
+                            // 添加子评论
+                            currentList.subList(i + 1, i + 3).clear();
+                            currentList.addAll(i + 1, curComment.getChilders());
+                            comment.setExpanded(true);
+                            expandedComments.add(comment.getId());
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    adapter.updateData(currentList);
+                }
             }
         });
         binding.rvMypostReply.setAdapter(adapter);
@@ -342,13 +386,34 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
                     binding.tvMypostEmpty.setVisibility(View.GONE);
                     binding.rvMypostReply.setVisibility(View.VISIBLE);
 
-                    adapter.updateData(comments);
-
-                    post.setCommentCount(String.valueOf(comments.size()));
-                    binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
+                    if (!expandedComments.isEmpty()) {
+                        for (Comment c : comments) {
+                            if (expandedComments.contains(c.getId()) && c.isMoreIndicator()) {
+                                c.setExpanded(true);
+                            }
+                        }
+                        List<Comment> expandedList = buildExpandedList(comments);
+                        adapter.updateData(expandedList);
+                    } else {
+                        adapter.updateData(comments);
+                    }
                 }
             }
         });
+    }
+
+    private List<Comment> buildExpandedList(List<Comment> comments) {
+        for (int i = 0; i < comments.size(); i++) {
+            Comment curComment = comments.get(i);
+
+            for (int commentId : expandedComments) {
+                if (commentId == curComment.getId() && !curComment.isMoreIndicator()) {
+                    comments.subList(i + 1, i + 3).clear();
+                    comments.addAll(i + 1, curComment.getChilders());
+                }
+            }
+        }
+        return comments;
     }
 
     @Override
@@ -368,31 +433,46 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(binding.etPostText.getWindowToken(), 0);
-                }
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.etPostText.getWindowToken(), 0);
 
+                Parcelable recyclerViewState = binding.rvMypostReply.getLayoutManager().onSaveInstanceState();
                 binding.etPostText.setText("");
 
-                post.setCommentCount(String.valueOf(Integer.parseInt(post.getCommentCount()) + 1));
+                mPresenter.getComments(post.getId());
 
+//                // 遍历一下链表找到rootid，如何一级评论数量大于2就自动展开
+//                List<Comment> comments = new ArrayList<>(adapter.getCurrentList());
+//                for (Comment c : comments) {
+//                    if (c.getId() == comment.getRootId()&& !c.isMoreIndicator()) {
+//                        if (c.getChilders().size() > 2 && !expandedComments.contains(c.getId())) {
+//                            expandedComments.add(c.getId());
+//                        }
+//                    }
+//                }
+//                List<Comment> expandedList = buildExpandedList(comments);
+//                adapter.updateData(expandedList);
+
+                binding.rvMypostReply.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+                post.setCommentCount(String.valueOf(Integer.parseInt(post.getCommentCount()) + 1));
                 binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
 
-
-                List<Comment> comments = adapter.getCurrentList();
-                List<Comment> finalList = new ArrayList<>(comments);
-                Log.d("PostActivity", "onPublishCommentSuccess: " + comments);
-                if (finalList.isEmpty()) {
-                    binding.tvMypostEmpty.setVisibility(View.GONE);
-                    binding.rvMypostReply.setVisibility(View.VISIBLE);
-                    finalList.add(comment);
-                    adapter.updateData(finalList);
-                } else {
-                    finalList.add(0, comment);
-                    finalList = mPresenter.flattenComments(finalList);
-                    adapter.updateData(finalList);
-                }
+//                mPresenter.getComments(post.getId());
+//                List<Comment> comments = adapter.getCurrentList();
+//                List<Comment> finalList = new ArrayList<>(comments);
+//                Log.d("PostActivity", "onPublishCommentSuccess: " + comments);
+//                if (finalList.isEmpty()) {
+//                    binding.tvMypostEmpty.setVisibility(View.GONE);
+//                    binding.rvMypostReply.setVisibility(View.VISIBLE);
+//                    finalList.add(comment);
+//                    adapter.updateData(finalList);
+//                } else {
+//                    finalList.add(0, comment);
+//                    // 删除展开收起的，重新处理
+//                    finalList.removeIf(Comment::isMoreIndicator);
+//                    finalList = mPresenter.flattenComments(finalList);
+//                    adapter.updateData(finalList);
+//                }
             }
         });
     }
@@ -422,12 +502,24 @@ public class PostActivity extends AppCompatActivity implements IPostContract.Vie
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                List<Comment> comments = adapter.getCurrentList();
-                List<Comment> finalList = new ArrayList<>(comments);
-                finalList.remove(comment);
-                adapter.updateData(finalList);
+                mPresenter.getComments(post.getId());
+//                List<Comment> comments = adapter.getCurrentList();
+//                List<Comment> finalList = new ArrayList<>(comments);
+//                finalList.remove(comment);
+//                if (comment.isMoreIndicator()) {
+//                    // 如果是展开的，把展开的都删了
+//                    expandedComments.remove(comment.getId());
+//                }
+//                // 把删掉评论的所有子评论或者子子评论都删了
+//                Iterator<Comment> it = finalList.iterator();
+//                while (it.hasNext()) {
+//                    Comment c = it.next();
+//                    if (c.getRootId() == comment.getId() || c.getParentId() == comment.getId()) {
+//                        it.remove();
+//                    }
+//                }
+//                adapter.updateData(finalList);
                 post.setCommentCount(String.valueOf(Integer.parseInt(post.getCommentCount()) - 1));
-
                 binding.tvMypostReply.setText(String.format("共 %s 条回复", post.getCommentCount()));
             }
         });

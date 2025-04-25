@@ -30,13 +30,17 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
     private static final String TAG = "CommentAdapterTAG";
     private static final int TYPE_LEVEL_ONE = 0;
     private static final int TYPE_LEVEL_TWO = 1;
+    private static final int TYPE_LEVEL_MORE = 2;
     private Context mContext;
 
     private OnItemClickListenser onItemClickListenser;
+
     public interface OnItemClickListenser {
         void onItemClick(Comment comment);
 
         void onItemLongClick(Comment comment);
+
+        void onMoreClick(Comment comment);
     }
 
     public MultiCommentAdapter(@NonNull DiffUtil.ItemCallback<Comment> diffCallback, PostActivity context, OnItemClickListenser onItemClickListenser) {
@@ -49,7 +53,9 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
         Comment comment = getItem(position);
-        if (comment.getRootId() == 0) {
+        if (comment.isMoreIndicator()) {
+            return TYPE_LEVEL_MORE;
+        } else if (comment.getRootId() == 0) {
             Log.d(TAG, "getItemViewType: 1");
             // 一级
             return TYPE_LEVEL_ONE;
@@ -71,6 +77,9 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
         } else if (viewType == TYPE_LEVEL_TWO) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_child_comment_layout, parent, false);
             return new LevelTwoViewHolder(view);
+        } else if (viewType == TYPE_LEVEL_MORE) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_more_layout, parent, false);
+            return new MoreViewHolder(view);
         }
         return null;
     }
@@ -82,6 +91,8 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
             ((LevelOneViewHolder) holder).bindData(comment);
         } else if (holder instanceof LevelTwoViewHolder) {
             ((LevelTwoViewHolder) holder).bindData(comment);
+        } else if (holder instanceof MoreViewHolder) {
+            ((MoreViewHolder) holder).bindData(comment);
         }
     }
 
@@ -179,4 +190,39 @@ public class MultiCommentAdapter extends ListAdapter<Comment, RecyclerView.ViewH
     }
 
 
+    class MoreViewHolder extends RecyclerView.ViewHolder {
+        private TextView more;
+        private ConstraintLayout constraintLayout;
+
+        public MoreViewHolder(@NonNull View itemView) {
+            super(itemView);
+            more = itemView.findViewById(R.id.tv_more_content);
+            constraintLayout = itemView.findViewById(R.id.cl_more_comment);
+        }
+
+        public void bindData(Comment comment) {
+            if (comment.isExpanded()) {
+                comment.setContent("收起");
+                more.setText(comment.getContent());
+            } else {
+                comment.setContent("展开" + comment.getRepliesCount() + "条回复");
+                more.setText(String.format(comment.getContent()));
+            }
+            constraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListenser != null) {
+                        onItemClickListenser.onMoreClick(comment);
+                    }
+                    if (comment.isExpanded()) {
+                        comment.setContent("收起");
+                        more.setText(comment.getContent());
+                    } else {
+                        comment.setContent("展开" + comment.getRepliesCount() + "条回复");
+                        more.setText(String.format(comment.getContent()));
+                    }
+                }
+            });
+        }
+    }
 }

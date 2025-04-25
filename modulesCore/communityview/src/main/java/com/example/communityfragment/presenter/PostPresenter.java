@@ -101,11 +101,15 @@ public class PostPresenter implements IPostContract.Presenter {
             }
         }
 
-        // 设置二级评论的展开状态
-        for (Comment parent : levelOneComments) {
-            List<Comment> children = childrenMap.get(parent.getId());
-            if (children != null && children.size() > 2) {
-                parent.setExpanded(false);
+        // 一级评论>2进行折叠，进行一级评论的下接2个，并展示显示更多按钮
+        for (Comment comment : levelOneComments) {
+            if (childrenMap.containsKey(comment.getId())) {
+                List<Comment> children = childrenMap.get(comment.getId());
+                if (children.size() > 2) {
+                    comment.setChilders(children);
+                    children = children.subList(0, 2);
+                    childrenMap.put(comment.getId(), children);
+                }
             }
         }
 
@@ -137,6 +141,17 @@ public class PostPresenter implements IPostContract.Presenter {
         if (childrenMap.containsKey(comment.getId())) {
             for (Comment child : childrenMap.get(comment.getId())) {
                 addCommentWithChildren(finalList, child, childrenMap); // 递归添加子评论
+            }
+            // 当前是一级评论的子评论数量大于2，则添加显示更多按钮
+            if (comment.getRootId() == 0 && comment.getChilders().size() > 2) {
+                Comment moreIndicator = new Comment();
+                moreIndicator.setMoreIndicator(true);
+                moreIndicator.setExpanded(false);
+                moreIndicator.setContent("");
+                moreIndicator.setRepliesCount(String.valueOf(comment.getChilders().size() - 2));
+                // 设置更多按钮的id为当前一级评论的id
+                moreIndicator.setId(comment.getId());
+                finalList.add(moreIndicator);
             }
         }
     }

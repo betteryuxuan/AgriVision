@@ -4,13 +4,10 @@
     android:id="@+id/cl_more_comment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple_card"
-    android:clickable="true"
-    android:focusable="true"
     android:paddingStart="15dp"
     android:paddingTop="3dp"
     android:paddingEnd="15dp"
-    android:paddingBottom="3dp">
+    android:paddingBottom="1dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_more_useravatar"
@@ -30,7 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="3dp"
-        android:text="▼ 查看更多"
+        android:textColor="#8c8c8c"
+        android:text="查看更多"
         app:layout_constraintStart_toEndOf="@+id/img_more_useravatar"
         app:layout_constraintTop_toTopOf="@+id/img_more_useravatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
